@@ -24,5 +24,8 @@
 
         public const int PlateNumberMinLength = 4;
         public const int PlateNumberMaxLength = 30;
+
+        // Image
+        public const int UrlMaxLength = 250;
     }
 }

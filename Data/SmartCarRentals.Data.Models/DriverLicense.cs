@@ -1,7 +1,22 @@
-﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace SmartCarRentals.Data.Models
+﻿namespace SmartCarRentals.Data.Models
 {
-    public class DriverLicense
+    using System;
+
+    using SmartCarRentals.Data.Common.Models;
+
+    public class DriverLicense : BaseDeletableModel<string>
     {
+        public DriverLicense()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public string Number { get; set; }
+
+        public DateTime IssuedOn { get; set; }
+
+        public DateTime ExpireOn { get; set; }
+
+        private DateTime GetDate(string date) => DateTime.Parse(date);
     }
 }
