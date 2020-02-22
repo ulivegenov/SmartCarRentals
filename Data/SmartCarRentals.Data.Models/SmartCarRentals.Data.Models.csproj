@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SmartCarRentals.Common\SmartCarRentals.Common.csproj" />
     <ProjectReference Include="..\SmartCarRentals.Data.Common\SmartCarRentals.Data.Common.csproj" />
   </ItemGroup>
   
