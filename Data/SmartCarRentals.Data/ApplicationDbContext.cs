@@ -121,6 +121,13 @@
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // One-to-one relationship between User and DriverLicense
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.DriverLicense)
+                .WithOne(dl => dl.Client)
+                .HasForeignKey<ApplicationUser>(u => u.DriverLicenseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Many-to-many realtionship between User and Car
             builder.Entity<CarRating>()
                 .HasKey(cr => new { cr.CarId, cr.ClientId, cr.TripId });

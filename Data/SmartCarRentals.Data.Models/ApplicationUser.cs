@@ -75,7 +75,6 @@
 
         public virtual Parking Parking { get; set; }
 
-        [Required]
         public string DriverLicenseId { get; set; }
 
         public virtual DriverLicense DriverLicense { get; set; }
