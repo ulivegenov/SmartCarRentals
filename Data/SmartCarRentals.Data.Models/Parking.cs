@@ -25,18 +25,18 @@
 
         public int TownId { get; set; }
 
-        public Town Town { get; set; }
+        public virtual Town Town { get; set; }
 
         [Required]
         [MaxLength(EntitiesAttributeConstraints.AddressMaxLength)]
         public string Address { get; set; }
 
-        public ICollection<ParkingLot> ParkingLots { get; set; }
+        public virtual ICollection<ParkingLot> ParkingLots { get; set; }
 
-        public ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
 
-        public ICollection<ApplicationUser> Workers { get; set; }
+        public virtual ICollection<ApplicationUser> Workers { get; set; }
 
-        public ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

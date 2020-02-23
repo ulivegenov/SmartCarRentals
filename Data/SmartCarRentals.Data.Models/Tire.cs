@@ -2,9 +2,10 @@
 {
     using System;
 
+    using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Models.Enums.Tire;
 
-    public class Tire
+    public class Tire : BaseDeletableModel<int>
     {
         public Tire(string productionDate, string season, string carId)
         {
@@ -29,7 +30,7 @@
 
         public string CarId { get; set; }
 
-        public Car Car { get; set; }
+        public virtual Car Car { get; set; }
 
         private DateTime GetDate(string productionDate)
         {

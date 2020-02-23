@@ -17,10 +17,10 @@
 
         public int ParkingId { get; set; }
 
-        public Parking Parking { get; set; }
+        public virtual Parking Parking { get; set; }
 
         public string CarId { get; set; }
 
-        public Car Car { get; set; }
+        public virtual Car Car { get; set; }
     }
 }

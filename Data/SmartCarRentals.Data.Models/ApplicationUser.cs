@@ -26,6 +26,7 @@
             this.Points = 0;
             this.Cars = new HashSet<Car>();
             this.Trips = new HashSet<Trip>();
+            this.Transfers = new HashSet<Transfer>();
             this.Reservations = new HashSet<Reservation>();
         }
 
@@ -70,17 +71,19 @@
 
         public int? ParkingId { get; set; }
 
-        public Parking Parking { get; set; }
+        public virtual Parking Parking { get; set; }
 
-        public int? DriverLicenseId { get; set; }
+        public string DriverLicenseId { get; set; }
 
-        public DriverLicense DriverLicense { get; set; }
+        public virtual DriverLicense DriverLicense { get; set; }
 
-        public ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
 
-        public ICollection<Trip> Trips { get; set; }
+        public virtual ICollection<Trip> Trips { get; set; }
 
-        public ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Transfer> Transfers { get; set; }
+
+        public virtual ICollection<Reservation> Reservations { get; set; }
 
         private int GetUsersAge()
         {

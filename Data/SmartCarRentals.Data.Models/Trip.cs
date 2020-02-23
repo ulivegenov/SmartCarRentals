@@ -30,13 +30,13 @@
 
         public int Points { get; set; } // TODO Logic - PointsFormula = + 1 point per 10E
 
-        public int CarId { get; set; }
+        public string CarId { get; set; }
 
-        public Car Car { get; set; }
+        public virtual Car Car { get; set; }
 
-        public int ClientId { get; set; }
+        public string ClientId { get; set; }
 
-        public ApplicationUser Client { get; set; }
+        public virtual ApplicationUser Client { get; set; }
 
         private Status SetStatus()
             => (Status)Enum.Parse(typeof(Status), "OnGoing");

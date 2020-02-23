@@ -23,7 +23,7 @@
             this.Fuel = this.SetType<FuelType>(fuelType);
             this.passengersCapacity = passengersCapacity;
 
-            this.UserTrips = new HashSet<UserTrip>();
+            this.Trips = new HashSet<Trip>();
             this.Images = new HashSet<Image>();
 
             this.ServiceRun = this.GetServiceRun();
@@ -69,15 +69,15 @@
 
         public int ParkingId { get; set; }
 
-        public Parking Parking { get; set; }
+        public virtual Parking Parking { get; set; }
 
         public int? ParkingLotId { get; set; }
 
-        public ParkingLot ParkingLot { get; set; }
+        public virtual ParkingLot ParkingLot { get; set; }
 
-        public ICollection<UserTrip> UserTrips { get; set; }
+        public virtual ICollection<Trip> Trips { get; set; }
 
-        public ICollection<Image> Images { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
 
         private int GetServiceRun()
             => EntitiesAttributeConstraints.DefaultServiceRun;

@@ -17,6 +17,6 @@
         [MaxLength(EntitiesAttributeConstraints.NameMaxLength)]
         public string Name { get; set; }
 
-        public ICollection<Town> Towns { get; set; }
+        public virtual ICollection<Town> Towns { get; set; }
     }
 }
