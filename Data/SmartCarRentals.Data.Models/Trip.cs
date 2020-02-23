@@ -1,6 +1,7 @@
 ﻿namespace SmartCarRentals.Data.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Models.Enums.Trip;
@@ -10,15 +11,14 @@
         public Trip()
         {
             this.CreatedOn = DateTime.UtcNow;
-
             this.IsDeleted = false;
 
-            this.Status = this.SetStatus();
+            this.Status = Status.OnGoing;
         }
 
         public DateTime EndDate { get; set; }
 
-        public int KmStart { get; set; } // TODO Set Logic
+        public int KmStart { get; set; }
 
         public int? KmEnd { get; set; }
 
@@ -26,19 +26,18 @@
 
         public Status Status { get; set; }
 
-        public decimal Price { get; set; } // TODO Logic
+        public decimal Price { get; set; }
 
-        public int Points { get; set; } // TODO Logic - PointsFormula = + 1 point per 10E
+        public int Points { get; set; }
 
+        [Required]
         public string CarId { get; set; }
 
+        [Required]
         public virtual Car Car { get; set; }
 
         public string ClientId { get; set; }
 
         public virtual ApplicationUser Client { get; set; }
-
-        private Status SetStatus()
-            => (Status)Enum.Parse(typeof(Status), "OnGoing");
     }
 }

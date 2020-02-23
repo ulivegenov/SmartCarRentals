@@ -8,6 +8,12 @@
 
     public class Transfer : BaseDeletableModel<int>
     {
+        public Transfer()
+        {
+            this.CreatedOn = DateTime.UtcNow;
+            this.IsDeleted = false;
+        }
+
         public DateTime TransferDate { get; set; }
 
         [Required]

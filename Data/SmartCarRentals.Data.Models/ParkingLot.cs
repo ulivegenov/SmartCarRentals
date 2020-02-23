@@ -1,5 +1,7 @@
 ﻿namespace SmartCarRentals.Data.Models
 {
+    using System;
+
     using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
 
@@ -7,6 +9,9 @@
     {
         public ParkingLot(int parkingId)
         {
+            this.CreatedOn = DateTime.UtcNow;
+            this.IsDeleted = false;
+
             this.Status = Status.Free;
             this.ParkingId = parkingId;
         }

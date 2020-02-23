@@ -10,6 +10,7 @@
     {
         public Country()
         {
+            this.IsDeleted = false;
             this.Towns = new HashSet<Town>();
         }
 

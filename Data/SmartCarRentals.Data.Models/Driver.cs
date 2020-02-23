@@ -11,6 +11,9 @@
         public Driver()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.CreatedOn = DateTime.Now;
+            this.IsDeleted = false;
+
             this.Ratings = new HashSet<int>();
             this.Transfers = new HashSet<Transfer>();
         }

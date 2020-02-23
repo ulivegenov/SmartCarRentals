@@ -1,5 +1,6 @@
 ﻿namespace SmartCarRentals.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +11,9 @@
     {
         public Town()
         {
+            this.CreatedOn = DateTime.UtcNow;
+            this.IsDeleted = false;
+
             this.Parkings = new HashSet<Parking>();
         }
 

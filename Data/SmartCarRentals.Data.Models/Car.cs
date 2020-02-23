@@ -25,8 +25,6 @@
 
             this.Trips = new HashSet<Trip>();
             this.Images = new HashSet<Image>();
-
-            this.ServiceRun = this.GetServiceRun();
         }
 
         [Required]
@@ -43,7 +41,9 @@
 
         public int KmRun { get; set; }
 
-        public int ServiceRun { get; set; }
+        public int ServiceKm { get; private set; }
+
+        public int ServiceRun => this.ServiceKm - this.KmRun;
 
         public int PricePerHour { get; set; } // TODO Logic
 
@@ -78,9 +78,6 @@
         public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
-
-        private int GetServiceRun()
-            => EntitiesAttributeConstraints.DefaultServiceRun;
 
         private T SetType<T>(string input)
         {

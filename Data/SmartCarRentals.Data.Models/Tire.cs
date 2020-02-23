@@ -1,6 +1,7 @@
 ﻿namespace SmartCarRentals.Data.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Models.Enums.Tire;
@@ -9,6 +10,9 @@
     {
         public Tire(string productionDate, string season, string carId)
         {
+            this.CreatedOn = DateTime.UtcNow;
+            this.IsDeleted = false;
+
             this.ProductionDate = this.GetDate(productionDate);
             this.Season = this.GetSeason(season);
             this.UsingStatus = this.GetUsingStatus(DateTime.UtcNow, season);
@@ -28,6 +32,7 @@
 
         public ConditionStatus ConditionStatus { get; set; }
 
+        [Required]
         public string CarId { get; set; }
 
         public virtual Car Car { get; set; }
