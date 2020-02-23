@@ -24,7 +24,6 @@
 
             this.Age = this.GetUsersAge();
             this.Points = 0;
-            this.CreditCards = new HashSet<CreditCard>();
             this.Cars = new HashSet<Car>();
             this.Trips = new HashSet<Trip>();
             this.Reservations = new HashSet<Reservation>();
@@ -76,8 +75,6 @@
         public int? DriverLicenseId { get; set; }
 
         public DriverLicense DriverLicense { get; set; }
-
-        public ICollection<CreditCard> CreditCards { get; set; }
 
         public ICollection<Car> Cars { get; set; }
 
