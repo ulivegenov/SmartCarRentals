@@ -24,7 +24,31 @@
         {
         }
 
+        public DbSet<Car> Cars { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Driver> Drivers { get; set; }
+
+        public DbSet<DriverLicense> DriverLicenses { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Parking> Parkings { get; set; }
+
+        public DbSet<ParkingLot> ParkingLots { get; set; }
+
+        public DbSet<Reservation> Reservations { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Tire> Tires { get; set; }
+
+        public DbSet<Town> Towns { get; set; }
+
+        public DbSet<Transfer> Transfers { get; set; }
+
+        public DbSet<Trip> Trips { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
