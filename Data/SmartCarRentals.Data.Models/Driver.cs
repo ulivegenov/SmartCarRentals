@@ -14,7 +14,7 @@
             this.CreatedOn = DateTime.Now;
             this.IsDeleted = false;
 
-            this.Ratings = new HashSet<int>();
+            this.Ratings = new HashSet<DriverRating>();
             this.Transfers = new HashSet<Transfer>();
         }
 
@@ -22,9 +22,9 @@
 
         public string LastName { get; set; }
 
-        public decimal Rating => this.Ratings.Sum() / this.Ratings.Count;
+        public double Rating => this.Ratings.Sum(r => r.RatingVote) / this.Ratings.Count;
 
-        public ICollection<int> Ratings { get; set; }
+        public ICollection<DriverRating> Ratings { get; set; }
 
         public virtual ICollection<Transfer> Transfers { get; set; }
     }

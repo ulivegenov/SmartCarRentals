@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.Linq;
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
@@ -23,6 +23,7 @@
 
             this.Trips = new HashSet<Trip>();
             this.Images = new HashSet<Image>();
+            this.Ratings = new HashSet<CarRating>();
         }
 
         [Required]
@@ -64,7 +65,7 @@
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
         public int PassengersCapacity { get; set; }
 
-        public double Rating { get; set; }
+        public double Rating => this.Ratings.Sum(r => r.RatingVote) / this.Ratings.Count;
 
         public int ParkingId { get; set; }
 
@@ -77,5 +78,7 @@
         public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
+
+        public virtual ICollection<CarRating> Ratings { get; set; }
     }
 }

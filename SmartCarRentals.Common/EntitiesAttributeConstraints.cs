@@ -34,5 +34,11 @@
         // Parking
         public const int MinCapacity = 1;
         public const int MaxCapacity = 10000;
+
+        // Rating
+        public const int MinRatingVote = 1;
+        public const int MaxRatingVote = 10;
+
+        public const int CommentMaxLength = 250;
     }
 }

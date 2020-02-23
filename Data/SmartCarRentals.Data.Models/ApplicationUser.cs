@@ -25,8 +25,10 @@
             this.Age = this.GetUsersAge();
             this.Points = 0;
             this.Cars = new HashSet<Car>();
+            this.CarRatings = new HashSet<CarRating>();
             this.Trips = new HashSet<Trip>();
             this.Transfers = new HashSet<Transfer>();
+            this.DriverRatings = new HashSet<DriverRating>();
             this.Reservations = new HashSet<Reservation>();
         }
 
@@ -80,9 +82,13 @@
 
         public virtual ICollection<Car> Cars { get; set; }
 
+        public virtual ICollection<CarRating> CarRatings { get; set; }
+
         public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<Transfer> Transfers { get; set; }
+
+        public virtual ICollection<DriverRating> DriverRatings { get; set; }
 
         public virtual ICollection<Reservation> Reservations { get; set; }
 
