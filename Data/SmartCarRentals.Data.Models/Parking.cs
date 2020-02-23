@@ -16,7 +16,7 @@
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
 
-            this.ParkingLots = new HashSet<ParkingLot>();
+            this.ParkingSlots = new HashSet<ParkingSlot>();
             this.Cars = new HashSet<Car>();
             this.Reservations = new HashSet<Reservation>();
         }
@@ -38,7 +38,7 @@
 
         public int FreeParkingLots => this.GetFreeParkingLots();
 
-        public virtual ICollection<ParkingLot> ParkingLots { get; set; }
+        public virtual ICollection<ParkingSlot> ParkingSlots { get; set; }
 
         public virtual ICollection<Car> Cars { get; set; }
 
@@ -47,6 +47,6 @@
         public virtual ICollection<Reservation> Reservations { get; set; }
 
         private int GetFreeParkingLots()
-            => this.ParkingLots.Where(pl => pl.Status == Status.Free).Count();
+            => this.ParkingSlots.Where(pl => pl.Status == Status.Free).Count();
     }
 }

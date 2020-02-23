@@ -71,10 +71,6 @@
 
         public virtual Parking Parking { get; set; }
 
-        public int? ParkingLotId { get; set; }
-
-        public virtual ParkingLot ParkingLot { get; set; }
-
         public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }

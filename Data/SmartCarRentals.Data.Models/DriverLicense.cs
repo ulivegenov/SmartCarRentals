@@ -19,10 +19,5 @@
         public DateTime IssuedOn { get; set; }
 
         public DateTime ExpireOn { get; set; }
-
-        [Required]
-        public string ClientId { get; set; }
-
-        public virtual ApplicationUser Client { get; set; }
     }
 }

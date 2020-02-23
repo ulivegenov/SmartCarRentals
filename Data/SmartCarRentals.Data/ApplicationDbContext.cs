@@ -36,7 +36,7 @@
 
         public DbSet<Parking> Parkings { get; set; }
 
-        public DbSet<ParkingLot> ParkingLots { get; set; }
+        public DbSet<ParkingSlot> ParkingLots { get; set; }
 
         public DbSet<Reservation> Reservations { get; set; }
 
@@ -119,6 +119,38 @@
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-many realtionship between User and Car
+            builder.Entity<CarRating>()
+                .HasKey(cr => new { cr.CarId, cr.ClientId, cr.TripId });
+
+            builder.Entity<CarRating>()
+                .HasOne(cr => cr.Car)
+                .WithMany(c => c.Ratings)
+                .HasForeignKey(cr => cr.CarId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CarRating>()
+                .HasOne(cr => cr.Client)
+                .WithMany(cl => cl.CarRatings)
+                .HasForeignKey(cr => cr.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-many realtionship between User and Driver
+            builder.Entity<DriverRating>()
+                .HasKey(dr => new { dr.DriverId, dr.ClientId, dr.TransferId });
+
+            builder.Entity<DriverRating>()
+                .HasOne(dr => dr.Driver)
+                .WithMany(cl => cl.Ratings)
+                .HasForeignKey(dr => dr.DriverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<DriverRating>()
+                .HasOne(dr => dr.Client)
+                .WithMany(cl => cl.DriverRatings)
+                .HasForeignKey(dr => dr.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 

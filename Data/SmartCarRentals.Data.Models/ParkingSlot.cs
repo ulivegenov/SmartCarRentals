@@ -5,14 +5,15 @@
     using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
 
-    public class ParkingLot : BaseDeletableModel<int>
+    public class ParkingSlot : BaseDeletableModel<int>
     {
-        public ParkingLot()
+        public ParkingSlot()
         {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
 
             this.Status = Status.Free;
+            this.CarId = null;
         }
 
         public int Number { get; set; }
