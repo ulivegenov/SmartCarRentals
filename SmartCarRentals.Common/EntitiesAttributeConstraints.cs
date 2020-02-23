@@ -25,7 +25,14 @@
         public const int PlateNumberMinLength = 4;
         public const int PlateNumberMaxLength = 30;
 
+        public const int MinPassengers = 1;
+        public const int MaxPassengers = 12;
+
         // Image
         public const int UrlMaxLength = 250;
+
+        // Parking
+        public const int MinCapacity = 1;
+        public const int MaxCapacity = 10000;
     }
 }

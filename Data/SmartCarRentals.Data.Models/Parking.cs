@@ -11,12 +11,12 @@
 
     public class Parking : BaseDeletableModel<int>
     {
-        public Parking(int capacity)
+        public Parking()
         {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
 
-            this.ParkingLots = new HashSet<ParkingLot>(capacity);
+            this.ParkingLots = new HashSet<ParkingLot>();
             this.Cars = new HashSet<Car>();
             this.Reservations = new HashSet<Reservation>();
         }
@@ -32,6 +32,9 @@
         [Required]
         [MaxLength(EntitiesAttributeConstraints.AddressMaxLength)]
         public string Address { get; set; }
+
+        [Range(EntitiesAttributeConstraints.MinCapacity, EntitiesAttributeConstraints.MaxCapacity)]
+        public int Capacity { get; set; }
 
         public int FreeParkingLots => this.GetFreeParkingLots();
 

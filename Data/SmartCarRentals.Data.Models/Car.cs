@@ -10,18 +10,16 @@
 
     public class Car : BaseDeletableModel<string>
     {
-        private readonly int passengersCapacity;
-
-        public Car(string classType, string transmitionType, string fuelType, int passengersCapacity)
+        public Car()
         {
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
 
-            this.Class = this.SetType<ClassType>(classType);
-            this.Transmition = this.SetType<TransmitionType>(transmitionType);
-            this.Fuel = this.SetType<FuelType>(fuelType);
-            this.passengersCapacity = passengersCapacity;
+            this.ServiceStatus = ServiceStatus.Ok;
+            this.HireStatus = HireStatus.Available;
+            this.ReservationStatus = ReservationStatus.Free;
+            this.Condition = ConditionType.Normal;
 
             this.Trips = new HashSet<Trip>();
             this.Images = new HashSet<Image>();
@@ -41,7 +39,7 @@
 
         public int KmRun { get; set; }
 
-        public int ServiceKm { get; private set; }
+        public int ServiceKm { get;  set; }
 
         public int ServiceRun => this.ServiceKm - this.KmRun;
 
@@ -63,7 +61,8 @@
 
         public FuelType Fuel { get; set; }
 
-        public int PassengersCapacity => this.passengersCapacity;
+        [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
+        public int PassengersCapacity { get; set; }
 
         public double Rating { get; set; }
 
@@ -78,12 +77,5 @@
         public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
-
-        private T SetType<T>(string input)
-        {
-            T type = (T)Enum.Parse(typeof(T), input);
-
-            return type;
-        }
     }
 }

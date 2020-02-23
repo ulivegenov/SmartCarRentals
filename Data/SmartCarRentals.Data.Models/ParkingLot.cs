@@ -7,13 +7,12 @@
 
     public class ParkingLot : BaseDeletableModel<int>
     {
-        public ParkingLot(int parkingId)
+        public ParkingLot()
         {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
 
             this.Status = Status.Free;
-            this.ParkingId = parkingId;
         }
 
         public int Number { get; set; }
