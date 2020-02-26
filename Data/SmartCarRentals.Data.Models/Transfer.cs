@@ -39,5 +39,9 @@
         public string DriverId { get; set; }
 
         public virtual Driver Driver { get; set; }
+
+        public int DriverRatingId { get; set; }
+
+        public DriverRating DriverRating { get; set; }
     }
 }

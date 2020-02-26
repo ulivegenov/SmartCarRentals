@@ -50,6 +50,10 @@
 
         public DbSet<Trip> Trips { get; set; }
 
+        public DbSet<CarRating> CarsRatings { get; set; }
+
+        public DbSet<DriverRating> DriversRatings { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -144,7 +148,14 @@
                 .HasForeignKey(cr => cr.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-many realtionship between User and Driver
+            // One-to-one relationship between Trip and CarRating
+            builder.Entity<CarRating>()
+                .HasOne(cr => cr.Trip)
+                .WithOne(t => t.CarRating)
+                .HasForeignKey<CarRating>(cr => cr.TripId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-many relationship between User and Driver
             builder.Entity<DriverRating>()
                 .HasKey(dr => new { dr.DriverId, dr.ClientId, dr.TransferId });
 
@@ -158,6 +169,13 @@
                 .HasOne(dr => dr.Client)
                 .WithMany(cl => cl.DriverRatings)
                 .HasForeignKey(dr => dr.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // One-to one relationship between Transfer and DriverRating
+            builder.Entity<DriverRating>()
+                .HasOne(dr => dr.Transfer)
+                .WithOne(t => t.DriverRating)
+                .HasForeignKey<DriverRating>(dr => dr.TransferId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
