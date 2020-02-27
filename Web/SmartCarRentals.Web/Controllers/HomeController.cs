@@ -2,9 +2,9 @@
 {
     using System.Diagnostics;
 
-    using SmartCarRentals.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+
+    using SmartCarRentals.Web.ViewModels;
 
     public class HomeController : BaseController
     {

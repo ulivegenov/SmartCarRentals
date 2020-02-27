@@ -3,12 +3,12 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
+
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data;
     using SmartCarRentals.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseController
     {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Models;
@@ -26,6 +27,7 @@
 
         public int KmRun { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
 
         public int Points { get; set; }
