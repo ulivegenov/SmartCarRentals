@@ -39,4 +39,8 @@
     <ProjectReference Include="..\SmartCarRentals.Web.Infrastructure\SmartCarRentals.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SmartCarRentals.Web.ViewModels\SmartCarRentals.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Users\" />
+  </ItemGroup>
 </Project>

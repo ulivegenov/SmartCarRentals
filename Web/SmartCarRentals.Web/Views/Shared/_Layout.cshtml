@@ -1,23 +1,9 @@
 ﻿@using SmartCarRentals.Common
 <!DOCTYPE html>
-@*<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
-    <environment names="Development">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
-    </environment>
-    <environment names="Staging,Production">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-    </environment>
-</head>*@
 <html lang="en">
 <head>
-    <title>Carbook - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Smart Car Rentals</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
@@ -56,14 +42,14 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-                <a class="navbar-brand" href="/">Smart<span>Car</span>Rentals</a>
+                <a class="navbar-brand" asp-page="/">Smart<span>Car</span>Rentals</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/">Home</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">About</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
@@ -73,8 +59,8 @@
                     </ul>
 
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Register</a></li>
+                        <li class="nav-item"><a asp-route="/Users/Login" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a asp-page="/Register" class="nav-link">Register</a></li>
                     </ul>
                 </div>
             </div>
