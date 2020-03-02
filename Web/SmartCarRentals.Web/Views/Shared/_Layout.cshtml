@@ -1,4 +1,5 @@
 ﻿@using SmartCarRentals.Common
+@using Microsoft.AspNetCore.Identity
 <!DOCTYPE html>
 
 <html lang="en">
@@ -42,14 +43,15 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-                <a class="navbar-brand" asp-page="/">Smart<span>Car</span>Rentals</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Smart<span>Car</span>Rentals</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
+                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" asp-page="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">About</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
@@ -57,24 +59,24 @@
                         <!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
                         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                     </ul>
-
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a asp-route="/Users/Login" class="nav-link">Login</a></li>
-                        <li class="nav-item"><a asp-page="/Register" class="nav-link">Register</a></li>
-                    </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    @this.RenderBody()
+    @*<div class="container">*@
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @this.RenderBody()
+        </main>
+    @*</div>*@
 
     <footer class="ftco-footer ftco-bg-dark ftco-section">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-12 text-center">
                     <div class="ftco-footer-widget mb-4">
-                        <h1 class="ftco-heading-1"><a href="/" class="logo">Smart<span>Car</span>Rentals</a></h1>
+                        <h1 class="ftco-heading-1"><a asp-area="" asp-controller="Home" asp-action="Index" class="logo">Smart<span>Car</span>Rentals</a></h1>
                         <h2 class="ftco-heading-2">Follow Us</h2>
                         <ul class="ftco-footer-social list-unstyled float-lft mt-5">
                             <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
@@ -121,5 +123,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
+
+    @this.RenderSection("Scripts", required: false)
 </body>
 </html>
