@@ -1,9 +1,9 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using SmartCarRentals.Services.Data;
     using SmartCarRentals.Web.ViewModels.Administration.Dashboard;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {
