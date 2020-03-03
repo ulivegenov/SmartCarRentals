@@ -11,7 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
 
     [AllowAnonymous]
@@ -43,11 +43,11 @@
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "TODO ERROR MESSAGE")]
             [EmailAddress]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "TODO ERROR MESSAGE")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 

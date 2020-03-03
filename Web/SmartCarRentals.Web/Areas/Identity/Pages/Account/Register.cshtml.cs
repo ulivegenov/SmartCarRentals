@@ -15,7 +15,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
 
     [AllowAnonymous]
@@ -47,6 +47,14 @@
 
         public class InputModel
         {
+            [Required]
+            [StringLength(EntitiesAttributeConstraints.NameMaxLength, ErrorMessage ="TODO ERROR MESSAGE", MinimumLength =EntitiesAttributeConstraints.NameMinLength)]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(EntitiesAttributeConstraints.NameMaxLength, ErrorMessage = "TODO ERROR MESSAGE", MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
+            public string LastName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
