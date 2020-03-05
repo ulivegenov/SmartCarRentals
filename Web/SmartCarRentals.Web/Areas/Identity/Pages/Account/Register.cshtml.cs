@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
@@ -49,11 +50,18 @@
         {
             [Required]
             [StringLength(EntitiesAttributeConstraints.NameMaxLength, ErrorMessage ="TODO ERROR MESSAGE", MinimumLength =EntitiesAttributeConstraints.NameMinLength)]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
             [StringLength(EntitiesAttributeConstraints.NameMaxLength, ErrorMessage = "TODO ERROR MESSAGE", MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
+            [Display(Name = "Last Name ")]
             public string LastName { get; set; }
+
+            [Required]
+            [StringLength(EntitiesAttributeConstraints.NameMaxLength, ErrorMessage = "TODO ERROR MESSAGE", MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
 
             [Required]
             [EmailAddress]
@@ -74,17 +82,24 @@
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ReturnUrl = returnUrl;
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ReturnUrl = returnUrl;
+            this.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? this.Url.Content("~/");
-            ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Email, Email = this.Input.Email };
+                var user = new ApplicationUser
+                {
+                    FirstName = this.Input.FirstName,
+                    LastName = this.Input.LastName,
+                    UserName = this.Input.UserName,
+                    Email = this.Input.Email,
+                    PasswordHash = this.Hash(this.Input.Password),
+                };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
@@ -121,6 +136,24 @@
 
             // If we got this far, something failed, redisplay form
             return this.Page();
+        }
+
+        private string Hash(string input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+
+            var crypt = new SHA256Managed();
+            var hash = new StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input));
+            foreach (byte theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+
+            return hash.ToString();
         }
     }
 }
