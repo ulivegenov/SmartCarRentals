@@ -2,6 +2,18 @@
 {
     using System.Reflection;
 
+    using CloudinaryDotNet;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     using SmartCarRentals.Data;
     using SmartCarRentals.Data.Common;
     using SmartCarRentals.Data.Common.Repositories;
@@ -12,16 +24,6 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Messaging;
     using SmartCarRentals.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -36,21 +38,18 @@
         public void ConfigureServices(IServiceCollection services)
         {
             // Framework services
-
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-            //    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            // Cloudinary set
+            Account cloudinaryCredentials = new Account(
+                this.configuration["Cloudinary:CloudName"],
+                this.configuration["Cloudinary:ApiKey"],
+                this.configuration["Cloudinary:ApiSecret"]);
 
-            //Account cloudinaryCredentials = new Account(
-            //    this.configuration["Cloudinary:CloudName"],
-            //    this.configuration["Cloudinary:ApiKey"],
-            //    this.configuration["Cloudinary:ApiSecret"]);
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
 
-            //Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
-
-            //services.AddSingleton(cloudinaryUtility);
+            services.AddSingleton(cloudinaryUtility);
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>

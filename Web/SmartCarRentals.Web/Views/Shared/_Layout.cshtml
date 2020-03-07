@@ -44,25 +44,45 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
+            @*<div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Smart<span>Car</span>Rentals</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
-                    @*<partial name="_LoginPartial" />*@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">About</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Cars</a></li>
-                        <!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
+                        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
+            </div>*@
+
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Smart<span>Car</span>Rentals</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+            </div>
+            <div class="mx-auto order-0">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Cars</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
