@@ -83,7 +83,7 @@
         public async Task OnGetAsync(string returnUrl = null)
         {
             this.ReturnUrl = returnUrl;
-            this.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -98,7 +98,6 @@
                     LastName = this.Input.LastName,
                     UserName = this.Input.UserName,
                     Email = this.Input.Email,
-                    PasswordHash = this.Hash(this.Input.Password),
                 };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
@@ -120,7 +119,7 @@
 
                     if (this.userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return this.RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                        return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email });
                     }
                     else
                     {
@@ -128,6 +127,7 @@
                         return this.LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     this.ModelState.AddModelError(string.Empty, error.Description);
@@ -136,24 +136,6 @@
 
             // If we got this far, something failed, redisplay form
             return this.Page();
-        }
-
-        private string Hash(string input)
-        {
-            if (input == null)
-            {
-                return null;
-            }
-
-            var crypt = new SHA256Managed();
-            var hash = new StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input));
-            foreach (byte theByte in crypto)
-            {
-                hash.Append(theByte.ToString("x2"));
-            }
-
-            return hash.ToString();
         }
     }
 }

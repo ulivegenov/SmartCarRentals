@@ -41,20 +41,6 @@
         [TempData]
         public string ErrorMessage { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "TODO ERROR MESSAGE")]
-            [EmailAddress]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "TODO ERROR MESSAGE")]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            [Display(Name = "Remember me?")]
-            public bool RememberMe { get; set; }
-        }
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(this.ErrorMessage))
@@ -80,32 +66,51 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: true);
+                var result = await this.signInManager.PasswordSignInAsync(this.Input.UserName, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User logged in.");
                     return this.LocalRedirect(returnUrl);
-                }
-
-                if (result.RequiresTwoFactor)
-                {
-                    return this.RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = this.Input.RememberMe });
-                }
-
-                if (result.IsLockedOut)
-                {
-                    this.logger.LogWarning("User account locked out.");
-                    return this.RedirectToPage("./Lockout");
                 }
                 else
                 {
                     this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return this.Page();
                 }
+
+                //if (result.RequiresTwoFactor)
+                //{
+                //    return this.RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = this.Input.RememberMe });
+                //}
+
+                //if (result.IsLockedOut)
+                //{
+                //    this.logger.LogWarning("User account locked out.");
+                //    return this.RedirectToPage("./Lockout");
+                //}
+                //else
+                //{
+                //    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                //    return this.Page();
+                //}
             }
 
             // If we got this far, something failed, redisplay form
             return this.Page();
+        }
+
+        public class InputModel
+        {
+            [Display(Name = "Username")]
+            [Required(ErrorMessage = "TODO ERROR MESSAGE")]
+            public string UserName { get; set; }
+
+            [Required(ErrorMessage = "TODO ERROR MESSAGE")]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+            [Display(Name = "Remember me?")]
+            public bool RememberMe { get; set; }
         }
     }
 }
