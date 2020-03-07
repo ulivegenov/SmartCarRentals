@@ -41,15 +41,9 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            // Cloudinary set
-            Account cloudinaryCredentials = new Account(
-                this.configuration["Cloudinary:CloudName"],
-                this.configuration["Cloudinary:ApiKey"],
-                this.configuration["Cloudinary:ApiSecret"]);
 
-            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
-
-            services.AddSingleton(cloudinaryUtility);
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -61,10 +55,9 @@
                     options.Password.RequiredLength = 6;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                //.AddUserStore<ApplicationUserStore>()
-                //.AddRoleStore<ApplicationRoleStore>()
-                .AddDefaultTokenProviders();
-                //.AddDefaultUI(UIFramework.Bootstrap4);
+                .AddDefaultTokenProviders()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddSession();
 
@@ -77,6 +70,7 @@
                 .AddRazorPagesOptions(options =>
                 {
                     //options.AllowAreas = true;
+                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Register");
                     options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
                 });
@@ -100,6 +94,16 @@
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);
+
+            // Cloudinary set
+            Account cloudinaryCredentials = new Account(
+                this.configuration["Cloudinary:CloudName"],
+                this.configuration["Cloudinary:ApiKey"],
+                this.configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+
+            services.AddSingleton(cloudinaryUtility);
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
