@@ -2,9 +2,7 @@
     this.ViewData["Title"] = "Contact Page";
 }
 @{
-    string contactImgBgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1583620104/SmartCarRentalsPics/Background/contact_wnc4ma.png";
-
-    //string googleMapsApiKey = this.ViewData["GoogleMapsApiKey"];
+    string contactImgBgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1583679855/SmartCarRentalsPics/Background/contact_irh9yz.jpg";
 }
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@contactImgBgUrl');" data-stellar-background-ratio="0.5">
@@ -48,7 +46,7 @@
                             <div class="icon mr-3">
                                 <span class="icon-map-o text-primary"></span>
                             </div>
-                            <p><span>Address:</span><span class="text-primary"> 198 West 21th Street, Suite 721 New York NY 10016</span></p>
+                            <p><span>Address:</span><br><span class="text-primary"> 37 Pirotska Street, Sofia 1303</span></p>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -84,7 +82,7 @@
     // Initialize and add the map
     function initMap() {
         // The location of Uluru
-        var uluru = { lat: -25.344, lng: 131.036 };
+        var uluru = { lat: 42.700167, lng: 23.315572 };
         // The map, centered at Uluru
         var map = new google.maps.Map(
             document.getElementById('map'), { zoom: 4, center: uluru });
@@ -93,6 +91,6 @@
     }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewData["GoogleMapsApiKey"]&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewData["GoogleMapsApiKey"]&v=3&callback=initMap"
         async defer></script>
 

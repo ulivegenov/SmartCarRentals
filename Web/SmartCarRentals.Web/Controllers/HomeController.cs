@@ -25,6 +25,11 @@
             return this.View();
         }
 
+        public IActionResult Services()
+        {
+            return this.View();
+        }
+
         public IActionResult Contact()
         {
             var model = this.configuration.GetValue<string>("GoogleMaps:ApiKey");
