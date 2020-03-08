@@ -95,7 +95,7 @@
 
             services.AddSingleton(this.configuration);
 
-            // Cloudinary set
+            // Cloudinary Api set
             Account cloudinaryCredentials = new Account(
                 this.configuration["Cloudinary:CloudName"],
                 this.configuration["Cloudinary:ApiKey"],
@@ -104,6 +104,11 @@
             Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
 
             services.AddSingleton(cloudinaryUtility);
+
+            // Google Maps Api set
+            Account googleMapsCredentials = new Account(this.configuration["GoogleMaps : ApiKey"]);
+
+            services.AddSingleton(googleMapsCredentials);
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));

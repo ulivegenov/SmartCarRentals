@@ -1,8 +1,10 @@
 ﻿@{
     this.ViewData["Title"] = "Contact Page";
 }
-@{ 
+@{
     string contactImgBgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1583620104/SmartCarRentalsPics/Background/contact_wnc4ma.png";
+
+    //string googleMapsApiKey = this.ViewData["GoogleMapsApiKey"];
 }
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@contactImgBgUrl');" data-stellar-background-ratio="0.5">
@@ -73,7 +75,24 @@
                 <div class="col-md-12">
                     <div id="map" class="bg-white"></div>
                 </div>
-            </div>   
+            </div>
         </div>
     </div>
 </section>
+
+<script>
+    // Initialize and add the map
+    function initMap() {
+        // The location of Uluru
+        var uluru = { lat: -25.344, lng: 131.036 };
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 4, center: uluru });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewData["GoogleMapsApiKey"]&callback=initMap"
+        async defer></script>
+

@@ -3,11 +3,18 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
-
+    using Microsoft.Extensions.Configuration;
     using SmartCarRentals.Web.ViewModels;
 
     public class HomeController : BaseController
     {
+        private readonly IConfiguration configuration;
+
+        public HomeController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         public IActionResult Index()
         {
             return this.View();
@@ -20,6 +27,8 @@
 
         public IActionResult Contact()
         {
+            var model = this.configuration.GetValue<string>("GoogleMaps:ApiKey");
+            this.ViewData["GoogleMapsApiKey"] = model;
             return this.View();
         }
 
