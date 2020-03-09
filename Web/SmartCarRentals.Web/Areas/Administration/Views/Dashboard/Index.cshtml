@@ -3,5 +3,29 @@
     this.ViewData["Title"] = "Admin dashboard";
 }
 
-<h1>@this.ViewData["Title"]</h1>
-Settings: @this.Model.SettingsCount
+@*<div class="img rounded d-flex align-items-end" style="background-image: url('https://res.cloudinary.com/dp70enihl/image/upload/v1582984668/SmartCarRentalsPics/Background/bg_5_b75rqv.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+            <div class="col-lg-8 ftco-animate">
+                <div class="text w-100 text-center mb-md-5 pb-md-5">
+                    <h1 class="mb-4">Fast &amp; Easy Way To Rent A Car</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+@*<div class="container">
+    <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+        <div class="col-lg-8 ftco-animate">
+            <div class="text w-100 text-center mb-md-5 pb-md-5">
+                <h1 class="mb-4">Fast &amp; Easy Way To Rent A Car</h1>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<section class="ftco-section ftco-no-pt bg-light">
+    <h1>@this.ViewData["Title"]</h1>
+        Settings: @this.Model.SettingsCount
+</section>

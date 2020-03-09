@@ -1,0 +1,17 @@
+﻿@using SmartCarRentals.Common
+@using SmartCarRentals.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+    <ul class="navbar-nav ml-auto">
+        @if (this.SignInManager.IsSignedIn(this.User))
+        {
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                    <a class="navbar-brand text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <span class="text-success">@(this.User.Identity.Name)!</span></a>
+            <button type="submit" class="nav-link btn btn-sm text-light">Logout</button>
+            </form>
+            </li>
+        }
+    </ul>
