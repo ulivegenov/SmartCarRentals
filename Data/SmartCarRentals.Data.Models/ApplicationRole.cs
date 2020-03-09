@@ -3,9 +3,9 @@ namespace SmartCarRentals.Data.Models
 {
     using System;
 
-    using SmartCarRentals.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+
+    using SmartCarRentals.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
