@@ -5,100 +5,183 @@
 <html lang="en">
 <head>
     <title>Smart Car Rentals</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
-    <environment names="Development">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
-    </environment>
-    <environment names="Staging,Production">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-    </environment>
+        <environment names="Development">
+            <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+            <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+        </environment>
+        <environment names="Staging,Production">
+            <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+            <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+        </environment>
 
-    <link href="~/favicon.ico" rel="shortcut icon" />
+        @*<link href="~/favicon.ico" rel="shortcut icon" />
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/animate.css">
+        <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/animate.css">
 
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="~/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="~/css/magnific-popup.css">
 
-    <link rel="stylesheet" href="~/css/aos.css">
+        <link rel="stylesheet" href="~/css/aos.css">
 
-    <link rel="stylesheet" href="~/css/ionicons.min.css">
+        <link rel="stylesheet" href="~/css/ionicons.min.css">
 
-    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="~/css/jquery.timepicker.css">
+        <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="~/css/jquery.timepicker.css">
 
 
-    <link rel="stylesheet" href="~/css/flaticon.css">
-    <link rel="stylesheet" href="~/css/icomoon.css">
-    <link rel="stylesheet" href="~/css/style.css">
+        <link rel="stylesheet" href="~/css/flaticon.css">
+        <link rel="stylesheet" href="~/css/icomoon.css">
+        <link rel="stylesheet" href="~/css/style.css">*@
+
+    @*<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>AdminLTE 3 | Dashboard 2</title>*@
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary" id="ftco-navbar">
-            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Smart<span class="text-success">Car</span>Rentals</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="oi oi-menu"></span> Menu
-                </button>
-            </div>
-            <div class="mx-auto order-0">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @*<li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a></li>*@
-                    <li class="nav-item"><a href="#" class="nav-link text-light">Pricing</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-light">Cars</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-light">Drivers</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-light">Clients</a></li>
-                </ul>
-            </div>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <partial name="_LoginPartial" />
-            </div>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-cyan navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link text-white">Contact</a>
+                </li>
+            </ul>
+
+            <!-- SEARCH FORM -->
+            @*<form class="form-inline ml-3">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-navbar" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>*@
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="text-bold text-uppercase text-white" asp-area="" asp-controller="Home" asp-action="Index">Smart<span class="text-yellow">Car</span>Rentals</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="oi oi-menu"></span>
+                    </button>
+                </li>
+            </ul>
         </nav>
-    </header>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index3.html" class="brand-link">
+                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                     style="opacity: .8">
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">@this.User.Identity.Name</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./index.html" class="nav-link">
+                                        <i class="fas fa-parking"></i>
+                                        <p>Parkings</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index2.html" class="nav-link">
+                                        <i class="fas fa-user-tie"></i>
+                                        <p>Drivers</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index3.html" class="nav-link">
+                                        <i class="fas fa-car"></i>
+                                        <p>Cars</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index3.html" class="nav-link">
+                                        <i class="fas fa-users"></i>
+                                        <p>Users</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+    </div>
+    @*</header>*@
 
     <partial name="_CookieConsentPartial" />
     <main role="main" class="pb-3">
         @this.RenderBody()
     </main>
 
-    <footer class="ftco-footer bg-primary p-5 ftco-section">
-        @*<div class="container">
-            <div class="row mb-5">
-                <div class="col-md-12 text-center">
-                    <div class="ftco-footer-widget mb-4">
-                        <h1 class="ftco-heading-1"><a asp-area="" asp-controller="Home" asp-action="Index" class="logo">Smart<span>Car</span>Rentals</a></h1>
-                        <h2 class="ftco-heading-2">Follow Us</h2>
-                        <ul class="ftco-footer-social list-unstyled float-lft mt-5">
-                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>*@
-
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
+    <footer class="ftco-footer bg-cyan p-2 ftco-section">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
             </div>
-        @*</div>*@
+        </div>
     </footer>
 
     <!-- loader -->
@@ -124,5 +207,30 @@
     <script src="~/js/main.js"></script>
 
     @this.RenderSection("Scripts", required: false)
+
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/admin/dist/js/adminlte.js"></script>
+
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="~/admin/dist/js/demo.js"></script>
+
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="~/admin/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="~/admin/plugins/raphael/raphael.min.js"></script>
+    <script src="~/admin/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="~/admin/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/admin/plugins/chart.js/Chart.min.js"></script>
+
+    <!-- PAGE SCRIPTS -->
+    <script src="~/admin/dist/js/pages/dashboard2.js"></script>
 </body>
 </html>
