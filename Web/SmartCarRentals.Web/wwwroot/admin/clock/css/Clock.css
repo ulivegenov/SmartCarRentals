@@ -1,0 +1,109 @@
+<style > #outer {
+    width: 250px;
+    background: #fff;
+    text-align: center;
+}
+
+#cover {
+    padding: 4px 0;
+    background: #000;
+    box-shadow: inset 10px 10px 100px #666,inset -10px -10px 100px #666;
+    border: 1px solid #fff;
+    border-radius: 7px
+}
+
+a.head, a.head:visited {
+    text-align: center;
+    line-height: 15px;
+    height: 15px;
+    color: #111;
+    margin: 2px 1px;
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    font-weight: bold;
+    background: #fff;
+    box-shadow: inset 0 -10px 10px #ccc;
+    text-shadow: #aaa 1px 1px 1px
+}
+
+    a.head:hover {
+        background: #ccc;
+        box-shadow: inset 0 -10px 10px #fff
+    }
+
+#calendar {
+    height: 57px;
+    margin: 0;
+    text-align: center;
+    padding: 7px 0 4px
+}
+
+table.dc {
+    border: 0;
+    margin: 0 auto;
+    height: 57px;
+    border-collapse: collapse
+}
+
+.dc td {
+    border: 0;
+    text-align: center;
+    padding: 0
+}
+
+#event {
+    font-family: arial,helvetica;
+    width: 92%;
+    border: 0;
+    text-align: center;
+    margin: 2px 4% 0 4%;
+    background: none;
+    padding: 0;
+    color: #fff;
+    min-height: 15px;
+    font-size: 11px
+}
+
+table.main {
+    width: 92%;
+    margin: 0 4%;
+    border-collapse: collapse
+}
+
+.main td {
+    padding: 0;
+    text-align: center
+}
+
+#clock {
+    width: 80px;
+    float: left;
+    text-align: center;
+    height: 57px;
+    margin: 0;
+    padding: 7px 0 4px 0
+}
+
+embed {
+    border: 1px solid #fff;
+    height: 54px;
+    width: 55px;
+    margin: 0;
+    padding: 0
+}
+
+#salute, #da, #dt, #time {
+    color: #fff;
+    font-size: 15px;
+    font: 600 15px verdana;
+    text-align: center;
+    text-shadow: #222 1px 1px 1px;
+    padding: 3px
+}
+
+#salute {
+    color: #0ff
+}
+
+</style >

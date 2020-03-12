@@ -5,54 +5,32 @@
 <html lang="en">
 <head>
     <title>Smart Car Rentals</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
-        <environment names="Development">
-            <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-            <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
-        </environment>
-        <environment names="Staging,Production">
-            <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-            <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-        </environment>
-
-        @*<link href="~/favicon.ico" rel="shortcut icon" />
-
-        <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css">
-        <link rel="stylesheet" href="~/css/animate.css">
-
-        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
-        <link rel="stylesheet" href="~/css/magnific-popup.css">
-
-        <link rel="stylesheet" href="~/css/aos.css">
-
-        <link rel="stylesheet" href="~/css/ionicons.min.css">
-
-        <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
-        <link rel="stylesheet" href="~/css/jquery.timepicker.css">
-
-
-        <link rel="stylesheet" href="~/css/flaticon.css">
-        <link rel="stylesheet" href="~/css/icomoon.css">
-        <link rel="stylesheet" href="~/css/style.css">*@
-
-    @*<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-    <title>AdminLTE 3 | Dashboard 2</title>*@
+    <environment names="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="~/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
+    <!-- Calendar -->
+    <link rel="stylesheet" href="~/admin/calendar/css/Calendarcss.css" />
+    <link rel="stylesheet" href="~/admin/clock/css/clndr.css" type="text/css" />
+    <!-- Weather -->
+    <link rel="stylesheet" href="~/admin/weather/css/Weather.css" />
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -66,24 +44,12 @@
                     <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link text-white" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link text-white">Contact</a>
                 </li>
             </ul>
-
-            <!-- SEARCH FORM -->
-            @*<form class="form-inline ml-3">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>*@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -110,7 +76,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="https://res.cloudinary.com/dp70enihl/image/upload/v1584033892/SmartCarRentalsPics/Admin/dsc_0072_resized_hbldb4.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">@this.User.Identity.Name</a>
@@ -163,30 +129,24 @@
             </div>
             <!-- /.sidebar -->
         </aside>
-    </div>
-    @*</header>*@
 
-    <partial name="_CookieConsentPartial" />
-    <main role="main" class="pb-3">
-        @this.RenderBody()
-    </main>
-
-    <footer class="ftco-footer bg-cyan p-2 ftco-section">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;
-                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-            </div>
+        <div class="content-wrapper">
+            @this.RenderBody()
         </div>
-    </footer>
 
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
-
+        <footer class="ftco-footer bg-cyan p-2 ftco-section">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
@@ -211,17 +171,18 @@
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
     <script src="~/admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Weather -->
+    <script src="~/admin/weather/js/JavaScript.js"></script>
     <!-- Bootstrap -->
     <script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- overlayScrollbars -->
     <script src="~/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/admin/dist/js/adminlte.js"></script>
-
     <!-- OPTIONAL SCRIPTS -->
     <script src="~/admin/dist/js/demo.js"></script>
-
-    <!-- PAGE PLUGINS -->
+    <!-- Calendar -->
+    <script src="~/admin/calendar/js/Calendar.js"></script>
     <!-- jQuery Mapael -->
     <script src="~/admin/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
     <script src="~/admin/plugins/raphael/raphael.min.js"></script>
@@ -229,7 +190,6 @@
     <script src="~/admin/plugins/jquery-mapael/maps/usa_states.min.js"></script>
     <!-- ChartJS -->
     <script src="~/admin/plugins/chart.js/Chart.min.js"></script>
-
     <!-- PAGE SCRIPTS -->
     <script src="~/admin/dist/js/pages/dashboard2.js"></script>
 </body>
