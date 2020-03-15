@@ -22,15 +22,12 @@
     <link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="~/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
     <!-- Calendar -->
     <link rel="stylesheet" href="~/admin/calendar/css/Calendarcss.css" />
-    <link rel="stylesheet" href="~/admin/clock/css/clndr.css" type="text/css" />
-    <!-- Weather -->
-    <link rel="stylesheet" href="~/admin/weather/css/Weather.css" />
+    <!-- Clock -->
+    <link rel="stylesheet" href="~/admin/clock/css/Clock.css" />
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -98,7 +95,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="./index.html" class="nav-link">
+                                    <a class="nav-link" asp-area="Administration" asp-controller="Parkings" asp-action="Create">
                                         <i class="fas fa-parking"></i>
                                         <p>Parkings</p>
                                     </a>
@@ -119,6 +116,18 @@
                                     <a href="./index3.html" class="nav-link">
                                         <i class="fas fa-users"></i>
                                         <p>Users</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index3.html" class="nav-link">
+                                        <i class="fas fa-city"></i>
+                                        <p>Towns</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index3.html" class="nav-link">
+                                        <i class="fas fa-flag"></i>
+                                        <p>Countries</p>
                                     </a>
                                 </li>
                             </ul>
@@ -169,27 +178,14 @@
     @this.RenderSection("Scripts", required: false)
 
     <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <script src="~/admin/plugins/jquery/jquery.min.js"></script>
-    <!-- Weather -->
-    <script src="~/admin/weather/js/JavaScript.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="~/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/admin/dist/js/adminlte.js"></script>
     <!-- OPTIONAL SCRIPTS -->
     <script src="~/admin/dist/js/demo.js"></script>
     <!-- Calendar -->
     <script src="~/admin/calendar/js/Calendar.js"></script>
-    <!-- jQuery Mapael -->
-    <script src="~/admin/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="~/admin/plugins/raphael/raphael.min.js"></script>
-    <script src="~/admin/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="~/admin/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <!-- ChartJS -->
-    <script src="~/admin/plugins/chart.js/Chart.min.js"></script>
+    <!-- Calendar -->
+    <script src="~/admin/clock/js/JavaScript.js"></script>
     <!-- PAGE SCRIPTS -->
     <script src="~/admin/dist/js/pages/dashboard2.js"></script>
 </body>

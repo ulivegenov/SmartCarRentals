@@ -5,6 +5,13 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+
     using SmartCarRentals.Data;
     using SmartCarRentals.Data.Common;
     using SmartCarRentals.Data.Common.Repositories;
@@ -14,13 +21,6 @@
     using SmartCarRentals.Services.Data;
     using SmartCarRentals.Services.Messaging;
 
-    using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-
     public static class Program
     {
         public static int Main(string[] args)
@@ -29,13 +29,17 @@
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider(true);
+            IConfiguration configuration = new ConfigurationBuilder()
+                                                .SetBasePath(Directory.GetCurrentDirectory())
+                                                .AddJsonFile("appsettings.json")
+                                                .Build();
 
             // Seed data on application startup
             using (var serviceScope = serviceProvider.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new ApplicationDbContextSeeder(configuration).SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
             using (var serviceScope = serviceProvider.CreateScope())

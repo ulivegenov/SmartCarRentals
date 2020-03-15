@@ -29,7 +29,7 @@ body {
         overflow: hidden;
         text-align: center;
         background-color: transparent;
-        color: #6f6f6f;
+        color: #d5d5d5;
         font-size: 14px;
     }
 
@@ -49,7 +49,7 @@ body {
         }
 
         .calendar_content div.past-date {
-            color: #d5d5d5;
+            color: #6f6f6f;
         }
 
         .calendar_content div.today {

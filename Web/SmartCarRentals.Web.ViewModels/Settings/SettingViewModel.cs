@@ -1,9 +1,9 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Settings
 {
+    using AutoMapper;
+
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {
