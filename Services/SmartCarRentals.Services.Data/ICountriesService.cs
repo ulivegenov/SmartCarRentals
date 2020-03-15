@@ -7,7 +7,7 @@
 
     public interface ICountriesService
     {
-        Task<bool> CreateAsync(CountryServicesInputModel countryServicesInputViewModel);
+        Task<bool> CreateAsync(CountryServiceInputModel countryServicesInputViewModel);
 
         Task<bool> EditAsync(int id);
 
@@ -15,6 +15,6 @@
 
         Task<int> GetCountAsync();
 
-        Task<IEnumerable<CountryServicesViewModel>> GetAllAsync();
+        Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync();
     }
 }

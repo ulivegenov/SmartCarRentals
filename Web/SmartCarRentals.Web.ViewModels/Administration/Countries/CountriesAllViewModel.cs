@@ -8,7 +8,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Countries;
 
-    public class CountriesAllViewModel : IMapFrom<CountriesServiceAllViewModel>
+    public class CountriesAllViewModel : IMapFrom<CountriesServiceAllModel>
     {
         public CountriesAllViewModel()
         {

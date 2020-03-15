@@ -6,7 +6,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Countries;
 
-    public class CountryInputModel : IMapTo<CountryServicesInputModel>
+    public class CountryInputModel : IMapTo<CountryServiceInputModel>
     {
         [Required]
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]

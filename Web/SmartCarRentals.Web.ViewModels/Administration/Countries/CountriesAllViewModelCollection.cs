@@ -5,13 +5,13 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Countries;
 
-    public class CountriesAllViewModelCollection : IMapFrom<CountriesServiceAllViewModelCollection>
+    public class CountriesAllViewModelCollection
     {
         public CountriesAllViewModelCollection()
         {
-            this.Countries = new HashSet<CountriesAllViewModel>();
+            this.Countries = new List<CountriesAllViewModel>();
         }
 
-        public IEnumerable<CountriesAllViewModel> Countries { get; set; }
+        public List<CountriesAllViewModel> Countries { get; set; }
     }
 }

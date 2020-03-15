@@ -16,15 +16,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @*@for (int i = 0; i < @Model.Countries.Count(); i++)
+                    @for (int i = 0; i < @Model.Countries.Count(); i++)
                         {
                             <tr>
                                 <th scope="row">@(i + 1)</th>
-                                <td>@Model.Countries.Select(c => c.Name)</td>
-                                <td>@Model.Countries.Select(c => c.Towns.Count)</td>
-                                <td>@Model.Countries.SelectMany(c => c.Towns.Select(t => t.Parkings.Count))</td>
+                                <td>@Model.Countries[i].Name</td>
+                                <td>@Model.Countries[i].Towns.Count</td>
+                                <td>@Model.Countries[i].Towns.Sum(t => t.Parkings.Count)</td>
                             </tr>
-                        }*@
+                        }
                 </tbody>
             </table>
         </div>

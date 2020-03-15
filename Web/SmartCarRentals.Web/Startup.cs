@@ -128,7 +128,7 @@
             AutoMapperConfig.RegisterMappings(
                 typeof(ErrorViewModel).GetTypeInfo().Assembly,
                 typeof(CountryInputModel).GetTypeInfo().Assembly,
-                typeof(CountryServicesInputModel).GetTypeInfo().Assembly);
+                typeof(CountryServiceInputModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

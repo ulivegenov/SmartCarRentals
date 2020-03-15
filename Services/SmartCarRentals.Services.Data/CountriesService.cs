@@ -21,7 +21,7 @@
             this.countryRepository = countryRepository;
         }
 
-        public async Task<bool> CreateAsync(CountryServicesInputModel countryServicesInputViewModel)
+        public async Task<bool> CreateAsync(CountryServiceInputModel countryServicesInputViewModel)
         {
             var country = countryServicesInputViewModel.To<Country>();
 
@@ -41,10 +41,10 @@
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<CountryServicesViewModel>> GetAllAsync()
+        public async Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync()
         {
             var countries = await this.countryRepository.All()
-                                                        .To<CountryServicesViewModel>()
+                                                        .To<CountriesServiceAllModel>()
                                                         .ToListAsync();
 
             return countries;
