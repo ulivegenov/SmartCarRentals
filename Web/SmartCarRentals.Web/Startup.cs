@@ -23,7 +23,9 @@
     using SmartCarRentals.Services.Data;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Messaging;
+    using SmartCarRentals.Services.Models.Countries;
     using SmartCarRentals.Web.ViewModels;
+    using SmartCarRentals.Web.ViewModels.Administration.Countries;
 
     public class Startup
     {
@@ -55,8 +57,7 @@
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
-                .AddDefaultUI()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddDefaultUI();
 
             services.AddSession();
 
@@ -118,12 +119,16 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IParkingsService, ParkingsService>();
+            services.AddTransient<ICountriesService, CountriesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(
+                typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(CountryInputModel).GetTypeInfo().Assembly,
+                typeof(CountryServicesInputModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

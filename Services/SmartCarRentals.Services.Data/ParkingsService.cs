@@ -38,7 +38,7 @@
 
         public async Task<IEnumerable<ParkingServiceModel>> GetAllAsync()
         {
-            var parkings = await this.parkingRepository.AllAsNoTrackingWithDeleted()
+            var parkings = await this.parkingRepository.All()
                                                        .To<ParkingServiceModel>()
                                                        .ToListAsync();
 
