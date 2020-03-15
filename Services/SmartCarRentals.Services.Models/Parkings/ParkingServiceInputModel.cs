@@ -10,9 +10,9 @@
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
     using SmartCarRentals.Services.Mapping;
 
-    public class ParkingServiceModel : IMapFrom<Parking>, IMapTo<Parking>
+    public class ParkingServiceInputModel : IMapFrom<Parking>, IMapTo<Parking>
     {
-        public ParkingServiceModel()
+        public ParkingServiceInputModel()
         {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;

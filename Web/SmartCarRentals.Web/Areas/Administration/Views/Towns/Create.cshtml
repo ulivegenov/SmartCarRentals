@@ -1,6 +1,6 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountryInputModel
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Towns.TownInputModel
 @{
-    this.ViewData["Title"] = "Create Country";
+    this.ViewData["Title"] = "Create Town";
 }
 
 <section class="content" align="center">
@@ -9,13 +9,21 @@
             <div class="small-box bg-primary">
                 <div class="inner">
                     <form class="request-form ftco-animate bg-primary" id="account" method="post">
-                        <h2>Create a new country</h2>
+                        <h2>Create a new town</h2>
                         <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Name" class="label"></label>
                             <input asp-for="Name" class="form-control" placeholder="Name" />
                             <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Country" class="label"></label>
+                            <select asp-for="Country" asp-items="@Model.CountryOptions">
+                                <option value="">Select Country</option>
+                            </select>
+                            <span asp-validation-for="Country" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">Add</button>

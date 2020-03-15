@@ -6,13 +6,13 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Parkings;
 
-    public class ParkingViewModel : IMapFrom<ParkingServiceModel>
+    public class ParkingInputModel : IMapFrom<ParkingServiceInputModel>
     {
         [Required]
         [MaxLength(EntitiesAttributeConstraints.NameMaxLength)]
         public string Name { get; set; }
 
-        public int TownId { get; set; }
+        public string Town { get; set; }
 
         [Required]
         [MaxLength(EntitiesAttributeConstraints.AddressMaxLength)]

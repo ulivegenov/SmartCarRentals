@@ -36,10 +36,10 @@
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ParkingServiceModel>> GetAllAsync()
+        public async Task<IEnumerable<ParkingServiceInputModel>> GetAllAsync()
         {
             var parkings = await this.parkingRepository.All()
-                                                       .To<ParkingServiceModel>()
+                                                       .To<ParkingServiceInputModel>()
                                                        .ToListAsync();
 
             return parkings;

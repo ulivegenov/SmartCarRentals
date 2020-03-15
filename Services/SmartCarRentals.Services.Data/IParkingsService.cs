@@ -15,6 +15,6 @@
 
         Task<int> GetCountAsync();
 
-        Task<IEnumerable<ParkingServiceModel>> GetAllAsync();
+        Task<IEnumerable<ParkingServiceInputModel>> GetAllAsync();
     }
 }

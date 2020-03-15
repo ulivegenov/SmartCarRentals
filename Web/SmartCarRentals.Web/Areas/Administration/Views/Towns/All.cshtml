@@ -1,0 +1,34 @@
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountriesAllViewModelCollection
+@{
+    this.ViewData["Title"] = "Countries All";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <thead class="table-head-fixed tab">
+                    <tr>
+                        <th scope="col"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Countries" asp-action="Create">+ Create New Country</a></th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Towns Count</th>
+                        <th scope="col">Parkings Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < @Model.Countries.Count(); i++)
+                        {
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Model.Countries[i].Name</td>
+                                <td>@Model.Countries[i].Towns.Count</td>
+                                <td>@Model.Countries[i].Towns.Sum(t => t.Parkings.Count)</td>
+                            </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
