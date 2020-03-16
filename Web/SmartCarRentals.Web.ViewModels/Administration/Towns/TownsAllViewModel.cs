@@ -1,7 +1,6 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Towns
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
@@ -15,8 +14,6 @@
             this.Parkings = new HashSet<Parking>();
         }
 
-        [Required]
-        [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
         public string Name { get; set; }
 
         public virtual Country Country { get; set; }

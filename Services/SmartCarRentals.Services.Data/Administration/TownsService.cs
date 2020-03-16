@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,13 @@
                                            .ToListAsync();
 
             return towns;
+        }
+
+        public Town GetByName(string name)
+        {
+            var town = this.townRepository.All().FirstOrDefault(c => c.Name == name);
+
+            return town;
         }
 
         public Task<int> GetCountAsync()

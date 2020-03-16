@@ -1,6 +1,7 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Towns
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class TownsAllViewModelCollection
     {

@@ -1,6 +1,5 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Towns
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using AutoMapper;

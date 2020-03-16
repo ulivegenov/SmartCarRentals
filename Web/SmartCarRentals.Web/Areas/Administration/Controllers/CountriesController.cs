@@ -14,10 +14,14 @@
     public class CountriesController : AdministrationController
     {
         private readonly ICountriesService countriesService;
+        private readonly ITownsService townsService;
 
-        public CountriesController(ICountriesService countriesService)
+        public CountriesController(
+                                   ICountriesService countriesService,
+                                   ITownsService townsService)
         {
             this.countriesService = countriesService;
+            this.townsService = townsService;
         }
 
         public IActionResult Create()
@@ -43,10 +47,22 @@
         public async Task<IActionResult> All()
         {
             var countries = await this.countriesService.GetAllAsync();
+            await this.townsService.GetAllAsync();
+
             var viewModel = new CountriesAllViewModelCollection();
+            this.ViewBag.Parkings = new Dictionary<string, int>();
 
             foreach (var country in countries)
             {
+                var parkingsCount = 0;
+
+                foreach (var town in country.Towns)
+                {
+                    parkingsCount += town.Parkings.Count;
+                }
+
+                this.ViewBag.Parkings[country.Name] = parkingsCount;
+
                 viewModel.Countries.Add(country.To<CountriesAllViewModel>());
             }
 

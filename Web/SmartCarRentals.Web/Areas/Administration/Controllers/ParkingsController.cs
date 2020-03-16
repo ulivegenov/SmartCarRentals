@@ -1,21 +1,89 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     using SmartCarRentals.Services.Data.Administration;
+    using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Parkings;
+    using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
     public class ParkingsController : AdministrationController
     {
         private readonly IParkingsService parkingsService;
+        private readonly ITownsService townsService;
 
-        public ParkingsController(IParkingsService parkingsService)
+        public ParkingsController(
+                                  IParkingsService parkingsService,
+                                  ITownsService townsService)
         {
             this.parkingsService = parkingsService;
+            this.townsService = townsService;
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var towns = await this.townsService.GetAllAsync();
+            this.ViewBag.Towns = new List<SelectListItem>();
+
+            foreach (var town in towns)
+            {
+                var listitem = new SelectListItem
+                {
+                    Text = town.Name,
+                    Value = town.Name,
+                };
+
+                this.ViewBag.Towns.Add(listitem);
+            }
+
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ParkingInputModel parkingInputModel)
+        {
+            var towns = await this.townsService.GetAllAsync();
+            this.ViewBag.Towns = new List<SelectListItem>();
+
+            foreach (var town in towns)
+            {
+                var listitem = new SelectListItem
+                {
+                    Text = town.Name,
+                    Value = town.Name,
+                };
+
+                this.ViewBag.Towns.Add(listitem);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(parkingInputModel);
+            }
+
+            var parkingServiceModel = parkingInputModel.To<ParkingServiceInputModel>();
+
+            parkingServiceModel.Town = this.townsService.GetByName(parkingInputModel.Town);
+            await this.parkingsService.CreateAsync(parkingServiceModel);
+
+            return this.Redirect("/Administration/Parkings/All");
+        }
+
+        public async Task<IActionResult> All()
+        {
+            var parkings = await this.parkingsService.GetAllAsync();
+            var viewModel = new ParkingsAllViewModelCollection();
+
+            foreach (var parking in parkings)
+            {
+                viewModel.Parkings.Add(parking.To<ParkingsAllViewModel>());
+            }
+
+            return this.View(viewModel);
         }
     }
 }

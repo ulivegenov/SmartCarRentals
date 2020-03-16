@@ -7,6 +7,7 @@
         public const int NameMaxLength = 50;
 
         public const int AddressMaxLength = 250;
+        public const int AddressMinLength = 2;
 
         // Users
         public const int UsernameMaxLength = 200;

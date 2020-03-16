@@ -7,7 +7,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using SmartCarRentals.Data.Models;
+
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Towns;
@@ -31,9 +31,11 @@
 
             foreach (var country in countries)
             {
-                var listitem = new SelectListItem();
-                listitem.Text = country.Name;
-                listitem.Value = country.Name;
+                var listitem = new SelectListItem
+                {
+                    Text = country.Name,
+                    Value = country.Name,
+                };
 
                 this.ViewBag.Countries.Add(listitem);
             }
@@ -49,9 +51,11 @@
 
             foreach (var country in countries)
             {
-                var listitem = new SelectListItem();
-                listitem.Text = country.Name;
-                listitem.Value = country.Name;
+                var listitem = new SelectListItem
+                {
+                    Text = country.Name,
+                    Value = country.Name,
+                };
 
                 this.ViewBag.Countries.Add(listitem);
             }

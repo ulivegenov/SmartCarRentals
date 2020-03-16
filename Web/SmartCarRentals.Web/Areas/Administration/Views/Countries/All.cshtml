@@ -1,4 +1,5 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountriesAllViewModelCollection
+﻿@using System.Linq
+@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountriesAllViewModelCollection
 @{
     this.ViewData["Title"] = "Countries All";
 }
@@ -22,7 +23,7 @@
                                 <th scope="row">@(i + 1)</th>
                                 <td>@Model.Countries[i].Name</td>
                                 <td>@Model.Countries[i].Towns.Count</td>
-                                <td>@Model.Countries[i].Towns.Sum(t => t.Parkings.Count)</td>
+                                <td>@this.ViewBag.Parkings[Model.Countries[i].Name]</td>
                             </tr>
                         }
                 </tbody>
