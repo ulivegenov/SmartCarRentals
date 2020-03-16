@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data
+﻿namespace SmartCarRentals.Services.Data.Administration
 {
     using System;
     using System.Collections.Generic;

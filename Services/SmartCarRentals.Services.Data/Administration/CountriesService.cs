@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data
+﻿namespace SmartCarRentals.Services.Data.Administration
 {
     using System;
     using System.Collections.Generic;
@@ -53,6 +53,13 @@
         public Task<int> GetCountAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public Country GetByName(string name)
+        {
+            var country = this.countryRepository.All().FirstOrDefault(c => c.Name == name);
+
+            return country;
         }
     }
 }

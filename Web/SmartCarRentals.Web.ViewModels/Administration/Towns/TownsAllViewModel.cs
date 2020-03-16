@@ -1,25 +1,19 @@
-﻿namespace SmartCarRentals.Services.Models.Towns
+﻿namespace SmartCarRentals.Web.ViewModels.Administration.Towns
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Towns;
 
-    public class TownsServiceInputModel : IMapTo<Town>, IMapFrom<Town>
+    public class TownsAllViewModel : IMapFrom<TownsServiceAllModel>
     {
-        public TownsServiceInputModel()
+        public TownsAllViewModel()
         {
-            this.CreatedOn = DateTime.UtcNow;
-            this.IsDeleted = false;
             this.Parkings = new HashSet<Parking>();
         }
-
-        public DateTime CreatedOn { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         [Required]
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]

@@ -18,7 +18,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Repositories;
     using SmartCarRentals.Data.Seeding;
-    using SmartCarRentals.Services.Data;
+    using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Messaging;
 
     public static class Program

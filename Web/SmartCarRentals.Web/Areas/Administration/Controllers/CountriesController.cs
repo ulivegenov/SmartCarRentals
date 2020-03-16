@@ -6,7 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using SmartCarRentals.Services.Data;
+    using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Countries;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;

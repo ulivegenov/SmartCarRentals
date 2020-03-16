@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    using SmartCarRentals.Services.Data;
+    using SmartCarRentals.Services.Data.Administration;
 
     public class ParkingsController : AdministrationController
     {

@@ -1,8 +1,9 @@
-﻿namespace SmartCarRentals.Services.Data
+﻿namespace SmartCarRentals.Services.Data.Administration
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Models.Countries;
 
     public interface ICountriesService
@@ -16,5 +17,7 @@
         Task<int> GetCountAsync();
 
         Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync();
+
+        Country GetByName(string name);
     }
 }

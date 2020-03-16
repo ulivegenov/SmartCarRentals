@@ -4,14 +4,15 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
+    using Moq;
+
     using SmartCarRentals.Data;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Moq;
+    using SmartCarRentals.Services.Data.Administration;
 
     using Xunit;
 
