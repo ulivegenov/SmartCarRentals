@@ -10,7 +10,7 @@
     {
         Task<bool> CreateAsync(CountryServiceInputModel countryServicesInputViewModel);
 
-        Task<bool> EditAsync(int id);
+        Task<bool> EditAsync(CountryServiceDetailsModel countryServiceDetailsModel);
 
         Task<bool> DeleteAsync(int id);
 
@@ -18,6 +18,8 @@
 
         Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync();
 
-        Country GetByName(string name);
+        Task<Country> GetByNameAsync(string name);
+
+        Task<CountryServiceDetailsModel> GetByIdAsync(int id);
     }
 }

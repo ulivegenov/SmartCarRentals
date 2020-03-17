@@ -36,9 +36,14 @@
             throw new NotImplementedException();
         }
 
-        public Task<bool> EditAsync(int id)
+        public async Task<bool> EditAsync(CountryServiceDetailsModel countryServiceDetailsModel)
         {
-            throw new NotImplementedException();
+            var country = countryServiceDetailsModel.To<Country>();
+
+            this.countryRepository.Update(country);
+            var result = await this.countryRepository.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync()
@@ -50,16 +55,27 @@
             return countries;
         }
 
-        public Task<int> GetCountAsync()
+        public async Task<int> GetCountAsync()
         {
-            throw new NotImplementedException();
+            var countries = await this.countryRepository.All().ToListAsync();
+            var count = countries.Count;
+
+            return count;
         }
 
-        public Country GetByName(string name)
+        public async Task<Country> GetByNameAsync(string name) // TO DO MAPPING!!!
         {
-            var country = this.countryRepository.All().FirstOrDefault(c => c.Name == name);
+            var country = await this.countryRepository.All().FirstOrDefaultAsync(c => c.Name == name);
 
             return country;
+        }
+
+        public async Task<CountryServiceDetailsModel> GetByIdAsync(int id)
+        {
+            var country = await this.countryRepository.All().FirstOrDefaultAsync(c => c.Id == id);
+            var countryServiceModel = country.To<CountryServiceDetailsModel>();
+
+            return countryServiceModel;
         }
     }
 }

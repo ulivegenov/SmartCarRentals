@@ -10,6 +10,7 @@
 
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Countries;
     using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Towns;
 
@@ -27,18 +28,7 @@
         public async Task<IActionResult> Create()
         {
             var countries = await this.countriesService.GetAllAsync();
-            this.ViewBag.Countries = new List<SelectListItem>();
-
-            foreach (var country in countries)
-            {
-                var listitem = new SelectListItem
-                {
-                    Text = country.Name,
-                    Value = country.Name,
-                };
-
-                this.ViewBag.Countries.Add(listitem);
-            }
+            this.AddListItemsToViewBag(countries);
 
             return this.View();
         }
@@ -47,18 +37,7 @@
         public async Task<IActionResult> Create(TownInputModel townInputModel)
         {
             var countries = await this.countriesService.GetAllAsync();
-            this.ViewBag.Countries = new List<SelectListItem>();
-
-            foreach (var country in countries)
-            {
-                var listitem = new SelectListItem
-                {
-                    Text = country.Name,
-                    Value = country.Name,
-                };
-
-                this.ViewBag.Countries.Add(listitem);
-            }
+            this.AddListItemsToViewBag(countries);
 
             if (!this.ModelState.IsValid)
             {
@@ -67,7 +46,7 @@
 
             var townServiceModel = townInputModel.To<TownServiceInputModel>();
 
-            townServiceModel.Country = this.countriesService.GetByName(townInputModel.Country);
+            townServiceModel.Country = await this.countriesService.GetByNameAsync(townInputModel.Country);
             await this.townsService.CreateAsync(townServiceModel);
 
             return this.Redirect("/Administration/Towns/All");
@@ -84,6 +63,22 @@
             }
 
             return this.View(viewModel);
+        }
+
+        private void AddListItemsToViewBag(IEnumerable<CountriesServiceAllModel> countries)
+        {
+            this.ViewBag.Countries = new List<SelectListItem>();
+
+            foreach (var country in countries)
+            {
+                var listitem = new SelectListItem
+                {
+                    Text = country.Name,
+                    Value = country.Name,
+                };
+
+                this.ViewBag.Countries.Add(listitem);
+            }
         }
     }
 }

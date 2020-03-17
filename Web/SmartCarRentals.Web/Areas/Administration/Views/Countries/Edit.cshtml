@@ -1,4 +1,29 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountryInputModel
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountryDetailsViewModel
 @{
     this.ViewData["Title"] = "Edit Country";
 }
+
+<section class="content" align="center">
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <form class="request-form ftco-animate bg-primary" id="account" method="post">
+                        <h2>Edit Country</h2>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" asp-area="Administration" asp-controller="Countries" asp-action="Edit" asp-route-id="@Model.Id">Update</button>
+                            <button type="submit" class="btn btn-warning" asp-area="Administration" asp-controller="Countries" asp-action="Details" asp-route-id="@Model.Id">Go Back</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

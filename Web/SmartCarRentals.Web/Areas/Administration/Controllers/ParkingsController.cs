@@ -9,6 +9,7 @@
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Parkings;
+    using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
     public class ParkingsController : AdministrationController
@@ -27,18 +28,7 @@
         public async Task<IActionResult> Create()
         {
             var towns = await this.townsService.GetAllAsync();
-            this.ViewBag.Towns = new List<SelectListItem>();
-
-            foreach (var town in towns)
-            {
-                var listitem = new SelectListItem
-                {
-                    Text = town.Name,
-                    Value = town.Name,
-                };
-
-                this.ViewBag.Towns.Add(listitem);
-            }
+            this.AddListItemsToViewBag(towns);
 
             return this.View();
         }
@@ -47,18 +37,7 @@
         public async Task<IActionResult> Create(ParkingInputModel parkingInputModel)
         {
             var towns = await this.townsService.GetAllAsync();
-            this.ViewBag.Towns = new List<SelectListItem>();
-
-            foreach (var town in towns)
-            {
-                var listitem = new SelectListItem
-                {
-                    Text = town.Name,
-                    Value = town.Name,
-                };
-
-                this.ViewBag.Towns.Add(listitem);
-            }
+            this.AddListItemsToViewBag(towns);
 
             if (!this.ModelState.IsValid)
             {
@@ -84,6 +63,22 @@
             }
 
             return this.View(viewModel);
+        }
+
+        private void AddListItemsToViewBag(IEnumerable<TownsServiceAllModel> towns)
+        {
+            this.ViewBag.Towns = new List<SelectListItem>();
+
+            foreach (var town in towns)
+            {
+                var listitem = new SelectListItem
+                {
+                    Text = town.Name,
+                    Value = town.Name,
+                };
+
+                this.ViewBag.Towns.Add(listitem);
+            }
         }
     }
 }

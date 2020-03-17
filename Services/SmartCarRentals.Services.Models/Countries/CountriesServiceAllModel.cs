@@ -14,6 +14,8 @@
             this.Towns = new HashSet<Town>();
         }
 
+        public int Id { get; set; }
+
         [Required]
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength =EntitiesAttributeConstraints.NameMinLength)]
         public string Name { get; set; }

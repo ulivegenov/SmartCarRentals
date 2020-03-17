@@ -57,9 +57,12 @@
             return town;
         }
 
-        public Task<int> GetCountAsync()
+        public async Task<int> GetCountAsync()
         {
-            throw new NotImplementedException();
+            var towns = await this.townRepository.All().ToListAsync();
+            var count = towns.Count;
+
+            return count;
         }
     }
 }

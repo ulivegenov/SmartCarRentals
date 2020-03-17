@@ -74,7 +74,7 @@
 
         public async Task<int> GetCountAsync()
         {
-            var parkings = await this.parkingRepository.AllAsNoTrackingWithDeleted().ToListAsync();
+            var parkings = await this.parkingRepository.All().ToListAsync();
             var count = parkings.Count;
 
             return count;
