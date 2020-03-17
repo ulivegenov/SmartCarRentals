@@ -357,4 +357,4 @@ MigrationBackup/
 appsettings.Production.json
 *.min.css
 *.min.js
-appsettings.json
+/Web/SmartCarRentals.Web/appsettings.json
