@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SmartCarRentals.Data.Common\SmartCarRentals.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\SmartCarRentals.Data.Models\SmartCarRentals.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\SmartCarRentals.Web.ViewModels\SmartCarRentals.Web.ViewModels.csproj" />
     <ProjectReference Include="..\SmartCarRentals.Services.Mapping\SmartCarRentals.Services.Mapping.csproj" />
     <ProjectReference Include="..\SmartCarRentals.Services.Models\SmartCarRentals.Services.Models.csproj" />
   </ItemGroup>

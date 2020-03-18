@@ -19,11 +19,7 @@
 
         public DateTime EndDate { get; set; }
 
-        public int KmStart { get; set; }
-
-        public int? KmEnd { get; set; }
-
-        public int? KmRun => this.KmEnd - this.KmStart;
+        public int? KmRun { get; set; }
 
         public Status Status { get; set; }
 
@@ -38,7 +34,7 @@
         [Required]
         public virtual Car Car { get; set; }
 
-        public int CarRatingId { get; set; }
+        public int? CarRatingId { get; set; }
 
         public CarRating CarRating { get; set; }
 

@@ -16,13 +16,23 @@
 
     public class TownsController : AdministrationController
     {
+        private const string DeleteErrorMessage = "Failed to delete the town.";
+
         private readonly ITownsService townsService;
         private readonly ICountriesService countriesService;
+        private readonly IParkingsService parkingsService;
+        private readonly IParkingSlotsService parkingSlotsService;
 
-        public TownsController(ITownsService townsService, ICountriesService countriesService)
+        public TownsController(
+                               ITownsService townsService,
+                               ICountriesService countriesService,
+                               IParkingsService parkingsService,
+                               IParkingSlotsService parkingSlotsService)
         {
             this.townsService = townsService;
             this.countriesService = countriesService;
+            this.parkingsService = parkingsService;
+            this.parkingSlotsService = parkingSlotsService;
         }
 
         public async Task<IActionResult> Create()
@@ -48,6 +58,45 @@
 
             townServiceModel.Country = await this.countriesService.GetByNameAsync(townInputModel.Country);
             await this.townsService.CreateAsync(townServiceModel);
+
+            return this.Redirect("/Administration/Towns/All");
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var town = await this.townsService.GetByIdAsync(id);
+            var viewModel = town.To<TownDetailsViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var town = await this.townsService.GetByIdAsync(id);
+            var viewModel = town.To<TownDetailsViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("/Administration/Towns/Delete/{id}")]
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            var townParkings = await this.parkingsService.GetAllByTownIdAsync(id);
+            var parkingsIds = townParkings.Select(p => p.Id).ToList();
+
+            var parkingSlots = await this.parkingSlotsService.GetAllByTownIdAsync(id);
+            var parkingSlotsIds = parkingSlots.Select(ps => ps.Id).ToList();
+
+            await this.parkingSlotsService.DeleteAllByIdAsync(parkingSlotsIds);
+            await this.parkingsService.DeleteAllByIdAsync(parkingsIds);
+
+            if (!(await this.townsService.DeleteByIdAsync(id) > 0))
+            {
+                this.TempData["Error"] = DeleteErrorMessage;
+
+                return this.View(); // TODO ERROR MESSAGE VIEW!!!
+            }
 
             return this.Redirect("/Administration/Towns/All");
         }

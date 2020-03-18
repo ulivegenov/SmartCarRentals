@@ -15,6 +15,7 @@
                         <th scope="col">Town</th>
                         <th scope="col">Cars Count</th>
                         <th scope="col">Capacity</th>
+                        <th scope="col">Details Page</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,7 @@
                         <td>@Model.Parkings[i].Town.Name</td>
                         <td>@Model.Parkings[i].Cars.Count</td>
                         <td>@Model.Parkings[i].Capacity</td>
+                        <td><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Parkings" asp-action="Details" asp-route-id="@Model.Parkings[i].Id">Details</a></td>
                     </tr>
                     }
                 </tbody>

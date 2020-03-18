@@ -10,7 +10,7 @@
     {
         Task<bool> CreateAsync(TownServiceInputModel countryServicesInputViewModel);
 
-        Task<bool> EditAsync(int id);
+        Task<bool> EditAsync(TownServiceDetailsModel townServiceDetailsModel);
 
         Task<int> DeleteByIdAsync(int id);
 
@@ -19,6 +19,8 @@
         Task<int> GetCountAsync();
 
         Town GetByName(string name);
+
+        Task<TownServiceDetailsModel> GetByIdAsync(int id);
 
         Task<IEnumerable<TownsServiceAllModel>> GetAllAsync();
 

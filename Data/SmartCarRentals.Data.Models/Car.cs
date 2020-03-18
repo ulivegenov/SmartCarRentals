@@ -22,7 +22,6 @@
             this.Condition = ConditionType.Normal;
 
             this.Trips = new HashSet<Trip>();
-            this.Images = new HashSet<Image>();
             this.Ratings = new HashSet<CarRating>();
         }
 
@@ -40,13 +39,9 @@
 
         public int KmRun { get; set; }
 
-        public int ServiceKm { get;  set; }
+        public int PricePerHour { get; set; }
 
-        public int ServiceRun => this.ServiceKm - this.KmRun;
-
-        public int PricePerHour { get; set; } // TODO Logic
-
-        public int PricePerDay { get; set; } // TODO Logic
+        public int PricePerDay { get; set; }
 
         public ClassType Class { get; set; }
 
@@ -65,15 +60,13 @@
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
         public int PassengersCapacity { get; set; }
 
-        public double Rating => this.Ratings.Sum(r => r.RatingVote) / this.Ratings.Count;
+        public double? Rating { get; set; }
 
-        public int ParkingId { get; set; }
+        public int? ParkingId { get; set; }
 
         public virtual Parking Parking { get; set; }
 
         public virtual ICollection<Trip> Trips { get; set; }
-
-        public virtual ICollection<Image> Images { get; set; }
 
         public virtual ICollection<CarRating> Ratings { get; set; }
     }

@@ -36,17 +36,12 @@
         [Range(EntitiesAttributeConstraints.MinCapacity, EntitiesAttributeConstraints.MaxCapacity)]
         public int Capacity { get; set; }
 
-        public int FreeParkingLots => this.GetFreeParkingLots();
+        public int FreeParkingSlots { get; set; }
 
         public virtual ICollection<ParkingSlot> ParkingSlots { get; set; }
 
         public virtual ICollection<Car> Cars { get; set; }
 
-        public virtual ICollection<ApplicationUser> Workers { get; set; }
-
         public virtual ICollection<Reservation> Reservations { get; set; }
-
-        private int GetFreeParkingLots()
-            => this.ParkingSlots.Where(pl => pl.Status == Status.Free).Count();
     }
 }

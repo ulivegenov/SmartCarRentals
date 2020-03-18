@@ -31,15 +31,6 @@
             this.townRepository = townRepository;
         }
 
-        public async Task<IEnumerable<ParkingSlot>> GetAllByParkingIdAsync(int parkingId)
-        {
-            var parkingSlots = await this.parkingSlotRepository.All()
-                                                               .Where(ps => ps.ParkingId == parkingId)
-                                                               .ToListAsync();
-
-            return parkingSlots;
-        }
-
         public async Task<int> DeleteByIdAsync(int slotId)
         {
             var parkingSlot = await this.parkingSlotRepository.GetByIdWithDeletedAsync(slotId);
@@ -86,6 +77,29 @@
             var deletedSlotsIds = parkingSlots.Select(ps => ps.Id).ToList();
 
             return deletedSlotsIds;
+        }
+
+        public async Task<IEnumerable<ParkingSlot>> GetAllByParkingIdAsync(int parkingId)
+        {
+            var parkingSlots = await this.parkingSlotRepository.All()
+                                                               .Where(ps => ps.ParkingId == parkingId)
+                                                               .ToListAsync();
+
+            return parkingSlots;
+        }
+
+        public async Task<IEnumerable<ParkingSlot>> GetAllByTownIdAsync(int townId)
+        {
+            var parkingsIds = await this.parkingRepository.All()
+                                                          .Where(p => p.TownId == townId)
+                                                          .Select(p => p.Id)
+                                                          .ToListAsync();
+
+            var parkingSlots = await this.parkingSlotRepository.All()
+                                                               .Where(ps => parkingsIds.Contains(ps.ParkingId))
+                                                               .ToListAsync();
+
+            return parkingSlots;
         }
 
         public async Task<IEnumerable<ParkingSlot>> GetAllByCountryIdAsync(int countryId)

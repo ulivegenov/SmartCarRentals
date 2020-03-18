@@ -14,9 +14,11 @@
             this.Parkings = new HashSet<Parking>();
         }
 
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
-        public virtual Country Country { get; set; }
+        public string CountryName { get; set; }
 
         public virtual ICollection<Parking> Parkings { get; set; }
     }

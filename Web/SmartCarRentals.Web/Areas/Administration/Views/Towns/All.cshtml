@@ -15,6 +15,7 @@
                         <th scope="col">Parkings Count</th>
                         <th scope="col">Cars Count</th>
                         <th scope="col">Country</th>
+                        <th scope="col">Details Page</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,7 +26,8 @@
                         <td>@Model.Towns[i].Name</td>
                         <td>@Model.Towns[i].Parkings.Count</td>
                         <td>@Model.Towns[i].Parkings.Sum(t => t.Cars.Count)</td>
-                        <td>@Model.Towns[i].Country.Name</td>
+                        <td>@Model.Towns[i].CountryName</td>
+                        <td><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Towns" asp-action="Details" asp-route-id="@Model.Towns[i].Id">Details</a></td>
                     </tr>
                     }
                 </tbody>

@@ -72,9 +72,14 @@
             return deletedTownsIds;
         }
 
-        public Task<bool> EditAsync(int id)
+        public async Task<bool> EditAsync(TownServiceDetailsModel townServiceDetailsModel)
         {
-            throw new NotImplementedException();
+            var town = townServiceDetailsModel.To<Town>();
+
+            this.townRepository.Update(town);
+            var result = await this.townRepository.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<IEnumerable<TownsServiceAllModel>> GetAllAsync()
@@ -99,6 +104,25 @@
             var count = towns.Count;
 
             return count;
+        }
+
+        public async Task<TownServiceDetailsModel> GetByIdAsync(int id)
+        {
+            var town = await this.townRepository.All()
+                                                .Where(t => t.Id == id)
+                                                .Select(t => new Town
+                                                {
+                                                    Id = t.Id,
+                                                    Name = t.Name,
+                                                    Country = t.Country,
+                                                    Parkings = t.Parkings,
+                                                })
+                                                .FirstOrDefaultAsync();
+
+            var townServiseModel = town.To<TownServiceDetailsModel>();
+            townServiseModel.ParkingNames = town.Parkings.Select(p => p.Name);
+
+            return townServiseModel;
         }
 
         public async Task<IEnumerable<Town>> GetAllByCountryIdAsync(int countryId)

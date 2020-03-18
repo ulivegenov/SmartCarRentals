@@ -1,6 +1,7 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -14,13 +15,18 @@
 
     public class ParkingsController : AdministrationController
     {
-        private readonly IParkingsService parkingsService;
+        private const string DeleteErrorMessage = "Failed to delete the parking.";
+
         private readonly ITownsService townsService;
+        private readonly IParkingsService parkingsService;
+        private readonly IParkingSlotsService parkingSlotsService;
 
         public ParkingsController(
+                                  ITownsService townsService,
                                   IParkingsService parkingsService,
-                                  ITownsService townsService)
+                                  IParkingSlotsService parkingSlotsService)
         {
+            this.parkingSlotsService = parkingSlotsService;
             this.parkingsService = parkingsService;
             this.townsService = townsService;
         }
@@ -48,6 +54,41 @@
 
             parkingServiceModel.Town = this.townsService.GetByName(parkingInputModel.Town);
             await this.parkingsService.CreateAsync(parkingServiceModel);
+
+            return this.Redirect("/Administration/Parkings/All");
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var parking = await this.parkingsService.GetByIdAsync(id);
+            var viewModel = parking.To<ParkingDetailsViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var parking = await this.parkingsService.GetByIdAsync(id);
+            var viewModel = parking.To<ParkingDetailsViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("/Administration/Parkings/Delete/{id}")]
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            var parkingSlots = await this.parkingSlotsService.GetAllByParkingIdAsync(id);
+            var parkingSlotsIds = parkingSlots.Select(ps => ps.Id).ToList();
+
+            await this.parkingSlotsService.DeleteAllByIdAsync(parkingSlotsIds);
+
+            if (!(await this.parkingsService.DeleteByIdAsync(id) > 0))
+            {
+                this.TempData["Error"] = DeleteErrorMessage;
+
+                return this.View(); // TODO ERROR MESSAGE VIEW!!!
+            }
 
             return this.Redirect("/Administration/Parkings/All");
         }

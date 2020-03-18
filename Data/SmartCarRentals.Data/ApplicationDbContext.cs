@@ -30,19 +30,13 @@
 
         public DbSet<Driver> Drivers { get; set; }
 
-        public DbSet<DriverLicense> DriverLicenses { get; set; }
-
-        public DbSet<Image> Images { get; set; }
-
         public DbSet<Parking> Parkings { get; set; }
 
-        public DbSet<ParkingSlot> ParkingLots { get; set; }
+        public DbSet<ParkingSlot> ParkingSlots { get; set; }
 
         public DbSet<Reservation> Reservations { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
-
-        public DbSet<Tire> Tires { get; set; }
 
         public DbSet<Town> Towns { get; set; }
 
@@ -123,13 +117,6 @@
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // One-to-one relationship between User and DriverLicense
-            builder.Entity<ApplicationUser>()
-                .HasOne(u => u.DriverLicense)
-                .WithOne(dl => dl.Client)
-                .HasForeignKey<ApplicationUser>(u => u.DriverLicenseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Many-to-many realtionship between User and Car

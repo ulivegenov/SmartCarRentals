@@ -1,0 +1,59 @@
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Parkings.ParkingDetailsViewModel
+@{
+    ViewData["Title"] = "Details Parking";
+}
+
+<section class="content" align="center">
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <h2>Parking Details</h2>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="label"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Name" readonly />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TownName" class="label"></label>
+                        <input asp-for="TownName" class="form-control" placeholder="TownName" readonly />
+                        <span asp-validation-for="TownName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="label"></label>
+                        <input asp-for="Address" class="form-control" placeholder="Address" readonly />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span>Capacity: @Model.Capacity</span>
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            Free Parking Slots:
+                            <a class="text-light" asp-area="Administration" asp-controller="Reservations" asp-action="ByParking" asp-route-id="@Model.Id"> @Model.FreeParkingSlots</a>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            Cars Count:
+                            <a class="text-light" asp-area="Administration" asp-controller="Reservations" asp-action="ByParking" asp-route-id="@Model.Id"> @Model.CarsCount</a>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            Reservations Count:
+                            <a class="text-light" asp-area="Administration" asp-controller="Reservations" asp-action="ByParking" asp-route-id="@Model.Id"> @Model.ReservationsCount</a>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Parkings" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                        <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Parkings" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

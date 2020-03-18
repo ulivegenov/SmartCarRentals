@@ -1,6 +1,6 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Towns.TownDetailsViewModel
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Parkings.ParkingDetailsViewModel
 @{
-    this.ViewData["Title"] = "Delete Town";
+    this.ViewData["Title"] = "Delete Parking";
 }
 
 <section class="content" align="center">
@@ -16,6 +16,22 @@
                             <label asp-for="Name" class="label"></label>
                             <input asp-for="Name" class="form-control" placeholder="Name" readonly />
                             <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TownName" class="label"></label>
+                            <input asp-for="TownName" class="form-control" placeholder="TownName" readonly />
+                            <span asp-validation-for="TownName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="label"></label>
+                            <input asp-for="Address" class="form-control" placeholder="Address" readonly />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <span>
+                                Cars Count:
+                                <a class="text-light" asp-area="Administration" asp-controller="Reservations" asp-action="ByParking" asp-route-id="@Model.Id"> @Model.CarsCount</a>
+                            </span>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-danger" asp-area="Administration" asp-controller="Parkings" asp-action="DeleteConfirm" asp-route-id="@Model.Id">Delete</button>

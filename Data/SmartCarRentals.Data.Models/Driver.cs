@@ -22,7 +22,7 @@
 
         public string LastName { get; set; }
 
-        public double Rating => this.Ratings.Sum(r => r.RatingVote) / this.Ratings.Count;
+        public double Rating { get; set; }
 
         public ICollection<DriverRating> Ratings { get; set; }
 

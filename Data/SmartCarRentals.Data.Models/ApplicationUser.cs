@@ -22,7 +22,6 @@
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
 
-            this.Age = this.GetUsersAge();
             this.Points = 0;
             this.Cars = new HashSet<Car>();
             this.CarRatings = new HashSet<CarRating>();
@@ -65,7 +64,7 @@
         [Range(EntitiesAttributeConstraints.AgeMin, EntitiesAttributeConstraints.AgeMax)]
         public int Age { get; set; }
 
-        public string Nationality { get; set; } // TODO Seed
+        public string Nationality { get; set; }
 
         public RankType Rank { get; set; }
 
@@ -74,10 +73,6 @@
         public int? ParkingId { get; set; }
 
         public virtual Parking Parking { get; set; }
-
-        public string DriverLicenseId { get; set; }
-
-        public virtual DriverLicense DriverLicense { get; set; }
 
         public virtual ICollection<Car> Cars { get; set; }
 
@@ -90,17 +85,5 @@
         public virtual ICollection<DriverRating> DriverRatings { get; set; }
 
         public virtual ICollection<Reservation> Reservations { get; set; }
-
-        private int GetUsersAge()
-        {
-            int age = DateTime.UtcNow.Year - this.BirthDate.Year;
-
-            if (this.BirthDate.Date > DateTime.UtcNow.AddYears(-age))
-            {
-                age--;
-            }
-
-            return age;
-        }
     }
 }

@@ -60,29 +60,6 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            var country = await this.countriesService.GetByIdAsync(id);
-            var viewModel = country.To<CountryDetailsViewModel>();
-
-            return this.View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(CountryDetailsViewModel countryDetailsViewModel)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(countryDetailsViewModel);
-            }
-
-            var countryServiceModel = countryDetailsViewModel.To<CountryServiceDetailsModel>();
-
-            await this.countriesService.EditAsync(countryServiceModel);
-
-            return this.Redirect($"/Administration/Countries/Details/{countryDetailsViewModel.Id}");
-        }
-
         public async Task<IActionResult> Delete(int id)
         {
             var country = await this.countriesService.GetByIdAsync(id);
@@ -92,7 +69,7 @@
         }
 
         [HttpPost]
-        [Route("/Administration/Categories/Delete/{id}")]
+        [Route("/Administration/Countries/Delete/{id}")]
         public async Task<IActionResult> DeleteConfirm(int id)
         {
             var countryTowns = await this.townsService.GetAllByCountryIdAsync(id);

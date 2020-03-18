@@ -20,7 +20,9 @@
 
         Task<IEnumerable<ParkingsServiceAllModel>> GetAllAsync();
 
-        Task<IEnumerable<Parking>> GetByTownIdAsync(int townId);
+        Task<ParkingServiceDetailsModel> GetByIdAsync(int id);
+
+        Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId);
 
         Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId);
     }

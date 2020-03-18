@@ -119,13 +119,13 @@
             return count;
         }
 
-        public async Task<IEnumerable<Parking>> GetByTownIdAsync(int townId)
+        public async Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId)
         {
-            var parkings = await this.parkingRepository.All()
+            var townParkings = await this.parkingRepository.All()
                                                        .Where(p => p.TownId == townId)
                                                        .ToListAsync();
 
-            return parkings;
+            return townParkings;
         }
 
         public async Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId)
@@ -140,6 +140,28 @@
                                                        .ToListAsync();
 
             return countryParkings;
+        }
+
+        public async Task<ParkingServiceDetailsModel> GetByIdAsync(int id)
+        {
+            var parking = await this.parkingRepository.All()
+                                                       .Where(p => p.Id == id)
+                                                       .Select(p => new Parking
+                                                       {
+                                                           Id = p.Id,
+                                                           Name = p.Name,
+                                                           Town = p.Town,
+                                                           Address = p.Address,
+                                                           Capacity = p.Capacity,
+                                                           FreeParkingSlots = p.FreeParkingSlots,
+                                                           Cars = p.Cars,
+                                                           Reservations = p.Reservations,
+                                                       })
+                                                       .FirstOrDefaultAsync();
+
+            var parkingServiceModel = parking.To<ParkingServiceDetailsModel>();
+
+            return parkingServiceModel;
         }
     }
 }

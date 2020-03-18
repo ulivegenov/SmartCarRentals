@@ -9,6 +9,8 @@
     {
         Task<IEnumerable<ParkingSlot>> GetAllByParkingIdAsync(int parkingId);
 
+        Task<IEnumerable<ParkingSlot>> GetAllByTownIdAsync(int townId);
+
         Task<IEnumerable<ParkingSlot>> GetAllByCountryIdAsync(int countryId);
 
         Task<int> DeleteByIdAsync(int slotId);
