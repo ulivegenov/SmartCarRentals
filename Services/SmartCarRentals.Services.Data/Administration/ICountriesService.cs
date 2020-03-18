@@ -12,7 +12,7 @@
 
         Task<bool> EditAsync(CountryServiceDetailsModel countryServiceDetailsModel);
 
-        Task<bool> DeleteAsync(int id);
+        Task<int> DeleteByIdAsync(int id);
 
         Task<int> GetCountAsync();
 

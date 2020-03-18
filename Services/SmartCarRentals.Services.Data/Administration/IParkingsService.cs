@@ -12,10 +12,16 @@
 
         Task<bool> EditAsync(int id);
 
-        Task<bool> DeleteAsync(int id);
+        Task<int> DeleteByIdAsync(int id);
+
+        Task<IEnumerable<int>> DeleteAllByIdAsync(IEnumerable<int> ids);
 
         Task<int> GetCountAsync();
 
         Task<IEnumerable<ParkingsServiceAllModel>> GetAllAsync();
+
+        Task<IEnumerable<Parking>> GetByTownIdAsync(int townId);
+
+        Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId);
     }
 }

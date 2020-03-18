@@ -14,6 +14,8 @@
 
     public class CountriesService : ICountriesService
     {
+        private const string InvalidCountryIdErrorMessage = "Country with ID: {0} does not exist.";
+
         private readonly IDeletableEntityRepository<Country> countryRepository;
 
         public CountriesService(IDeletableEntityRepository<Country> countryRepository)
@@ -31,9 +33,20 @@
             return result > 0;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var country = await this.countryRepository.GetByIdWithDeletedAsync(id);
+
+            if (country == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidCountryIdErrorMessage, country.Id));
+            }
+
+            this.countryRepository.Delete(country);
+            await this.countryRepository.SaveChangesAsync();
+
+            return country.Id;
         }
 
         public async Task<bool> EditAsync(CountryServiceDetailsModel countryServiceDetailsModel)

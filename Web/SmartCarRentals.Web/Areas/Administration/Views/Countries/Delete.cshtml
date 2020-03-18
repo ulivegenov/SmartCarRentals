@@ -18,7 +18,7 @@
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-danger" asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
+                            <button type="submit" class="btn btn-danger" asp-area="Administration" asp-controller="Countries" asp-action="DeleteConfirm" asp-route-id="@Model.Id">Delete</button>
                             <button type="submit" class="btn btn-warning" asp-area="Administration" asp-controller="Countries" asp-action="Details" asp-route-id="@Model.Id">Go Back</button>
                         </div>
                     </form>

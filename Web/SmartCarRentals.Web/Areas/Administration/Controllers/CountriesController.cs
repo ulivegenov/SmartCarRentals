@@ -1,6 +1,5 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -14,15 +13,23 @@
 
     public class CountriesController : AdministrationController
     {
+        private const string DeleteErrorMessage = "Failed to delete the country.";
+
         private readonly ICountriesService countriesService;
         private readonly ITownsService townsService;
+        private readonly IParkingsService parkingsService;
+        private readonly IParkingSlotsService parkingSlotsService;
 
         public CountriesController(
                                    ICountriesService countriesService,
-                                   ITownsService townsService)
+                                   ITownsService townsService,
+                                   IParkingsService parkingsService,
+                                   IParkingSlotsService parkingSlotsService)
         {
             this.countriesService = countriesService;
             this.townsService = townsService;
+            this.parkingsService = parkingsService;
+            this.parkingSlotsService = parkingSlotsService;
         }
 
         public IActionResult Create()
@@ -88,11 +95,30 @@
         [Route("/Administration/Categories/Delete/{id}")]
         public async Task<IActionResult> DeleteConfirm(int id)
         {
-            // TO DO LOGIC
-            throw new NotImplementedException();
+            var countryTowns = await this.townsService.GetAllByCountryIdAsync(id);
+            var townsIds = countryTowns.Select(c => c.Id).ToList();
+
+            var countryParkings = await this.parkingsService.GetAllByCountryIdAsync(id);
+            var parkingsIds = countryParkings.Select(p => p.Id).ToList();
+
+            var parkingSlots = await this.parkingSlotsService.GetAllByCountryIdAsync(id);
+            var parkingSlotsIds = parkingSlots.Select(ps => ps.Id).ToList();
+
+            await this.parkingSlotsService.DeleteAllByIdAsync(parkingSlotsIds);
+            await this.parkingsService.DeleteAllByIdAsync(parkingsIds);
+            await this.townsService.DeleteAllByIdAsync(townsIds);
+
+            if (!(await this.countriesService.DeleteByIdAsync(id) > 0))
+            {
+                this.TempData["Error"] = DeleteErrorMessage;
+
+                return this.View(); // TODO ERROR MESSAGE VIEW!!!
+            }
+
+            return this.Redirect("/Administration/Countries/All");
         }
 
-            public async Task<IActionResult> All()
+        public async Task<IActionResult> All()
         {
             var countries = await this.countriesService.GetAllAsync();
             await this.townsService.GetAllAsync();

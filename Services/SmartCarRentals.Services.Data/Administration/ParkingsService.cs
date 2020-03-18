@@ -15,15 +15,21 @@
 
     public class ParkingsService : IParkingsService
     {
+        private const string InvalidParkingIdErrorMessage = "Parking with ID: {0} does not exist.";
+        private const string InvalidParkingsIdsErrorMessage = "There is no Parking with any of these IDs.";
+
         private readonly IDeletableEntityRepository<Parking> parkingRepository;
         private readonly IDeletableEntityRepository<ParkingSlot> parkingSlotRepository;
+        private readonly IDeletableEntityRepository<Town> townRepository;
 
         public ParkingsService(
                                IDeletableEntityRepository<Parking> parkingRepository,
-                               IDeletableEntityRepository<ParkingSlot> parkingSlotRepository)
+                               IDeletableEntityRepository<ParkingSlot> parkingSlotRepository,
+                               IDeletableEntityRepository<Town> townRepository)
         {
             this.parkingRepository = parkingRepository;
             this.parkingSlotRepository = parkingSlotRepository;
+            this.townRepository = townRepository;
         }
 
         public async Task<bool> CreateAsync(ParkingServiceInputModel parkingServiceInputModel)
@@ -53,9 +59,42 @@
             return result;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var parking = await this.parkingRepository.GetByIdWithDeletedAsync(id);
+
+            if (parking == null)
+            {
+                throw new ArgumentNullException(string.Format(InvalidParkingIdErrorMessage, id));
+            }
+
+            this.parkingRepository.Delete(parking);
+            await this.parkingRepository.SaveChangesAsync();
+
+            return parking.Id;
+        }
+
+        public async Task<IEnumerable<int>> DeleteAllByIdAsync(IEnumerable<int> ids)
+        {
+            var parkings = await this.parkingRepository.All()
+                                                       .Where(p => ids.Contains(p.Id))
+                                                       .ToListAsync();
+
+            if (parkings == null)
+            {
+                throw new ArgumentNullException(InvalidParkingsIdsErrorMessage);
+            }
+
+            foreach (var parking in parkings)
+            {
+                this.parkingRepository.Delete(parking);
+            }
+
+            await this.parkingRepository.SaveChangesAsync();
+
+            var deletedParkingsIds = parkings.Select(p => p.Id).ToList();
+
+            return deletedParkingsIds;
         }
 
         public Task<bool> EditAsync(int id)
@@ -78,6 +117,29 @@
             var count = parkings.Count;
 
             return count;
+        }
+
+        public async Task<IEnumerable<Parking>> GetByTownIdAsync(int townId)
+        {
+            var parkings = await this.parkingRepository.All()
+                                                       .Where(p => p.TownId == townId)
+                                                       .ToListAsync();
+
+            return parkings;
+        }
+
+        public async Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId)
+        {
+            var townsIds = await this.townRepository.All()
+                                                    .Where(t => t.CountryId == countryId)
+                                                    .Select(t => t.Id)
+                                                    .ToListAsync();
+
+            var countryParkings = await this.parkingRepository.All()
+                                                       .Where(p => townsIds.Contains(p.TownId))
+                                                       .ToListAsync();
+
+            return countryParkings;
         }
     }
 }
