@@ -2,8 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Models;
 
     public class Driver : BaseDeletableModel<string>
@@ -18,8 +19,12 @@
             this.Transfers = new HashSet<Transfer>();
         }
 
+        [Required]
+        [MaxLength(EntitiesAttributeConstraints.NameMaxLength)]
         public string FirstName { get; set; }
 
+        [Required]
+        [MaxLength(EntitiesAttributeConstraints.NameMaxLength)]
         public string LastName { get; set; }
 
         public double Rating { get; set; }
