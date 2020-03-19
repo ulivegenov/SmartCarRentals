@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
+
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Models;
 
@@ -28,6 +28,8 @@
         public string LastName { get; set; }
 
         public double Rating { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public ICollection<DriverRating> Ratings { get; set; }
 

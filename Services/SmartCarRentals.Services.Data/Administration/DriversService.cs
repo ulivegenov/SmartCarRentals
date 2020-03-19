@@ -18,6 +18,16 @@
             this.driverRepository = driverRepository;
         }
 
+        public async Task<int> CreateAsync(DriverServiceInputModel driverServiceModel)
+        {
+            var driver = driverServiceModel.To<Driver>();
+            await this.driverRepository.AddAsync(driver);
+
+            var result = await this.driverRepository.SaveChangesAsync();
+
+            return result;
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             var drivers = await this.driverRepository.All()

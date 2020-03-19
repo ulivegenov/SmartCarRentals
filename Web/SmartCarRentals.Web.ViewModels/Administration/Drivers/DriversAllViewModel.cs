@@ -2,13 +2,14 @@
 {
     using System.Collections.Generic;
 
-    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Drivers;
 
     public class DriversAllViewModel : IMapFrom<DriversServiceAllModel>
     {
+        public string Id { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
