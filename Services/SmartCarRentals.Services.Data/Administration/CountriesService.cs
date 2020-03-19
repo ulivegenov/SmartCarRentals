@@ -62,6 +62,16 @@
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             var countries = await this.countryRepository.All()
+                                                        .Select(c => new Country()
+                                                        {
+                                                            Id = c.Id,
+                                                            Name = c.Name,
+                                                            Towns = c.Towns.Select(t => new Town()
+                                                            {
+                                                                Parkings = t.Parkings,
+                                                            })
+                                                            .ToList(),
+                                                        })
                                                         .To<T>()
                                                         .ToListAsync();
 
@@ -76,7 +86,7 @@
             return count;
         }
 
-        public async Task<Country> GetByNameAsync(string name) // TO DO MAPPING!!!
+        public async Task<Country> GetByNameAsync(string name) // Is It Neccesary???!!!
         {
             var country = await this.countryRepository.All().FirstOrDefaultAsync(c => c.Name == name);
 

@@ -1,6 +1,5 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -9,6 +8,7 @@
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Countries;
+    using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
 
     public class CountriesController : AdministrationController
@@ -98,10 +98,8 @@
         public async Task<IActionResult> All()
         {
             var countries = await this.countriesService.GetAllAsync<CountriesServiceAllModel>();
-            await this.townsService.GetAllAsync();
 
             var viewModel = new CountriesAllViewModelCollection();
-            this.ViewBag.Parkings = new Dictionary<string, int>();
 
             foreach (var country in countries)
             {
@@ -112,7 +110,7 @@
                     parkingsCount += town.Parkings.Count;
                 }
 
-                this.ViewBag.Parkings[country.Name] = parkingsCount;
+                viewModel.ParkingByCountry[country.Name] = parkingsCount;
 
                 viewModel.Countries.Add(country.To<CountriesAllViewModel>());
             }

@@ -1,16 +1,12 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Countries;
     using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
     using SmartCarRentals.Web.ViewModels.Administration.Towns;
@@ -102,7 +98,7 @@
 
         public async Task<IActionResult> All()
         {
-            var towns = await this.townsService.GetAllAsync();
+            var towns = await this.townsService.GetAllAsync<TownsServiceAllModel>();
             var viewModel = new TownsAllViewModelCollection();
 
             foreach (var town in towns)

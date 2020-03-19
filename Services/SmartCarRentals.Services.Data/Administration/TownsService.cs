@@ -82,10 +82,10 @@
             return result > 0;
         }
 
-        public async Task<IEnumerable<TownsServiceAllModel>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             var towns = await this.townRepository.All()
-                                           .To<TownsServiceAllModel>()
+                                           .To<T>()
                                            .ToListAsync();
 
             return towns;

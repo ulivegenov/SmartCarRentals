@@ -22,7 +22,7 @@
 
         Task<TownServiceDetailsModel> GetByIdAsync(int id);
 
-        Task<IEnumerable<TownsServiceAllModel>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync<T>();
 
         Task<IEnumerable<Town>> GetAllByCountryIdAsync(int countryId);
     }

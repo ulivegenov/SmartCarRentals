@@ -1,17 +1,15 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Parkings;
-    using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
+    using SmartCarRentals.Web.ViewModels.Administration.Towns;
 
     public class ParkingsController : AdministrationController
     {
@@ -33,26 +31,24 @@
 
         public async Task<IActionResult> Create()
         {
-            var towns = await this.townsService.GetAllAsync();
-            this.AddListItemsToViewBag(towns);
+            var towns = await this.townsService.GetAllAsync<TownsDropDownViewModel>();
+            var viewModel = new ParkingInputModel()
+            {
+                Towns = towns,
+            };
 
-            return this.View();
+            return this.View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(ParkingInputModel parkingInputModel)
         {
-            var towns = await this.townsService.GetAllAsync();
-            this.AddListItemsToViewBag(towns);
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(parkingInputModel);
             }
 
             var parkingServiceModel = parkingInputModel.To<ParkingServiceInputModel>();
-
-            parkingServiceModel.Town = this.townsService.GetByName(parkingInputModel.Town);
             await this.parkingsService.CreateAsync(parkingServiceModel);
 
             return this.Redirect("/Administration/Parkings/All");
@@ -104,22 +100,6 @@
             }
 
             return this.View(viewModel);
-        }
-
-        private void AddListItemsToViewBag(IEnumerable<TownsServiceAllModel> towns)
-        {
-            this.ViewBag.Towns = new List<SelectListItem>();
-
-            foreach (var town in towns)
-            {
-                var listitem = new SelectListItem
-                {
-                    Text = town.Name,
-                    Value = town.Name,
-                };
-
-                this.ViewBag.Towns.Add(listitem);
-            }
         }
     }
 }

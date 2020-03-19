@@ -1,5 +1,4 @@
-﻿@using System.Linq
-@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountriesAllViewModelCollection
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Countries.CountriesAllViewModelCollection
 @{
     this.ViewData["Title"] = "Countries All";
 }
@@ -24,7 +23,7 @@
                         <th scope="row">@(i + 1)</th>
                         <td>@Model.Countries[i].Name</td>
                         <td>@Model.Countries[i].Towns.Count</td>
-                        <td>@this.ViewBag.Parkings[Model.Countries[i].Name]</td>
+                        <td>@Model.ParkingByCountry[Model.Countries[i].Name]</td>
                         <td><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Countries" asp-action="Details" asp-route-id="@Model.Countries[i].Id">Details</a></td>
                     </tr>
                     }
