@@ -24,9 +24,11 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Messaging;
     using SmartCarRentals.Services.Models.Countries;
+    using SmartCarRentals.Services.Models.Drivers;
     using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
+    using SmartCarRentals.Web.ViewModels.Administration.Drivers;
     using SmartCarRentals.Web.ViewModels.Administration.Towns;
 
     public class Startup
@@ -125,6 +127,7 @@
             services.AddTransient<ITownsService, TownsService>();
             services.AddTransient<IParkingSlotsService, ParkingSlotsService>();
             services.AddTransient<IDriversService, DriversService>();
+            services.AddTransient<IDriversRatingsService, DriversRatingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -135,7 +138,9 @@
                 typeof(CountryInputModel).GetTypeInfo().Assembly,
                 typeof(CountryServiceInputModel).GetTypeInfo().Assembly,
                 typeof(TownInputModel).GetTypeInfo().Assembly,
-                typeof(TownServiceInputModel).GetTypeInfo().Assembly);
+                typeof(TownServiceInputModel).GetTypeInfo().Assembly,
+                typeof(DriverInputModel).GetTypeInfo().Assembly,
+                typeof(DriverServiceInputModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

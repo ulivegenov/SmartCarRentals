@@ -13,15 +13,18 @@
         private readonly IParkingsService parkingsService;
         private readonly ICountriesService countriesService;
         private readonly ITownsService townsService;
+        private readonly IDriversService driversService;
 
         public DashboardController(
                                    IParkingsService parkingsService,
                                    ICountriesService countriesService,
-                                   ITownsService townsService)
+                                   ITownsService townsService,
+                                   IDriversService driversService)
         {
             this.parkingsService = parkingsService;
             this.countriesService = countriesService;
             this.townsService = townsService;
+            this.driversService = driversService;
         }
 
         public async Task<IActionResult> Index()
@@ -31,6 +34,7 @@
                 ParkingsCount = await this.parkingsService.GetCountAsync(),
                 CountriesCount = await this.countriesService.GetCountAsync(),
                 TownsCount = await this.townsService.GetCountAsync(),
+                DriversCount = await this.driversService.GetCountAsync(),
             };
 
             return this.View(viewModel);

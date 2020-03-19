@@ -10,5 +10,13 @@
         Task<IEnumerable<T>> GetAllAsync<T>();
 
         Task<int> CreateAsync(DriverServiceInputModel driverServiceModel);
+
+        Task<T> GetByIdAsync<T>(string id);
+
+        Task<int> GetCountAsync();
+
+        Task<int> EditAsync(DriverServiceDetailsModel driverServiceDetailsModel);
+
+        Task<int> DeleteByIdAsync(string id);
     }
 }

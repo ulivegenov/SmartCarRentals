@@ -10,6 +10,7 @@
                 <thead class="table-head-fixed tab">
                     <tr>
                         <th scope="col"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Drivers" asp-action="Create">+ Create New Driver</a></th>
+                        <th scope="col">Image</th>
                         <th scope="col">Full Name</th>
                         <th scope="col">Rating</th>
                         <th scope="col">Transfers Count</th>
@@ -19,13 +20,20 @@
                 <tbody>
                     @for (int i = 0; i < @Model.Drivers.Count; i++)
                     {
-                        <tr>
-                            <th scope="row">@(i + 1)</th>
-                            <td><span>@Model.Drivers[i].FirstName</span><span> @Model.Drivers[i].LastName</span></td>
-                            <td>@Model.Drivers[i].Rating</td>
-                            <td>@Model.Drivers[i].Transfers.Count</td>
-                            <td><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Parkings" asp-action="Details" asp-route-id="@Model.Drivers[i].Id">Details</a></td>
-                        </tr>
+                    <tr>
+                        <th class="align-middle" scope="row">@(i + 1)</th>
+                        <td class="align-middle" scope="col">
+                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                <div class="image">
+                                    <img src="https://res.cloudinary.com/dp70enihl/image/upload/v1584033892/SmartCarRentalsPics/Admin/dsc_0072_resized_hbldb4.jpg" class="img-circle elevation-2" alt="User Image">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle"><span>@Model.Drivers[i].FirstName</span><span> @Model.Drivers[i].LastName</span></td>
+                        <td class="align-middle">@Model.Drivers[i].Rating</td>
+                        <td class="align-middle">@Model.Drivers[i].Transfers.Count</td>
+                        <td class="align-middle"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Drivers" asp-action="Details" asp-route-id="@Model.Drivers[i].Id">Details</a></td>
+                    </tr>
                     }
                 </tbody>
             </table>
