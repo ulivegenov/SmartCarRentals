@@ -16,7 +16,7 @@
 
         Task<int> GetCountAsync();
 
-        Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync<T>();
 
         Task<Country> GetByNameAsync(string name);
 

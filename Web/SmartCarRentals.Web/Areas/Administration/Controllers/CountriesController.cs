@@ -97,7 +97,7 @@
 
         public async Task<IActionResult> All()
         {
-            var countries = await this.countriesService.GetAllAsync();
+            var countries = await this.countriesService.GetAllAsync<CountriesServiceAllModel>();
             await this.townsService.GetAllAsync();
 
             var viewModel = new CountriesAllViewModelCollection();

@@ -59,10 +59,10 @@
             return result > 0;
         }
 
-        public async Task<IEnumerable<CountriesServiceAllModel>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             var countries = await this.countryRepository.All()
-                                                        .To<CountriesServiceAllModel>()
+                                                        .To<T>()
                                                         .ToListAsync();
 
             return countries;
