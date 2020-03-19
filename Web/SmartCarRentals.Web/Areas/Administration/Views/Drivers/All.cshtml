@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriversAllViewModelCollection
+@{
     this.ViewData["Title"] = "Drivers All";
 }
 
@@ -18,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < @Model.Parkings.Count; i++)
+                    @*@for (int i = 0; i < @Model.Drivers.Count; i++)
                     {
                         <tr>
                             <th scope="row">@(i + 1)</th>
@@ -29,7 +30,7 @@
                             <td>@Model.Parkings[i].Capacity</td>
                             <td><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Parkings" asp-action="Details" asp-route-id="@Model.Parkings[i].Id">Details</a></td>
                         </tr>
-                    }
+                    }*@
                 </tbody>
             </table>
         </div>

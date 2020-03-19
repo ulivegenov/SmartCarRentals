@@ -6,5 +6,11 @@
 
     public class DriversAllViewModelCollection
     {
+        public DriversAllViewModelCollection()
+        {
+            this.Drivers = new List<DriversAllViewModel>();
+        }
+
+        public List<DriversAllViewModel> Drivers { get; set; }
     }
 }

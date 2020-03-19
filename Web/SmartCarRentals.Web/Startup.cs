@@ -124,6 +124,7 @@
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<ITownsService, TownsService>();
             services.AddTransient<IParkingSlotsService, ParkingSlotsService>();
+            services.AddTransient<IDriversService, DriversService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

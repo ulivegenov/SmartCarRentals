@@ -1,10 +1,22 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Drivers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
 
-    public class DriversAllViewModel
+    using SmartCarRentals.Common;
+    using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Drivers;
+
+    public class DriversAllViewModel : IMapFrom<DriversServiceAllModel>
     {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public double Rating { get; set; }
+
+        public ICollection<DriverRating> Ratings { get; set; }
+
+        public virtual ICollection<Transfer> Transfers { get; set; }
     }
 }

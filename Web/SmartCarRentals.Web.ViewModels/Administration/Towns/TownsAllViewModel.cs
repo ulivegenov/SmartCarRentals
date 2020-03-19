@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Towns;
