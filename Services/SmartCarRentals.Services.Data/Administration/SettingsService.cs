@@ -5,6 +5,7 @@
 
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
 
     public class SettingsService : ISettingsService

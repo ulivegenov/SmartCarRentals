@@ -5,8 +5,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class DriverServiceInputModel : IMapTo<Driver>
+    public class DriverServiceInputModel : IServiceInputModel, IMapTo<Driver>
     {
         [Required]
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]

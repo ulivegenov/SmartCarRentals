@@ -9,6 +9,7 @@
 
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Countries;
 
@@ -80,7 +81,9 @@
 
         public async Task<int> GetCountAsync()
         {
-            var countries = await this.countryRepository.All().ToListAsync();
+            var countries = await this.countryRepository.All()
+                                                        .Select(c => c.Id)
+                                                        .ToListAsync();
             var count = countries.Count;
 
             return count;

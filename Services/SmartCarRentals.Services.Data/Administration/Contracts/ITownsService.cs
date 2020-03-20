@@ -1,16 +1,16 @@
-﻿namespace SmartCarRentals.Services.Data.Administration
+﻿namespace SmartCarRentals.Services.Data.Administration.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Services.Models.Towns;
+    using SmartCarRentals.Services.Models.Contracts;
 
     public interface ITownsService
     {
-        Task<bool> CreateAsync(TownServiceInputModel countryServicesInputViewModel);
+        Task<int> CreateAsync(IServiceInputModel servicesInputViewModel);
 
-        Task<bool> EditAsync(TownServiceDetailsModel townServiceDetailsModel);
+        Task<int> EditAsync(IServiceDetailsModel<int> serviceDetailsModel);
 
         Task<int> DeleteByIdAsync(int id);
 
@@ -18,9 +18,7 @@
 
         Task<int> GetCountAsync();
 
-        Town GetByName(string name);
-
-        Task<TownServiceDetailsModel> GetByIdAsync(int id);
+        public Task<T> GetByIdAsync<T>(int id);
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 

@@ -5,8 +5,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class CountryServiceDetailsModel : IMapFrom<Country>, IMapTo<Country>
+    public class CountryServiceDetailsModel : IServiceDetailsModel<int>, IMapFrom<Country>, IMapTo<Country>
     {
         public int Id { get; set; }
 

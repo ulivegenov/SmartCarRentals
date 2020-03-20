@@ -10,6 +10,7 @@
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
 
     public class ParkingSlotsService : IParkingSlotsService
     {

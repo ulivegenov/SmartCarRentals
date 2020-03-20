@@ -4,7 +4,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using SmartCarRentals.Services.Data.Administration;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Web.ViewModels.Administration.Dashboard;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 

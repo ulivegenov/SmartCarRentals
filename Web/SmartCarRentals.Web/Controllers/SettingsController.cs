@@ -7,7 +7,7 @@
 
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Services.Data.Administration;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Web.ViewModels.Settings;
 
     public class SettingsController : BaseController

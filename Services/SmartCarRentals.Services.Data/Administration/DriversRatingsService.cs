@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
 
     public class DriversRatingsService : IDriversRatingsService
     {

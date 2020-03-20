@@ -6,8 +6,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class CountriesServiceAllModel : IMapFrom<Country>, IMapTo<Country>
+    public class CountriesServiceAllModel : IServiceAllModel, IMapFrom<Country>, IMapTo<Country>
     {
         public CountriesServiceAllModel()
         {

@@ -6,8 +6,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class DriversServiceAllModel : IMapFrom<Driver>, IMapTo<Driver>
+    public class DriversServiceAllModel : IServiceAllModel, IMapFrom<Driver>, IMapTo<Driver>
     {
         public string Id { get; set; }
 

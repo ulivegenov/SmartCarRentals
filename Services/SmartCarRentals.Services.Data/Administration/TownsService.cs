@@ -9,118 +9,58 @@
 
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Towns;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class TownsService : ITownsService
+    public class TownsService : AdministrationService<Town, int>, ITownsService
     {
-        private const string InvalidTownIdErrorMessage = "Town with ID: {0} does not exist.";
-        private const string InvalidTownsIdsErrorMessage = "There is no Town with any of these IDs.";
-
         private readonly IDeletableEntityRepository<Town> townRepository;
 
         public TownsService(IDeletableEntityRepository<Town> townRepository)
+            : base(townRepository)
         {
             this.townRepository = townRepository;
         }
 
-        public async Task<bool> CreateAsync(TownServiceInputModel townServicesInputViewModel)
+        public override async Task<int> EditAsync(IServiceDetailsModel<int> serviceDetailsModel)
         {
-            var town = townServicesInputViewModel.To<Town>();
+            var townFromDb = await this.townRepository.All()
+                                                       .Where(t => t.Id == serviceDetailsModel.Id)
+                                                       .Select(t => new Town()
+                                                       {
+                                                           CountryId = t.CountryId,
+                                                       })
+                                                       .FirstOrDefaultAsync();
+            var town = serviceDetailsModel.To<Town>();
 
-            await this.townRepository.AddAsync(town);
-            var result = await this.townRepository.SaveChangesAsync();
-
-            return result > 0;
-        }
-
-        public async Task<int> DeleteByIdAsync(int id)
-        {
-            var town = await this.townRepository.GetByIdWithDeletedAsync(id);
-
-            if (town == null)
-            {
-                throw new ArgumentNullException(string.Format(InvalidTownIdErrorMessage, id));
-            }
-
-            this.townRepository.Delete(town);
-            await this.townRepository.SaveChangesAsync();
-
-            return town.Id;
-        }
-
-        public async Task<IEnumerable<int>> DeleteAllByIdAsync(IEnumerable<int> ids)
-        {
-            var towns = await this.townRepository.All()
-                                                 .Where(t => ids.Contains(t.Id))
-                                                 .ToListAsync();
-
-            if (towns == null)
-            {
-                throw new ArgumentNullException(InvalidTownsIdsErrorMessage);
-            }
-
-            foreach (var town in towns)
-            {
-                this.townRepository.Delete(town);
-            }
-
-            await this.townRepository.SaveChangesAsync();
-
-            var deletedTownsIds = towns.Select(t => t.Id).ToList();
-
-            return deletedTownsIds;
-        }
-
-        public async Task<bool> EditAsync(TownServiceDetailsModel townServiceDetailsModel)
-        {
-            var town = townServiceDetailsModel.To<Town>();
+            town.CountryId = townFromDb.CountryId;
+            town.Parkings = townFromDb.Parkings;
 
             this.townRepository.Update(town);
             var result = await this.townRepository.SaveChangesAsync();
 
-            return result > 0;
+            return result;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync<T>()
-        {
-            var towns = await this.townRepository.All()
-                                           .To<T>()
-                                           .ToListAsync();
-
-            return towns;
-        }
-
-        public Town GetByName(string name)
-        {
-            var town = this.townRepository.All().FirstOrDefault(c => c.Name == name);
-
-            return town;
-        }
-
-        public async Task<int> GetCountAsync()
-        {
-            var towns = await this.townRepository.All().ToListAsync();
-            var count = towns.Count;
-
-            return count;
-        }
-
-        public async Task<TownServiceDetailsModel> GetByIdAsync(int id)
+        public override async Task<T> GetByIdAsync<T>(int id)
         {
             var town = await this.townRepository.All()
-                                                .Where(t => t.Id == id)
+                                                .Where(t => id.Equals(t.Id))
                                                 .Select(t => new Town
                                                 {
                                                     Id = t.Id,
                                                     Name = t.Name,
                                                     Country = t.Country,
-                                                    Parkings = t.Parkings,
+                                                    Parkings = t.Parkings.Select(p => new Parking()
+                                                    {
+                                                        Name = p.Name,
+                                                    })
+                                                    .ToList(),
                                                 })
                                                 .FirstOrDefaultAsync();
 
-            var townServiseModel = town.To<TownServiceDetailsModel>();
-            townServiseModel.ParkingNames = town.Parkings.Select(p => p.Name);
+            var townServiseModel = town.To<T>();
 
             return townServiseModel;
         }

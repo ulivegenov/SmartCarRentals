@@ -7,8 +7,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class ParkingsServiceAllModel : IMapTo<Parking>, IMapFrom<Parking>
+    public class ParkingsServiceAllModel : IServiceAllModel, IMapTo<Parking>, IMapFrom<Parking>
     {
         public ParkingsServiceAllModel()
         {

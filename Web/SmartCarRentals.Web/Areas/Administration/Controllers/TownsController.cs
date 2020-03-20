@@ -5,7 +5,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using SmartCarRentals.Services.Data.Administration;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
@@ -59,15 +59,33 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var town = await this.townsService.GetByIdAsync(id);
+            var town = await this.townsService.GetByIdAsync<TownServiceDetailsModel>(id);
             var viewModel = town.To<TownDetailsViewModel>();
 
             return this.View(viewModel);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var town = await this.townsService.GetByIdAsync<TownServiceDetailsModel>(id);
+            var viewModel = town.To<TownDetailsViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TownDetailsViewModel driverDetailsViewModel)
+        {
+            var serviceDriver = driverDetailsViewModel.To<TownServiceDetailsModel>();
+
+            await this.townsService.EditAsync(serviceDriver);
+
+            return this.Redirect($"/Administration/Towns/Details/{serviceDriver.Id}");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
-            var town = await this.townsService.GetByIdAsync(id);
+            var town = await this.townsService.GetByIdAsync<TownServiceDetailsModel>(id);
             var viewModel = town.To<TownDetailsViewModel>();
 
             return this.View(viewModel);

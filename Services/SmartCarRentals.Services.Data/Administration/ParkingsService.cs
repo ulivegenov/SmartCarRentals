@@ -10,10 +10,12 @@
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
     using SmartCarRentals.Services.Models.Parkings;
 
-    public class ParkingsService : IParkingsService
+    public class ParkingsService : AdministrationService<Parking, int>, IParkingsService
     {
         private const string InvalidParkingIdErrorMessage = "Parking with ID: {0} does not exist.";
         private const string InvalidParkingsIdsErrorMessage = "There is no Parking with any of these IDs.";
@@ -22,19 +24,27 @@
         private readonly IDeletableEntityRepository<ParkingSlot> parkingSlotRepository;
         private readonly IDeletableEntityRepository<Town> townRepository;
 
+
+        public ParkingsService(IDeletableEntityRepository<Parking> parkingRepository)
+            : base(parkingRepository)
+        {
+            this.parkingRepository = parkingRepository;
+        }
+
         public ParkingsService(
                                IDeletableEntityRepository<Parking> parkingRepository,
                                IDeletableEntityRepository<ParkingSlot> parkingSlotRepository,
                                IDeletableEntityRepository<Town> townRepository)
+            : this(parkingRepository)
         {
-            this.parkingRepository = parkingRepository;
+            //this.parkingRepository = parkingRepository;
             this.parkingSlotRepository = parkingSlotRepository;
             this.townRepository = townRepository;
         }
 
-        public async Task<bool> CreateAsync(ParkingServiceInputModel parkingServiceInputModel)
+        public override async Task<int> CreateAsync(IServiceInputModel servicesInputViewModel)
         {
-            var parking = parkingServiceInputModel.To<Parking>();
+            var parking = servicesInputViewModel.To<Parking>();
 
             await this.parkingRepository.AddAsync(parking);
             var resultOne = await this.parkingRepository.SaveChangesAsync();
@@ -54,69 +64,71 @@
             }
 
             var resultTwo = await this.parkingSlotRepository.SaveChangesAsync();
-            var result = resultOne > 0 && resultTwo > 0;
+
+            return resultOne + resultTwo;
+        }
+
+        public override async Task<int> EditAsync(IServiceDetailsModel<int> serviceDetailsModel)
+        {
+            var parkingFromDb = await this.parkingRepository.All()
+                                                       .Where(p => p.Id == serviceDetailsModel.Id)
+                                                       .Select(p => new Parking
+                                                       {
+                                                           TownId = p.TownId,
+                                                           Capacity = p.Capacity,
+                                                           FreeParkingSlots = p.FreeParkingSlots,
+                                                           ParkingSlots = p.ParkingSlots.Select(ps => new ParkingSlot()
+                                                           {
+                                                               Id = ps.Id,
+                                                           })
+                                                           .ToList(),
+                                                           Cars = p.Cars.Select(c => new Car()
+                                                           {
+                                                               Id = c.Id,
+                                                           })
+                                                           .ToList(),
+                                                           Reservations = p.Reservations.Select(r => new Reservation()
+                                                           {
+                                                               Id = r.Id,
+                                                           })
+                                                           .ToList(),
+                                                       })
+                                                       .FirstOrDefaultAsync();
+
+            var parking = serviceDetailsModel.To<Parking>();
+            parking.TownId = parkingFromDb.TownId;
+            parking.Capacity = parkingFromDb.Capacity;
+            parking.FreeParkingSlots = parkingFromDb.FreeParkingSlots;
+            parking.ParkingSlots = parkingFromDb.ParkingSlots;
+            parking.Cars = parkingFromDb.Cars;
+            parking.Reservations = parkingFromDb.Reservations;
+
+            this.parkingRepository.Update(parking);
+            var result = await this.parkingRepository.SaveChangesAsync();
 
             return result;
         }
 
-        public async Task<int> DeleteByIdAsync(int id)
+        public override async Task<T> GetByIdAsync<T>(int id)
         {
-            var parking = await this.parkingRepository.GetByIdWithDeletedAsync(id);
+            var parking = await this.parkingRepository.All()
+                                                       .Where(p => p.Id == id)
+                                                       .Select(p => new Parking
+                                                       {
+                                                           Id = p.Id,
+                                                           Name = p.Name,
+                                                           Town = p.Town,
+                                                           Address = p.Address,
+                                                           Capacity = p.Capacity,
+                                                           FreeParkingSlots = p.FreeParkingSlots,
+                                                           Cars = p.Cars,
+                                                           Reservations = p.Reservations,
+                                                       })
+                                                       .FirstOrDefaultAsync();
 
-            if (parking == null)
-            {
-                throw new ArgumentNullException(string.Format(InvalidParkingIdErrorMessage, id));
-            }
+            var parkingServiceModel = parking.To<T>();
 
-            this.parkingRepository.Delete(parking);
-            await this.parkingRepository.SaveChangesAsync();
-
-            return parking.Id;
-        }
-
-        public async Task<IEnumerable<int>> DeleteAllByIdAsync(IEnumerable<int> ids)
-        {
-            var parkings = await this.parkingRepository.All()
-                                                       .Where(p => ids.Contains(p.Id))
-                                                       .ToListAsync();
-
-            if (parkings == null)
-            {
-                throw new ArgumentNullException(InvalidParkingsIdsErrorMessage);
-            }
-
-            foreach (var parking in parkings)
-            {
-                this.parkingRepository.Delete(parking);
-            }
-
-            await this.parkingRepository.SaveChangesAsync();
-
-            var deletedParkingsIds = parkings.Select(p => p.Id).ToList();
-
-            return deletedParkingsIds;
-        }
-
-        public Task<bool> EditAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<ParkingsServiceAllModel>> GetAllAsync()
-        {
-            var parkings = await this.parkingRepository.All()
-                                                       .To<ParkingsServiceAllModel>()
-                                                       .ToListAsync();
-
-            return parkings;
-        }
-
-        public async Task<int> GetCountAsync()
-        {
-            var parkings = await this.parkingRepository.All().ToListAsync();
-            var count = parkings.Count;
-
-            return count;
+            return parkingServiceModel;
         }
 
         public async Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId)
@@ -140,28 +152,6 @@
                                                        .ToListAsync();
 
             return countryParkings;
-        }
-
-        public async Task<ParkingServiceDetailsModel> GetByIdAsync(int id)
-        {
-            var parking = await this.parkingRepository.All()
-                                                       .Where(p => p.Id == id)
-                                                       .Select(p => new Parking
-                                                       {
-                                                           Id = p.Id,
-                                                           Name = p.Name,
-                                                           Town = p.Town,
-                                                           Address = p.Address,
-                                                           Capacity = p.Capacity,
-                                                           FreeParkingSlots = p.FreeParkingSlots,
-                                                           Cars = p.Cars,
-                                                           Reservations = p.Reservations,
-                                                       })
-                                                       .FirstOrDefaultAsync();
-
-            var parkingServiceModel = parking.To<ParkingServiceDetailsModel>();
-
-            return parkingServiceModel;
         }
     }
 }

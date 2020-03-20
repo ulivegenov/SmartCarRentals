@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class DriverServiceDetailsModel : IMapFrom<Driver>, IMapTo<Driver>
+    public class DriverServiceDetailsModel : IServiceDetailsModel<string>, IMapFrom<Driver>, IMapTo<Driver>
     {
         public DriverServiceDetailsModel()
         {

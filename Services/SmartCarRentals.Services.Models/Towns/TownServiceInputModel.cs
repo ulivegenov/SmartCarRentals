@@ -7,8 +7,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class TownServiceInputModel : IMapTo<Town>, IMapFrom<Town>
+    public class TownServiceInputModel : IServiceInputModel, IMapTo<Town>, IMapFrom<Town>
     {
         public TownServiceInputModel()
         {
@@ -25,7 +26,9 @@
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
         public string Name { get; set; }
 
-        public int CountryId { get; set; }
+        public string CountryId { get; set; }
+
+        public Country Country { get; set; }
 
         public virtual ICollection<Parking> Parkings { get; set; }
     }

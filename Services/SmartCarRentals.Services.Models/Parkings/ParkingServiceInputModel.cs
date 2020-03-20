@@ -9,8 +9,9 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class ParkingServiceInputModel : IMapFrom<Parking>, IMapTo<Parking>
+    public class ParkingServiceInputModel : IServiceInputModel, IMapFrom<Parking>, IMapTo<Parking>
     {
         public ParkingServiceInputModel()
         {

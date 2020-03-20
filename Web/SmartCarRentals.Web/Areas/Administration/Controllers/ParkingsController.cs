@@ -5,7 +5,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using SmartCarRentals.Services.Data.Administration;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Parkings;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
@@ -54,9 +54,27 @@
             return this.Redirect("/Administration/Parkings/All");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var parking = await this.parkingsService.GetByIdAsync<ParkingServiceDetailsModel>(id);
+            var viewModel = parking.To<ParkingDetailsViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ParkingDetailsViewModel parkingDetailsViewModel)
+        {
+            var serviceDriver = parkingDetailsViewModel.To<ParkingServiceDetailsModel>();
+
+            await this.parkingsService.EditAsync(serviceDriver);
+
+            return this.Redirect($"/Administration/Parkings/Details/{serviceDriver.Id}");
+        }
+
         public async Task<IActionResult> Details(int id)
         {
-            var parking = await this.parkingsService.GetByIdAsync(id);
+            var parking = await this.parkingsService.GetByIdAsync<ParkingServiceDetailsModel>(id);
             var viewModel = parking.To<ParkingDetailsViewModel>();
 
             return this.View(viewModel);
@@ -64,7 +82,7 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            var parking = await this.parkingsService.GetByIdAsync(id);
+            var parking = await this.parkingsService.GetByIdAsync<ParkingServiceDetailsModel>(id);
             var viewModel = parking.To<ParkingDetailsViewModel>();
 
             return this.View(viewModel);
@@ -91,7 +109,7 @@
 
         public async Task<IActionResult> All()
         {
-            var parkings = await this.parkingsService.GetAllAsync();
+            var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceAllModel>();
             var viewModel = new ParkingsAllViewModelCollection();
 
             foreach (var parking in parkings)

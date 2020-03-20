@@ -4,10 +4,12 @@
     using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Common;
+    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Towns;
+    using SmartCarRentals.Web.ViewModels.Administration.Contracts;
 
-    public class TownDetailsViewModel : IMapFrom<TownServiceDetailsModel>, IMapTo<TownServiceDetailsModel>
+    public class TownDetailsViewModel : IDetailsViewModel<int>, IMapFrom<TownServiceDetailsModel>, IMapTo<TownServiceDetailsModel>
     {
         public int Id { get; set; }
 
@@ -18,9 +20,13 @@
         [Display(Name = "Country Name")]
         public string CountryName { get; set; }
 
-        public IEnumerable<string> ParkingNames { get; set; }
+        public int CountryId { get; set; }
+
+        public virtual Country Country { get; set; }
 
         [Display(Name = "Count of Parkings")]
         public string ParkingsCount { get; set; }
+
+        public ICollection<Parking> Parkings { get; set; }
     }
 }
