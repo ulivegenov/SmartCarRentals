@@ -12,7 +12,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Contracts;
 
-    public abstract class AdministrationService<TEntity, TKey>
+    public abstract class AdministrationService<TEntity, TKey> : IAdministrationService<TKey>
         where TEntity : BaseDeletableModel<TKey>
     {
         private const string InvalidTEntityIdErrorMessage = "{0} with ID: {1} does not exist.";
@@ -28,8 +28,8 @@
         public async Task<int> GetCountAsync()
         {
             var deletableEntities = await this.deletableEntityRepository.All()
-                                                            .Select(e => e.Id)
-                                                            .ToListAsync();
+                                                                        .Select(e => e.Id)
+                                                                        .ToListAsync();
             var count = deletableEntities.Count;
 
             return count;
@@ -45,7 +45,7 @@
             return result;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync<T>()
+        public virtual async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             var entity = await this.deletableEntityRepository.All()
                                                             .To<T>()

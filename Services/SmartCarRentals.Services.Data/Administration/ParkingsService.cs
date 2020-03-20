@@ -1,6 +1,5 @@
 ﻿namespace SmartCarRentals.Services.Data.Administration
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,17 +12,12 @@
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Contracts;
-    using SmartCarRentals.Services.Models.Parkings;
 
     public class ParkingsService : AdministrationService<Parking, int>, IParkingsService
     {
-        private const string InvalidParkingIdErrorMessage = "Parking with ID: {0} does not exist.";
-        private const string InvalidParkingsIdsErrorMessage = "There is no Parking with any of these IDs.";
-
         private readonly IDeletableEntityRepository<Parking> parkingRepository;
         private readonly IDeletableEntityRepository<ParkingSlot> parkingSlotRepository;
         private readonly IDeletableEntityRepository<Town> townRepository;
-
 
         public ParkingsService(IDeletableEntityRepository<Parking> parkingRepository)
             : base(parkingRepository)
@@ -37,7 +31,6 @@
                                IDeletableEntityRepository<Town> townRepository)
             : this(parkingRepository)
         {
-            //this.parkingRepository = parkingRepository;
             this.parkingSlotRepository = parkingSlotRepository;
             this.townRepository = townRepository;
         }
