@@ -53,7 +53,7 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var country = await this.countriesService.GetByIdAsync(id);
+            var country = await this.countriesService.GetByIdAsync<CountryServiceDetailsModel>(id);
             var viewModel = country.To<CountryDetailsViewModel>();
 
             return this.View(viewModel);
@@ -61,7 +61,7 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            var country = await this.countriesService.GetByIdAsync(id);
+            var country = await this.countriesService.GetByIdAsync<CountryServiceDetailsModel>(id);
             var viewModel = country.To<CountryDetailsViewModel>();
 
             return this.View(viewModel);

@@ -64,36 +64,32 @@ h1, h2, h3, h4, h5,
 }
 
 .ftco-navbar-light {
-	background: transparent !important;
+	background: transparent!important;
 	position: absolute;
 	top: 20px;
 	left: 0;
 	right: 0;
 	z-index: 3;
-
 	@include media-breakpoint-down(md) {
-		background: $black !important;
+		background: $black!important;
 		position: relative;
 		top: 0;
 	}
 
 	.navbar-brand {
 		color: $white;
-
-		span {
+		span{
 			color: $secondary;
 		}
-
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(md){
 			color: $white;
 		}
 	}
-
+	
 	.navbar-nav {
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(md){
 			padding-bottom: 10px;
 		}
-
 		> .nav-item {
 			> .nav-link {
 				font-size: 15px;
@@ -103,14 +99,11 @@ h1, h2, h3, h4, h5,
 				padding-right: 20px;
 				color: $white;
 				font-weight: 400;
-
 				&:hover {
 					color: $secondary;
 				}
-
-				opacity: 1 !important;
-
-				@include media-breakpoint-down(md) {
+				opacity: 1!important;
+				@include media-breakpoint-down(md){
 					padding-left: 0;
 					padding-right: 0;
 					padding-bottom: 0;
@@ -118,7 +111,7 @@ h1, h2, h3, h4, h5,
 				}
 			}
 
-			.dropdown-menu {
+			.dropdown-menu{
 				border: none;
 				background: $white;
 				-webkit-box-shadow: 0px 10px 34px -20px rgba(0,0,0,0.41);
@@ -126,17 +119,15 @@ h1, h2, h3, h4, h5,
 				box-shadow: 0px 10px 34px -20px rgba(0,0,0,0.41);
 			}
 
-
+			
 			&.ftco-seperator {
 				position: relative;
 				margin-left: 20px;
 				padding-left: 20px;
-
 				@include media-breakpoint-down(md) {
 					padding-left: 0;
 					margin-left: 0;
 				}
-
 				&:before {
 					position: absolute;
 					content: "";
@@ -145,13 +136,11 @@ h1, h2, h3, h4, h5,
 					left: 0;
 					width: 2px;
 					background: rgba($white, .05);
-
 					@include media-breakpoint-down(md) {
 						display: none;
 					}
 				}
 			}
-
 			&.cta {
 				> a {
 					color: $white;
@@ -163,33 +152,28 @@ h1, h2, h3, h4, h5,
 					margin-top: 4px;
 					background: $primary;
 					@include border-radius(2px);
-
 					span {
 						display: inline-block;
 						color: $white;
 					}
-
-					&:hover {
+					&:hover{
 						background: $primary;
 						border: 1px solid $primary;
 					}
 				}
-
 				&.cta-colored {
-					a {
+					a{
 						border: 1px solid $secondary;
 						background: $secondary !important;
 					}
 				}
 			}
-
 			&.active {
 				> a {
 					color: $secondary;
 				}
 			}
-
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(md){
 				&.active {
 					> a {
 						color: $primary;
@@ -198,65 +182,58 @@ h1, h2, h3, h4, h5,
 			}
 		}
 	}
-
 	.navbar-toggler {
 		border: none;
-		color: rgba(255,255,255,.5) !important;
+		color: rgba(255,255,255,.5)!important;
 		cursor: pointer;
 		padding-right: 0;
 		text-transform: uppercase;
 		font-size: 16px;
 		letter-spacing: .1em;
-
 		&:hover, &:focus {
 			text-decoration: none;
 			color: $primary;
 			outline: none !important;
 		}
 	}
-
-	&.scrolled {
+	
+	&.scrolled  {
 		position: fixed;
 		right: 0;
 		left: 0;
 		top: 0;
 		margin-top: -130px;
-		background: $white !important;
+		background: $white!important;
 		box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
-
 		.nav-item {
-			> .nav-link {
-				@include media-breakpoint-down(md) {
+			> .nav-link{
+				@include media-breakpoint-down(md){
 					padding-left: 0 !important;
 					padding-right: 0 !important;
 					padding-bottom: 0 !important;
 				}
 			}
-
 			&.active {
 				> a {
-					color: $primary !important;
+					color: $primary!important;
 				}
 			}
-
 			&.cta {
 				> a {
 					color: $white !important;
 					background: $primary;
 					border: none !important;
-					padding-top: .5rem !important;
+					padding-top: .5rem!important;
 					padding-bottom: .5rem !important;
 					padding-left: 20px !important;
 					padding-right: 20px !important;
 					margin-top: 6px !important;
 					@include border-radius(5px);
-
 					span {
 						display: inline-block;
 						color: $white !important;
 					}
 				}
-
 				&.cta-colored {
 					span {
 						border-color: $primary;
@@ -269,39 +246,36 @@ h1, h2, h3, h4, h5,
 			@include media-breakpoint-down(md) {
 				background: none;
 				border-radius: 0px;
-				padding-left: 0rem !important;
-				padding-right: 0rem !important;
+				padding-left: 0rem!important;
+				padding-right: 0rem!important;
 			}
 		}
 
 		.navbar-toggler {
 			border: none;
-			color: rgba(0,0,0,.5) !important;
-			border-color: rgba(0,0,0,.5) !important;
+			color: rgba(0,0,0,.5)!important;
+			border-color: rgba(0,0,0,.5)!important;
 			cursor: pointer;
 			padding-right: 0;
 			text-transform: uppercase;
 			font-size: 16px;
 			letter-spacing: .1em;
+
 		}
-
 		.nav-link {
-			padding-top: .9rem !important;
-			padding-bottom: .9rem !important;
-			color: $black !important;
-
+			padding-top: .9rem!important;
+			padding-bottom: .9rem!important;
+			color: $black!important;
 			&.active {
-				color: $primary !important;
+				color: $primary!important;
 			}
 		}
-
 		&.awake {
 			margin-top: 0px;
 			transition: .3s all ease-out;
 		}
-
 		&.sleep {
-			transition: .3s all ease-out;
+			transition: .3s all ease-out;	
 		}
 
 		.navbar-brand {
@@ -1299,7 +1273,6 @@ textarea.form-control {
 }
 
 
-
 //ABOUT
 .media-custom{
 	background: $white;
@@ -1351,25 +1324,18 @@ textarea.form-control {
 	background: #3c312e;
 }
 
-.ftco-bg-blue {
-	background: #327ff4;
-}
-
 .ftco-footer {
 	font-size: 16px;
 	background: #000;
 	padding: 7em 0;
-
-	.logo {
+	.logo{
 		text-transform: uppercase;
 		font-weight: 700;
 		color: $white;
-
-		span {
+		span{
 			color: $secondary;
 		}
 	}
-
 	.ftco-footer-widget {
 		h2 {
 			font-weight: normal;
@@ -1378,42 +1344,34 @@ textarea.form-control {
 			font-size: 20px;
 			font-weight: 400;
 		}
-
-		ul {
-			li {
-				a {
+		ul{
+			li{
+				a{
 					color: rgba(255,255,255,.8);
-
-					span {
+					span{
 						color: $white;
 					}
 				}
 			}
 		}
-
-		.btn-primary {
+		.btn-primary{
 			background: $white !important;
 			border: 2px solid $white !important;
-
-			&:hover {
+			&:hover{
 				background: $white;
 				border: 2px solid $white !important;
 			}
 		}
 	}
-
 	p {
 		color: rgba($white, .7);
 	}
-
 	a {
 		color: rgba($white, .7);
-
 		&:hover {
 			color: $white;
 		}
 	}
-
 	.ftco-heading-2 {
 		font-size: 17px;
 		font-weight: 400;

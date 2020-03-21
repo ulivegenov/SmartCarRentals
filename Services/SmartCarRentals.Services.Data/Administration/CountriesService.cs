@@ -41,12 +41,12 @@
             return countries;
         }
 
-        public async Task<CountryServiceDetailsModel> GetByIdAsync(int id)
-        {
-            var country = await this.countryRepository.All().FirstOrDefaultAsync(c => c.Id == id);
-            var countryServiceModel = country.To<CountryServiceDetailsModel>();
+        //public async Task<CountryServiceDetailsModel> GetByIdAsync(int id)
+        //{
+        //    var country = await this.countryRepository.All().FirstOrDefaultAsync(c => c.Id == id);
+        //    var countryServiceModel = country.To<CountryServiceDetailsModel>();
 
-            return countryServiceModel;
-        }
+        //    return countryServiceModel;
+        //}
     }
 }

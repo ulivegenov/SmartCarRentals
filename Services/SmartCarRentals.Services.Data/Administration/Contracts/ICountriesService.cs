@@ -6,6 +6,6 @@
 
     public interface ICountriesService : IAdministrationService<int>
     {
-        Task<CountryServiceDetailsModel> GetByIdAsync(int id);
+        //Task<CountryServiceDetailsModel> GetByIdAsync(int id);
     }
 }

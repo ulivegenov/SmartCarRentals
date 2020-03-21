@@ -1,0 +1,46 @@
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarsAllViewModelCollection
+@{
+    this.ViewData["Title"] = "Cars All";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <thead class="table-head-fixed tab">
+                    <tr>
+                        <th scope="col"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Drivers" asp-action="Create">+ Create New Driver</a></th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Count of trips</th>
+                        <th scope="col">Parking</th>
+                        <th scope="col">Details Page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < @Model.Cars.Count; i++)
+                    {
+                    <tr>
+                        <th class="align-middle" scope="row">@(i + 1)</th>
+                        <td class="align-middle" scope="col">
+                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                <div class="image">
+                                    <img src="https://res.cloudinary.com/dp70enihl/image/upload/v1584791868/SmartCarRentalsPics/Cars/2007_mercedes_benz_c220_Used_1_zax2n8.jpg" class="img-circle elevation-2" alt="User Image">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle"><span>@Model.Cars[i].Make</span><span> @Model.Cars[i].Model</span></td>
+                        <td class="align-middle">@Model.Cars[i].Class</td>
+                        <td class="align-middle">@Model.Cars[i].Rating</td>
+                        <td class="align-middle">@Model.Cars[i].Trips.Count</td>
+                        <td class="align-middle">@Model.Cars[i].Parking.Name</td>
+                        <td class="align-middle"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Cars" asp-action="Details" asp-route-id="@Model.Cars[i].Id">Details</a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
