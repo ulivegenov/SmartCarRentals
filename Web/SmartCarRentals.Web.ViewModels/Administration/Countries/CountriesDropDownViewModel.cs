@@ -1,9 +1,9 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Countries
 {
-    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Countries;
 
-    public class CountriesDropDownViewModel : IMapFrom<Country>
+    public class CountriesDropDownViewModel : IMapFrom<CountriesServiceDropDownModel>
     {
         public int Id { get; set; }
 

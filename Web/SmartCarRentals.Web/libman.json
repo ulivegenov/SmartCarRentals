@@ -35,47 +35,6 @@
         "dist/jquery.validate.unobtrusive.js",
         "dist/jquery.validate.unobtrusive.min.js"
       ]
-    },
-    {
-      "provider": "filesystem",
-      "library": "C:\\Users\\ASUS\\Desktop\\New folder (2)\\SmartCarRentals\\Web\\SmartCarRentals.Web\\wwwroot\\admin\\plugins\\fontawesome-free\\css\\",
-      "destination": "wwwroot/lib/admin/plugins/fontawesome-free/css",
-      "files": [
-        "all.min.css",
-        "all.css",
-        "calendarcss.css",
-        "calendar.js",
-        "clock.css",
-        "clock.js",
-        "driver.css"
-      ]
-    },
-    {
-      "provider": "filesystem",
-      "library": "C:\\Users\\ASUS\\Desktop\\New folder (2)\\SmartCarRentals\\Web\\SmartCarRentals.Web\\wwwroot\\admin\\dist\\css\\",
-      "destination": "wwwroot/lib/admin/dist/css",
-      "files": [
-        "adminlte.css",
-        "adminlte.min.css"
-      ]
-    },
-    {
-      "provider": "filesystem",
-      "library": "C:\\Users\\ASUS\\Desktop\\New folder (2)\\SmartCarRentals\\Web\\SmartCarRentals.Web\\wwwroot\\admin\\dist\\js\\",
-      "destination": "wwwroot/lib/admin/dist/js/",
-      "files": [
-        "adminlte.js",
-        "adminlte.min.js",
-        "demo.js"
-      ]
-    },
-    {
-      "provider": "filesystem",
-      "library": "C:\\Users\\ASUS\\Desktop\\New folder (2)\\SmartCarRentals\\Web\\SmartCarRentals.Web\\wwwroot\\admin\\dist\\js\\pages\\",
-      "destination": "wwwroot/lib/admin/dist/js/pages/",
-      "files": [
-        "dashboard2.js"
-      ]
     }
   ]
 }

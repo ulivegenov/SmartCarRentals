@@ -1,6 +1,7 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Cars
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Common;
@@ -8,10 +9,15 @@
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
-    using SmartCarRentals.Web.ViewModels.Administration.Contracts;
+    using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
     public class CarInputModel : IMapTo<CarServiceInputModel>
     {
+        public CarInputModel()
+        {
+            this.Parkings = new HashSet<ParkingsDropDownViewModel>();
+        }
+
         [Required]
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
         public string Make { get; set; }
@@ -33,8 +39,8 @@
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
         public int PassengersCapacity { get; set; }
 
-        public double? Rating { get; set; }
+        public int ParkingId { get; set; }
 
-        public int? ParkingId { get; set; }
+        public ICollection<ParkingsDropDownViewModel> Parkings { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Countries;
     using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
     using SmartCarRentals.Web.ViewModels.Administration.Towns;
@@ -34,11 +35,9 @@
 
         public async Task<IActionResult> Create()
         {
-            var countries = await this.countriesService.GetAllAsync<CountriesDropDownViewModel>();
-            var viewModel = new TownInputModel()
-            {
-                Countries = countries,
-            };
+            var countries = await this.countriesService.GetAllAsync<CountriesServiceDropDownModel>();
+            var viewModel = new TownInputModel();
+            viewModel.Countries = countries.Select(c => c.To<CountriesDropDownViewModel>()).ToList();
 
             return this.View(viewModel);
         }
