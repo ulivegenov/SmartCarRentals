@@ -8,6 +8,12 @@
 
     public class DriversAllViewModel : IMapFrom<DriversServiceAllModel>
     {
+        public DriversAllViewModel()
+        {
+            this.Ratings = new HashSet<DriverRating>();
+            this.Transfers = new HashSet<Transfer>();
+        }
+
         public string Id { get; set; }
 
         public string FirstName { get; set; }

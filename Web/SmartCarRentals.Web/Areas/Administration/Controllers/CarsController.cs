@@ -4,8 +4,6 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
@@ -119,6 +117,7 @@
             var cars = await this.carsService.GetAllAsync<CarsServiceAllModel>();
 
             var viewModel = new CarsAllViewModelCollection();
+
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
 
             return this.View(viewModel);

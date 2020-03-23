@@ -1,6 +1,8 @@
 ﻿namespace SmartCarRentals.Services.Data.Administration
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -8,6 +10,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Mapping;
 
     public class CarsService : AdministrationService<Car, string>, ICarsService
     {
@@ -48,6 +51,61 @@
             var result = await this.carRepository.SaveChangesAsync();
 
             return result;
+        }
+
+        public override async Task<T> GetByIdAsync<T>(string id)
+        {
+            var car = await this.carRepository.All()
+                                              .Where(c => c.Id == id)
+                                              .Select(c => new Car()
+                                              {
+                                                  Id = c.Id,
+                                                  ImgUrl = c.ImgUrl,
+                                                  Make = c.Make,
+                                                  Model = c.Model,
+                                                  Class = c.Class,
+                                                  Fuel = c.Fuel,
+                                                  Transmition = c.Transmition,
+                                                  KmRun = c.KmRun,
+                                                  PricePerHour = c.PricePerHour,
+                                                  PricePerDay = c.PricePerDay,
+                                                  PlateNumber = c.PlateNumber,
+                                                  Rating = c.Ratings.Count != 0
+                                                           ? c.Ratings.Select(r => r.RatingVote).Average()
+                                                           : 0,
+                                                  Trips = c.Trips.Select(t => new Trip() { Id = t.Id, }).ToList(),
+                                                  PassengersCapacity = c.PassengersCapacity,
+                                                  ParkingId = c.ParkingId,
+                                                  Parking = c.Parking,
+                                              })
+                                              .To<T>()
+                                              .FirstOrDefaultAsync();
+
+            return car;
+        }
+
+        public override async Task<IEnumerable<T>> GetAllAsync<T>()
+        {
+            var cars = await this.carRepository.All()
+                                              .Select(c => new Car()
+                                              {
+                                                  Id = c.Id,
+                                                  ImgUrl = c.ImgUrl,
+                                                  Make = c.Make,
+                                                  Model = c.Model,
+                                                  Class = c.Class,
+                                                  Rating = c.Ratings.Count != 0
+                                                           ? c.Ratings.Select(r => r.RatingVote).Average()
+                                                           : 0,
+                                                  Trips = c.Trips.Select(t => new Trip() { Id = t.Id, }).ToList(),
+                                                  ParkingId = c.ParkingId,
+                                                  Parking = c.Parking,
+
+                                              })
+                                              .To<T>()
+                                              .ToListAsync();
+
+            return cars;
         }
     }
 }

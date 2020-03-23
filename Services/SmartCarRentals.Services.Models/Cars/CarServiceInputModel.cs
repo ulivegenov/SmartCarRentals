@@ -41,8 +41,6 @@
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
 
-        //public HireStatus HireStatus { get; set; }
-
         public ClassType Class { get; set; }
 
         public TransmitionType Transmition { get; set; }

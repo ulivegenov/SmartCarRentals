@@ -5,7 +5,6 @@
     using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Common;
-    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
@@ -41,8 +40,6 @@
         [Required]
         [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
         public string ImgUrl { get; set; }
-
-        //public HireStatus HireStatus { get; set; }
 
         public ClassType Class { get; set; }
 

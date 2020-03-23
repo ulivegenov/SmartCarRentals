@@ -82,7 +82,6 @@
                             <label asp-for="ParkingId" class="label"></label>
                             <select class="form-control" asp-for="ParkingId" asp-items="@parkings" value=@currentParking>
                                 <option value="">Select Parking</option>
-                                @*<option value="">@Model.Parking.</option>*@
                             </select>
                             <span asp-validation-for="ParkingId" class="text-danger"></span>
                         </div>

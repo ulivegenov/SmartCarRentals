@@ -1,4 +1,5 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarDetailsViewModel
+﻿@using SmartCarRentals.Common
+@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarDetailsViewModel
 @{
     ViewData["Title"] = "Details Car";
 }
@@ -42,15 +43,19 @@
                             </li>
                             <li class="list-group-item">
                                 <div>
-                                    @for (int i = 0; i < Model.Rating - 1; i++)
-                                    {
-                                        <span><i class="fas fa-star"></i></span>
-                                    }
+                                    <b><a>Rating: @Model.Rating&emsp;&emsp;</a>
+                                        <a>
+                                           @for (int i = 1; i <= Model.Rating; i++)
+                                           {
+                                               <span><i class="fas fa-star"></i></span>
+                                           }
 
-                                    @for (int i = 5; i > Model.Rating; i--)
-                                    {
-                                        <span><i class="far fa-star"></i></span>
-                                    }
+                                           @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > Model.Rating; i--)
+                                           {
+                                               <span><i class="far fa-star"></i></span>
+                                           }
+                                        </a>
+                                    </b>
                                 </div>
                             </li>
                         </ul>
@@ -67,27 +72,5 @@
             </div>
         </div>
     </div>
-
-
-    @*<div class="container-fluid">
-            <div class="row no-gutters">
-                <div class="small-box bg-primary">
-                    <div class="inner">
-                        <h2>Country Details</h2>
-                        <hr />
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Name" class="label"></label>
-                            <input asp-for="Name" class="form-control" placeholder="Name" readonly />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                            <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Countries" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
 </section>
 

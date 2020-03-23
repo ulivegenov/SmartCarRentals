@@ -1,4 +1,5 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverDetailsViewModel
+﻿@using SmartCarRentals.Common
+@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverDetailsViewModel
 @{
     ViewData["Title"] = "Details Driver";
     var imageUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1584033892/SmartCarRentalsPics/Admin/dsc_0072_resized_hbldb4.jpg";
@@ -33,12 +34,12 @@
                             </li>
                             <li class="list-group-item">
                                 <div>
-                                    @for (int i = 0; i < Model.Rating - 1; i++)
+                                    @for (int i = 1; i <= Model.Rating; i++)
                                     {
                                         <span><i class="fas fa-star"></i></span>
                                     }
 
-                                    @for (int i = 5; i > Model.Rating; i--)
+                                    @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > Model.Rating; i--)
                                     {
                                         <span><i class="far fa-star"></i></span>
                                     }

@@ -9,8 +9,6 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Contracts;
-    using SmartCarRentals.Services.Models.Drivers;
 
     public class DriversService : AdministrationService<Driver, string>, IDriversService
     {
@@ -43,6 +41,28 @@
                                                     .FirstOrDefaultAsync();
 
             return driver;
+        }
+
+        public override async Task<IEnumerable<T>> GetAllAsync<T>()
+        {
+            var drivers = await this.driverRepository.All()
+                                                    .Select(d => new Driver()
+                                                    {
+                                                        Id = d.Id,
+                                                        FirstName = d.FirstName,
+                                                        LastName = d.LastName,
+                                                        ImageUrl = d.ImageUrl,
+                                                        Rating = d.Ratings.Select(r => r.RatingVote).Average(),
+                                                        Transfers = d.Transfers.Select(t => new Transfer()
+                                                        {
+                                                            Id = t.Id,
+                                                        })
+                                                        .ToList(),
+                                                    })
+                                                    .To<T>()
+                                                    .ToListAsync();
+
+            return drivers;
         }
     }
 }

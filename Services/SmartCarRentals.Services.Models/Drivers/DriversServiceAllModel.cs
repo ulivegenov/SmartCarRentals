@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
@@ -10,6 +11,12 @@
 
     public class DriversServiceAllModel : IServiceAllModel, IMapFrom<Driver>, IMapTo<Driver>
     {
+        public DriversServiceAllModel()
+        {
+            this.Ratings = new HashSet<DriverRating>();
+            this.Transfers = new HashSet<Transfer>();
+        }
+
         public string Id { get; set; }
 
         [Required]

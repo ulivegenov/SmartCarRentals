@@ -1,18 +1,14 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Cars
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
-    using SmartCarRentals.Web.ViewModels.Administration.Contracts;
 
     public class CarsAllViewModel : IMapFrom<CarsServiceAllModel>
     {
-        private double? rating;
-
         public CarsAllViewModel()
         {
             this.Trips = new HashSet<Trip>();
