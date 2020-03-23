@@ -1,0 +1,63 @@
+﻿@using SmartCarRentals.Common
+@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverDetailsViewModel
+@{
+    ViewData["Title"] = "Details Driver";
+    var imageUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1584033892/SmartCarRentalsPics/Admin/dsc_0072_resized_hbldb4.jpg";
+}
+
+<section class="content" align="center">
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
+                </div>
+
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src=@imageUrl
+                                 alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center"><span>@Model.FirstName </span><span>@Model.LastName</span></h3>
+
+                        <p class="text-muted text-center">Driver</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Count of Transfers:<a> @Model.TransfersCount</a></b>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Rating:<a> @Model.Rating</a></b>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    @for (int i = 1; i <= Model.Rating; i++)
+                                    {
+                                        <span><i class="fas fa-star"></i></span>
+                                    }
+
+                                    @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > Model.Rating; i--)
+                                    {
+                                        <span><i class="far fa-star"></i></span>
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="row user-social-detail">
+                            <div class="col-lg-12 col-sm-12 col-12">
+                                <a type="button" class="btn bg-gradient-indigo py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                                <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

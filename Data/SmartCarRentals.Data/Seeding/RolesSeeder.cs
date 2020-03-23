@@ -27,6 +27,7 @@
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             await SeedRoleAsync(roleManager, userManager, GlobalConstants.AdministratorRoleName, this.configuration);
+            await SeedRoleAsync(roleManager, userManager, GlobalConstants.UserRoleName, this.configuration);
         }
 
         private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager, string roleName, IConfiguration configuration)

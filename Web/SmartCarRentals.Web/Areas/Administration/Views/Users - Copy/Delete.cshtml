@@ -1,0 +1,37 @@
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverDetailsViewModel
+@{
+    this.ViewData["Title"] = "Delete Driver";
+}
+
+<section class="content" align="center">
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <form class="request-form ftco-animate bg-primary" id="account" method="post">
+                        <h2>Do You Want To Delete?</h2>
+                        <hr />
+                        <div class="form-group">
+                            <label asp-for="Id" class="label"></label>
+                            <input asp-for="Id" class="form-control" placeholder="Id" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="label"></label>
+                            <input asp-for="FirstName" class="form-control" placeholder="FirstName" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName" class="label"></label>
+                            <input asp-for="LastName" class="form-control" placeholder="LastName" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
+                            <button type="submit" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Details" asp-route-id="@Model.Id">Go Back</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

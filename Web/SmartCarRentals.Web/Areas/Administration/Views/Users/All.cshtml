@@ -1,0 +1,40 @@
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Users.UsersAllViewModelCollection
+@{
+    this.ViewData["Title"] = "Users All";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <thead class="table-head-fixed tab">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Pints</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Details Page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < @Model.Users.Count; i++)
+                    {
+                    <tr>
+                        <td class="align-middle" scope="row">@(i + 1)</td>
+                        <td class="align-middle" scope="row">@Model.Users[i].Id</td>
+                        <td class="align-middle" scope="row">@Model.Users[i].NormalizedUserName</td>
+                        <td class="align-middle" scope="row">@Model.Users[i].NormalizedEmail</td>
+                        <td class="align-middle">@Model.Users[i].Rank</td>
+                        <td class="align-middle">@Model.Users[i].Points</td>
+                        <td class="align-middle"><span>@Model.Users[i].FirstName</span><span> @Model.Users[i].LastName</span></td>
+                        <td class="align-middle"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Users[i].Id">Details</a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

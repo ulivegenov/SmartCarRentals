@@ -117,11 +117,7 @@
         {
             var towns = await this.townsService.GetAllAsync<TownsServiceAllModel>();
             var viewModel = new TownsAllViewModelCollection();
-
-            foreach (var town in towns)
-            {
-                viewModel.Towns.Add(town.To<TownsAllViewModel>());
-            }
+            viewModel.Towns = towns.Select(t => t.To<TownsAllViewModel>()).ToList();
 
             return this.View(viewModel);
         }

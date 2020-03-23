@@ -23,6 +23,7 @@
             this.Logins = new HashSet<IdentityUserLogin<string>>();
 
             this.Points = 0;
+            this.Rank = RankType.User;
             this.Cars = new HashSet<Car>();
             this.CarRatings = new HashSet<CarRating>();
             this.Trips = new HashSet<Trip>();
