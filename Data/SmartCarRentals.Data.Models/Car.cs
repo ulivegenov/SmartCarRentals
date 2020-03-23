@@ -39,9 +39,17 @@
 
         public int KmRun { get; set; }
 
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerHour { get; set; }
 
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
+
+        [Required]
+        [MaxLength(EntitiesAttributeConstraints.UrlMaxLength)]
+        public string ImgUrl { get; set; }
 
         public ClassType Class { get; set; }
 
@@ -53,7 +61,7 @@
 
         public ConditionType Condition { get; set; }
 
-        public TransmitionType Transmition { get; }
+        public TransmitionType Transmition { get; set; }
 
         public FuelType Fuel { get; set; }
 

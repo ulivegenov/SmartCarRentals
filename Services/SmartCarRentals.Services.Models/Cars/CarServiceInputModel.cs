@@ -14,7 +14,7 @@
     {
         public CarServiceInputModel()
         {
-            this.Parkings = new HashSet<ParkingsServiceDropDawnModel>();
+            this.Parkings = new HashSet<ParkingsServiceDropDownModel>();
         }
 
         [Required]
@@ -29,9 +29,23 @@
         [StringLength(EntitiesAttributeConstraints.PlateNumberMaxLength, MinimumLength = EntitiesAttributeConstraints.PlateNumberMinLength)]
         public string PlateNumber { get; set; }
 
+        [Required]
+        [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
+        public string ImgUrl { get; set; }
+
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerHour { get; set; }
 
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
+
+        //public HireStatus HireStatus { get; set; }
+
+        public ClassType Class { get; set; }
+
+        public TransmitionType Transmition { get; set; }
 
         public FuelType Fuel { get; set; }
 
@@ -40,6 +54,8 @@
 
         public int ParkingId { get; set; }
 
-        public ICollection<ParkingsServiceDropDawnModel> Parkings { get; set; }
+        public Parking Parking { get; set; }
+
+        public ICollection<ParkingsServiceDropDownModel> Parkings { get; set; }
     }
 }

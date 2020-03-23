@@ -11,6 +11,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
     using SmartCarRentals.Web.ViewModels.Administration.Contracts;
+    using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
     public class CarDetailsViewModel : IDetailsViewModel<string>, IMapFrom<CarServiceDetailsModel>, IMapTo<CarServiceDetailsModel>
     {
@@ -19,6 +20,7 @@
             this.Trips = new HashSet<Trip>();
             this.Reservations = new HashSet<Reservation>();
             this.Ratings = new HashSet<CarRating>();
+            this.Parkings = new HashSet<ParkingsDropDownViewModel>();
         }
 
         public string Id { get; set; }
@@ -31,8 +33,22 @@
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
         public string Model { get; set; }
 
+        [Required]
+        [MaxLength(EntitiesAttributeConstraints.PlateNumberMaxLength)]
+        public string PlateNumber { get; set; }
+
+        [Required]
+        [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
+        public string ImgUrl { get; set; }
+
+        public int KmRun { get; set; }
+
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerHour { get; set; }
 
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
 
         public ClassType Class { get; set; }
@@ -41,18 +57,18 @@
 
         public ReservationStatus ReservationStatus { get; set; }
 
-        public TransmitionType Transmition { get; }
+        public TransmitionType Transmition { get; set; }
 
         public FuelType Fuel { get; set; }
 
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
         public int PassengersCapacity { get; set; }
 
-        public double? Rating => this.GetRating();
+        public double? Rating { get; set; }
 
         public int? ParkingId { get; set; }
 
-        public virtual Parking Parking { get; set; }
+        public Parking Parking { get; set; }
 
         public virtual ICollection<Trip> Trips { get; set; }
 
@@ -60,11 +76,6 @@
 
         public virtual ICollection<CarRating> Ratings { get; set; }
 
-        private double? GetRating()
-        {
-            var rating = this.Ratings.Sum(r => r.RatingVote) / this.Trips.Count;
-
-            return rating;
-        }
+        public virtual ICollection<ParkingsDropDownViewModel> Parkings { get; set; }
     }
 }

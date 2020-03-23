@@ -10,5 +10,7 @@
         Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId);
 
         Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId);
+
+        Task<Parking> GetByCarIdAsync(string id);
     }
 }

@@ -110,11 +110,7 @@
         {
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceAllModel>();
             var viewModel = new ParkingsAllViewModelCollection();
-
-            foreach (var parking in parkings)
-            {
-                viewModel.Parkings.Add(parking.To<ParkingsAllViewModel>());
-            }
+            viewModel.Parkings = parkings.Select(p => p.To<ParkingsAllViewModel>()).ToList();
 
             return this.View(viewModel);
         }

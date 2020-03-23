@@ -27,7 +27,7 @@
                         <td class="align-middle" scope="col">
                             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                                 <div class="image">
-                                    <img src="https://res.cloudinary.com/dp70enihl/image/upload/v1584791868/SmartCarRentalsPics/Cars/2007_mercedes_benz_c220_Used_1_zax2n8.jpg" class="img-circle elevation-2" alt="User Image">
+                                    <img src="@Model.Cars[i].ImgUrl" class="img-circle" alt="User Image">
                                 </div>
                             </div>
                         </td>
@@ -35,7 +35,14 @@
                         <td class="align-middle">@Model.Cars[i].Class</td>
                         <td class="align-middle">@Model.Cars[i].Rating</td>
                         <td class="align-middle">@Model.Cars[i].Trips.Count</td>
-                        <td class="align-middle">@Model.Cars[i].Parking.Name</td>
+                        @if (Model.Cars[i].ParkingId != null)
+                        {
+                            <td class="align-middle">@Model.Cars[i].Parking.Name</td>
+                        }
+                        else
+                        {
+                            <td class="align-middle">On Trip</td>
+                        }
                         <td class="align-middle"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Cars" asp-action="Details" asp-route-id="@Model.Cars[i].Id">Details</a></td>
                     </tr>
                     }

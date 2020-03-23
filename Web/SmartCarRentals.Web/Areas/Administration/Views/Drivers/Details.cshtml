@@ -11,60 +11,52 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
                 </div>
-                <div class="row user-detail">
-                    <div class="col-lg-12 col-sm-12 col-12">
-                        <img src=@imageUrl class="rounded-circle img-thumbnail">
-                        <h5><span>@Model.FirstName </span><span>@Model.LastName</span></h5>
 
-                        <hr>
-                        <div href="#" class="btn btn-success btn-sm">@Model.Rating</div>
-                        <div>
-                            @for (int i = 0; i < Model.Rating - 1; i++)
-                            {
-                                <span><i class="fas fa-star"></i></span>
-                            }
-
-                            @for (int i = 5; i > Model.Rating; i--)
-                            {
-                                <span><i class="far fa-star"></i></span>
-                            }
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src=@imageUrl
+                                 alt="User profile picture">
                         </div>
 
-                        <hr>
-                        <span>@Model.TransfersCount</span>
-                    </div>
-                </div>
-                <div class="row user-social-detail">
-                    <div class="col-lg-12 col-sm-12 col-12">
-                        <a type="button" class="btn bg-gradient-indigo py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                        <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                        <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
+                        <h3 class="profile-username text-center"><span>@Model.FirstName </span><span>@Model.LastName</span></h3>
+
+                        <p class="text-muted text-center">Driver</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Count of Transfers:<a> @Model.TransfersCount</a></b>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Rating:<a> @Model.Rating</a></b>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    @for (int i = 0; i < Model.Rating - 1; i++)
+                                    {
+                                        <span><i class="fas fa-star"></i></span>
+                                    }
+
+                                    @for (int i = 5; i > Model.Rating; i--)
+                                    {
+                                        <span><i class="far fa-star"></i></span>
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="row user-social-detail">
+                            <div class="col-lg-12 col-sm-12 col-12">
+                                <a type="button" class="btn bg-gradient-indigo py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                                <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-    @*<div class="container-fluid">
-            <div class="row no-gutters">
-                <div class="small-box bg-primary">
-                    <div class="inner">
-                        <h2>Country Details</h2>
-                        <hr />
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Name" class="label"></label>
-                            <input asp-for="Name" class="form-control" placeholder="Name" readonly />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                            <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Countries" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
 </section>
 

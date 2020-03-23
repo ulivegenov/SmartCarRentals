@@ -75,7 +75,7 @@
             return result;
         }
 
-        public async Task<int> DeleteByIdAsync(TKey id)
+        public virtual async Task<int> DeleteByIdAsync(TKey id)
         {
             var entity = await this.deletableEntityRepository.GetByIdWithDeletedAsync(id);
 

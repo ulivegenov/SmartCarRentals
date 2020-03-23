@@ -18,6 +18,7 @@
         private readonly IDeletableEntityRepository<Parking> parkingRepository;
         private readonly IDeletableEntityRepository<ParkingSlot> parkingSlotRepository;
         private readonly IDeletableEntityRepository<Town> townRepository;
+        private readonly IDeletableEntityRepository<Car> carRepository;
 
         public ParkingsService(IDeletableEntityRepository<Parking> parkingRepository)
             : base(parkingRepository)
@@ -28,11 +29,13 @@
         public ParkingsService(
                                IDeletableEntityRepository<Parking> parkingRepository,
                                IDeletableEntityRepository<ParkingSlot> parkingSlotRepository,
-                               IDeletableEntityRepository<Town> townRepository)
+                               IDeletableEntityRepository<Town> townRepository,
+                               IDeletableEntityRepository<Car> carRepository)
             : this(parkingRepository)
         {
             this.parkingSlotRepository = parkingSlotRepository;
             this.townRepository = townRepository;
+            this.carRepository = carRepository;
         }
 
         public override async Task<int> CreateAsync(IServiceInputModel servicesInputViewModel)
@@ -145,6 +148,30 @@
                                                        .ToListAsync();
 
             return countryParkings;
+        }
+
+        public async Task<Parking> GetByCarIdAsync(string id)
+        {
+            var car = await this.carRepository.All()
+                                              .Where(c => c.Id == id)
+                                              .Select(c => new Car()
+                                              {
+                                                  ParkingId = c.ParkingId,
+                                              })
+                                              .FirstOrDefaultAsync();
+
+            var parking = await this.parkingRepository.All()
+                                                      .Where(p => p.Id == car.ParkingId)
+                                                      .Select(p => new Parking()
+                                                      {
+                                                          Id = p.Id,
+                                                          Name = p.Name,
+                                                          Address = p.Address,
+                                                          Town = p.Town,
+                                                      })
+                                                      .FirstOrDefaultAsync();
+
+            return parking;
         }
     }
 }

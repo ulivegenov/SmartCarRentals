@@ -30,9 +30,23 @@
         [StringLength(EntitiesAttributeConstraints.PlateNumberMaxLength, MinimumLength = EntitiesAttributeConstraints.PlateNumberMinLength)]
         public string PlateNumber { get; set; }
 
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerHour { get; set; }
 
+        [Required]
+        [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
+
+        [Required]
+        [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
+        public string ImgUrl { get; set; }
+
+        //public HireStatus HireStatus { get; set; }
+
+        public ClassType Class { get; set; }
+
+        public TransmitionType Transmition { get; set; }
 
         public FuelType Fuel { get; set; }
 

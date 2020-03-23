@@ -25,6 +25,25 @@
                             <span asp-validation-for="Model" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <label asp-for="Class" class="label"></label>
+                            <select class="form-control" asp-for="Class" asp-items="Html.GetEnumSelectList<ClassType>()">
+                                <option value="">Select Class</option>
+                            </select>
+                            <span asp-validation-for="Class" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Transmition" class="label"></label>
+                            <select class="form-control" asp-for="Transmition" asp-items="Html.GetEnumSelectList<TransmitionType>()">
+                                <option value="">Select Transmition</option>
+                            </select>
+                            <span asp-validation-for="Transmition" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ImgUrl" class="label"></label>
+                            <input asp-for="ImgUrl" class="form-control" placeholder="ImgUrl" />
+                            <span asp-validation-for="ImgUrl" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="PlateNumber" class="label"></label>
                             <input asp-for="PlateNumber" class="form-control" placeholder="PlateNumber" />
                             <span asp-validation-for="PlateNumber" class="text-danger"></span>
@@ -38,11 +57,6 @@
                             <label asp-for="PricePerDay" class="label"></label>
                             <input asp-for="PricePerDay" class="form-control" placeholder="PricePerDay" />
                             <span asp-validation-for="PricePerDay" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Fuel" class="label"></label>
-                            <input asp-for="Fuel" class="form-control" placeholder="Fuel" />
-                            <span asp-validation-for="Fuel" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Fuel" class="label"></label>

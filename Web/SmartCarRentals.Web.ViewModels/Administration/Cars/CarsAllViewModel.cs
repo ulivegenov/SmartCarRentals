@@ -11,6 +11,8 @@
 
     public class CarsAllViewModel : IMapFrom<CarsServiceAllModel>
     {
+        private double? rating;
+
         public CarsAllViewModel()
         {
             this.Trips = new HashSet<Trip>();
@@ -23,9 +25,11 @@
 
         public string Model { get; set; }
 
+        public string ImgUrl { get; set; }
+
         public ClassType Class { get; set; }
 
-        public double? Rating => this.GetRating();
+        public double? Rating { get; set; }
 
         public int? ParkingId { get; set; }
 
@@ -34,12 +38,5 @@
         public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<CarRating> Ratings { get; set; }
-
-        private double? GetRating()
-        {
-            var rating = this.Ratings.Sum(r => r.RatingVote) / this.Trips.Count;
-
-            return rating;
-        }
     }
 }

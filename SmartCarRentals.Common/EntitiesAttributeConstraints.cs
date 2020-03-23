@@ -21,7 +21,8 @@
         public const int AgeMax = 100;
 
         // Car
-        public const int DefaultServiceRun = 10000;
+        public const int MinPrice = 1;
+        public const int MaxPrice = 200000;
 
         public const int PlateNumberMinLength = 4;
         public const int PlateNumberMaxLength = 30;
@@ -30,6 +31,7 @@
         public const int MaxPassengers = 12;
 
         // Image
+        public const int UrlMinLength = 5;
         public const int UrlMaxLength = 250;
 
         // Parking

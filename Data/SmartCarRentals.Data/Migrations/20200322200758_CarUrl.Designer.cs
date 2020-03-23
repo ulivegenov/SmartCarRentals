@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartCarRentals.Data;
 
 namespace SmartCarRentals.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200322200758_CarUrl")]
+    partial class CarUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,9 +353,6 @@ namespace SmartCarRentals.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Transmition")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

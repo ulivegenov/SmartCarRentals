@@ -3,7 +3,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Parkings;
 
-    public class ParkingsDropDownViewModel : IMapFrom<ParkingsServiceDropDawnModel>, IMapTo<ParkingsServiceDropDawnModel>
+    public class ParkingsDropDownViewModel : IMapFrom<ParkingsServiceDropDownModel>, IMapTo<ParkingsServiceDropDownModel>
     {
         public int Id { get; set; }
 
