@@ -1,23 +1,36 @@
 ﻿namespace SmartCarRentals.Web.Controllers
 {
     using System.Diagnostics;
-
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+
     using Microsoft.Extensions.Configuration;
+    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Web.ViewModels;
+    using SmartCarRentals.Web.ViewModels.Main.Cars;
 
     public class HomeController : BaseController
     {
         private readonly IConfiguration configuration;
+        private readonly IHomeService homeService;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(
+                              IConfiguration configuration,
+                              IHomeService homeService)
         {
             this.configuration = configuration;
+            this.homeService = homeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            var cars = await this.homeService.GetHotOffersCarsAsync();
+            var viewModel = new CarsHotOffersViewModelCollection();
+            viewModel.Cars = cars.Select(c => c.To<CarsHotOffersViewModel>()).ToList();
+
+            return this.View(viewModel);
         }
 
         public IActionResult About()

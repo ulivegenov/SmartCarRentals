@@ -1,5 +1,6 @@
 ﻿namespace SmartCarRentals.Services.Data.Administration
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -17,6 +18,8 @@
 
     public class UsersService : IUsersService
     {
+        private const string InvalidUserErrorMessage = "There is no {0} with any of these IDs.";
+
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
@@ -132,13 +135,11 @@
 
             if (user == null)
             {
-                // TODO
+                throw new NullReferenceException(string.Format(InvalidUserErrorMessage, id));
             }
 
             for (int i = 0; i < roles.Count; i++)
             {
-                //var applicationRole = await this.roleManager.FindByIdAsync(roles[i].Id);
-
                 IdentityResult result;
 
 

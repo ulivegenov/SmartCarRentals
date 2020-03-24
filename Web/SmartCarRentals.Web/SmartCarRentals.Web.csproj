@@ -47,6 +47,5 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administration\Views\Cars\" />
-    <Folder Include="Areas\Administration\Views\Users - Copy\" />
   </ItemGroup>
 </Project>

@@ -22,6 +22,8 @@
     using SmartCarRentals.Data.Seeding;
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.Main;
+    using SmartCarRentals.Services.Data.Main.Contacts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Messaging;
     using SmartCarRentals.Services.Models.Cars;
@@ -31,11 +33,6 @@
     using SmartCarRentals.Services.Models.Towns;
     using SmartCarRentals.Services.Models.Users;
     using SmartCarRentals.Web.ViewModels;
-    using SmartCarRentals.Web.ViewModels.Administration.Cars;
-    using SmartCarRentals.Web.ViewModels.Administration.Countries;
-    using SmartCarRentals.Web.ViewModels.Administration.Drivers;
-    using SmartCarRentals.Web.ViewModels.Administration.Parkings;
-    using SmartCarRentals.Web.ViewModels.Administration.Towns;
 
     public class Startup
     {
@@ -136,6 +133,7 @@
             services.AddTransient<IDriversRatingsService, DriversRatingsService>();
             services.AddTransient<ICarsService, CarsService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IHomeService, HomeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
