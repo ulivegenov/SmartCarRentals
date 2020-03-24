@@ -15,6 +15,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Rank</th>
                         <th scope="col">Pints</th>
+                        <th scope="col">Roles</th>
                         <th scope="col">Full Name</th>
                         <th scope="col">Details Page</th>
                     </tr>
@@ -29,6 +30,7 @@
                         <td class="align-middle" scope="row">@Model.Users[i].NormalizedEmail</td>
                         <td class="align-middle">@Model.Users[i].Rank</td>
                         <td class="align-middle">@Model.Users[i].Points</td>
+                        <td class="align-middle">@string.Join(", ", Model.Users[i].ApplicationRoles)</td>
                         <td class="align-middle"><span>@Model.Users[i].FirstName</span><span> @Model.Users[i].LastName</span></td>
                         <td class="align-middle"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Users[i].Id">Details</a></td>
                     </tr>

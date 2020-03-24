@@ -147,7 +147,8 @@
                 typeof(TownServiceInputModel).GetTypeInfo().Assembly,
                 typeof(DriverServiceInputModel).GetTypeInfo().Assembly,
                 typeof(ParkingServiceInputModel).GetTypeInfo().Assembly,
-                typeof(CarServiceInputModel).GetTypeInfo().Assembly);
+                typeof(CarServiceInputModel).GetTypeInfo().Assembly,
+                typeof(UserServiceDetailsModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
