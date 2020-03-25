@@ -24,6 +24,8 @@
 
         public string ImgUrl { get; set; }
 
+        public int PricePerDay { get; set; }
+
         public ClassType Class { get; set; }
 
         public double? Rating { get; set; }

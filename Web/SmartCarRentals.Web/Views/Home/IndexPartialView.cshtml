@@ -1,4 +1,5 @@
-﻿@model SmartCarRentals.Web.ViewModels.Main.Cars.CarsHotOffersViewModelCollection
+﻿@using SmartCarRentals.Common
+@model SmartCarRentals.Web.ViewModels.Main.Cars.CarsHotOffersViewModelCollection
 @{
     this.ViewData["Title"] = "Hot Offers partial";
 }
@@ -11,11 +12,25 @@
             </div>
             <div class="text">
                 <h2 class="mb-0"><a href="#">@Model.Cars[i].Make @Model.Cars[i].Model</a></h2>
+                <p class="mb-0 rated">
+                    <span>Rating: @Model.Cars[i].Rating &emsp;</span>
+                    <span>
+                        @for (int j = 1; j <= Model.Cars[i].Rating; j++)
+                        {
+                            <span class="ion-ios-star text-primary"></span>
+                        }
+
+                        @for (int j = EntitiesAttributeConstraints.MaxRatingVote; j > Model.Cars[i].Rating; j--)
+                        {
+                            <span class="ion-ios-star-outline text-primary"></span>
+                        }
+                    </span>
+                </p>
                 <div class="d-flex mb-3">
                     <span class="cat">@Model.Cars[i].Class</span>
                     <p class="price ml-auto">$@Model.Cars[i].PricePerDay <span>/day</span></p>
                 </div>
-                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="#" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Rent now</a> <a class="btn btn-secondary py-2 ml-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@Model.Cars[i].Id">Details</a></p>
             </div>
         </div>
     </div>

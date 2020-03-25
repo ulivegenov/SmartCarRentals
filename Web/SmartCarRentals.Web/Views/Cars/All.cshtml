@@ -1,0 +1,124 @@
+﻿@using SmartCarRentals.Web.ViewModels
+@using SmartCarRentals.Common
+@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarsAllViewModelCollection
+@{
+    this.ViewData["Title"] = "Cars All";
+    var bgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1585135294/SmartCarRentalsPics/Background/bg_3_s4tpcl.jpg";
+    var countries = Model.Countries.Select(Country => new SelectListItem(Country, Country));
+    var towns = Model.Towns.Select(Town => new SelectListItem(Town, Town));
+    var parkings = Model.Parkings.Select(Parking => new SelectListItem(Parking, Parking));
+}
+
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@bgUrl');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
+                <h1 class="mb-3 bread">Choose Your Car</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr />
+<div class="container">
+    <form asp-action="All" method="post">
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <select name="SearchByCountry" id="inputCountry" class="form-control mb-2" asp-items="@countries">
+                    <option value="@ViewData["CountryFilter"]">Search by Country</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="SearchByTown" id="inputTown" class="form-control mb-2" asp-items="@towns">
+                    <option value="@ViewData["TownFilter"]">Search by Town</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="SearchByParking" id="inputParking" class="form-control mb-2" asp-items="@parkings">
+                    <option value="@ViewData["ParkingFilter"]">Search by Parking</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="submit" value="Search" class="btn btn-primary mb-2 py-2 px-4" /> |
+                <a asp-action="All">Back to Full List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            @foreach (var car in Model.Cars)
+            {
+                <div class="col-md-4">
+                    <div class="car-wrap rounded ftco-animate">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(@car.ImgUrl);">
+                        </div>
+                        <div class="text">
+                            <h2 class="mb-0"><a asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id">@car.Make @car.Model</a></h2>
+                            <p class="mb-0 rated">
+                                <span>Rating: @car.Rating &emsp;</span>
+                                <span>
+                                    @for (int i = 1; i <= car.Rating; i++)
+                                    {
+                                        <span class="ion-ios-star text-primary"></span>
+                                    }
+
+                                    @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > car.Rating; i--)
+                                    {
+                                        <span class="ion-ios-star-outline text-primary"></span>
+                                    }
+                                </span>
+                            </p>
+                            <div class="d-flex mb-3">
+                                <span class="cat">@car.Parking.Town.Name, @car.Parking.Address</span>
+                                <p class="price ml-auto">$@car.PricePerDay <span>/day</span></p>
+                            </div>
+                            <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Rent now</a> <a class="btn btn-secondary py-2 ml-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id">Details</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        <li><a href="#">&lt;</a></li>
+                        <li class="active"><span>1</span></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const inputCountry = document.getElementById("inputCountry");
+    const inputTown = document.getElementById("inputTown");
+    const inputParking = document.getElementById("inputParking");
+
+    inputCountry.addEventListener('change', (event) => {
+        inputTown.value = "Search by Town";
+        inputParking.value = "Search by Parking";
+    });
+
+    inputTown.addEventListener('change', () => {
+        inputCountry.value = "Search by Country";
+        inputParking.value = "Search by Parking";
+    });
+
+    inputParking.addEventListener('change', () => {
+        inputCountry.value = "Search by Country";
+        inputTown.value = "Search by Town";
+    });
+</script>

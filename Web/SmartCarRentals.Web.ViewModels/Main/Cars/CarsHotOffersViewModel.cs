@@ -16,6 +16,8 @@
 
         public string ImgUrl { get; set; }
 
+        public double Rating { get; set; }
+
         public ClassType Class { get; set; }
     }
 }

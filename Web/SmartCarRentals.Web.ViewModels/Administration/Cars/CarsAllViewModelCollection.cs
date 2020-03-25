@@ -7,8 +7,18 @@
         public CarsAllViewModelCollection()
         {
             this.Cars = new List<CarsAllViewModel>();
+
+            this.Countries = new List<string>();
+            this.Towns = new List<string>();
+            this.Parkings = new List<string>();
         }
 
         public List<CarsAllViewModel> Cars { get; set; }
+
+        public List<string> Countries { get; set; }
+
+        public List<string> Towns { get; set; }
+
+        public List<string> Parkings { get; set; }
     }
 }
