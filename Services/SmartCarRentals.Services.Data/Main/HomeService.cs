@@ -31,7 +31,7 @@
                                                    Make = c.Make,
                                                    Model = c.Model,
                                                    PricePerDay = c.PricePerDay,
-                                                   ImgUrl = c.ImgUrl,
+                                                   Image = c.Image,
                                                    Class = c.Class,
                                                })
                                                .Take(4)

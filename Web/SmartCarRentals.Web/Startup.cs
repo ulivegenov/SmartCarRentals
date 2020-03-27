@@ -102,15 +102,14 @@
 
             services.AddSingleton(this.configuration);
 
-            // Cloudinary Api set
             Account cloudinaryCredentials = new Account(
-                this.configuration["Cloudinary:CloudName"],
-                this.configuration["Cloudinary:ApiKey"],
-                this.configuration["Cloudinary:ApiSecret"]);
+                                        this.configuration["Cloudinary:CloudName"],
+                                        this.configuration["Cloudinary:ApiKey"],
+                                        this.configuration["Cloudinary:ApiSecret"]);
 
-            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+            Cloudinary cloudinary = new Cloudinary(cloudinaryCredentials);
 
-            services.AddSingleton(cloudinaryUtility);
+            services.AddSingleton(cloudinary);
 
             // Google Maps Api set
             Account googleMapsCredentials = new Account(this.configuration["GoogleMaps : ApiKey"]);
@@ -134,6 +133,7 @@
             services.AddTransient<ICarsService, CarsService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IHomeService, HomeService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,7 +14,7 @@
 
         public int PricePerDay { get; set; }
 
-        public string ImgUrl { get; set; }
+        public string Image { get; set; }
 
         public double Rating { get; set; }
 

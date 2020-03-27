@@ -4,13 +4,15 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
-    public class CarInputModel : IMapTo<CarServiceInputModel>
+    public class CarInputModel : IMapTo<CarServiceInputModel>, IMapFrom<CarDetailsViewModel>
     {
         public CarInputModel()
         {
@@ -37,9 +39,7 @@
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
 
-        [Required]
-        [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
-        public string ImgUrl { get; set; }
+        public IFormFile Image { get; set; }
 
         public ClassType Class { get; set; }
 

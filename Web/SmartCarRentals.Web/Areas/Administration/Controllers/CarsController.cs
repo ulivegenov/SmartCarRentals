@@ -4,6 +4,8 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+
+    using SmartCarRentals.Common;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
@@ -18,15 +20,18 @@
         private readonly ICarsService carsService;
         private readonly IParkingsService parkingsService;
         private readonly IParkingSlotsService parkingSlotsService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public CarsController(
                               ICarsService carsService,
                               IParkingsService parkingsService,
-                              IParkingSlotsService parkingSlotsService)
+                              IParkingSlotsService parkingSlotsService,
+                              ICloudinaryService cloudinaryService)
         {
             this.carsService = carsService;
             this.parkingsService = parkingsService;
             this.parkingSlotsService = parkingSlotsService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task<IActionResult> Create()
@@ -43,10 +48,21 @@
         {
             if (!this.ModelState.IsValid)
             {
+                var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
+                carInputModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
+
                 return this.View(carInputModel);
             }
 
             var carServiceModel = carInputModel.To<CarServiceInputModel>();
+
+            var imageUrl = await this.cloudinaryService.UploadImageAsync(
+                                                                         carInputModel.Image,
+                                                                         $"{carServiceModel.Model}-{carServiceModel.Model}",
+                                                                         GlobalConstants.CarsImagesFolder);
+
+            carServiceModel.Image = imageUrl;
+
             await this.carsService.CreateAsync(carServiceModel);
 
             return this.Redirect("/Administration/Cars/All");
@@ -56,23 +72,34 @@
         {
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
             var car = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(id);
-            var viewModel = car.To<CarDetailsViewModel>();
+            var viewModel = car.To<CarEditInputModel>();
+
             viewModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
 
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CarDetailsViewModel carDetailsViewModel)
+        public async Task<IActionResult> Edit(CarEditInputModel carEditModel)
         {
-            var serviceCar = carDetailsViewModel.To<CarServiceDetailsModel>();
+            var serviceCar = carEditModel.To<CarServiceDetailsModel>();
+
+            if (carEditModel.Image.Length > 0)
+            {
+                var imageUrl = await this.cloudinaryService.UploadImageAsync(
+                                                                        carEditModel.Image,
+                                                                        $"{serviceCar.Model}-{serviceCar.Model}",
+                                                                        GlobalConstants.CarsImagesFolder);
+
+                serviceCar.Image = imageUrl;
+            }
 
             if (!this.ModelState.IsValid)
             {
                 var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
-                carDetailsViewModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
+                carEditModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
 
-                return this.View(carDetailsViewModel);
+                return this.View(carEditModel);
             }
 
             await this.carsService.EditAsync(serviceCar);

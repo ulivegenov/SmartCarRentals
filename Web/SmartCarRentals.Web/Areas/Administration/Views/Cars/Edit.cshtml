@@ -1,5 +1,5 @@
 ﻿@using SmartCarRentals.Data.Models.Enums.Car
-@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarDetailsViewModel
+@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarEditInputModel
 @{
     this.ViewData["Title"] = "Edit Car";
     var parkings = Model.Parkings.Select(p => new SelectListItem(p.Name, p.Id.ToString()));
@@ -11,8 +11,8 @@
         <div class="row no-gutters">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <form class="request-form ftco-animate bg-primary" method="post">
-                        <h2>Edit Car</h2>
+                    <form class="request-form ftco-animate bg-primary" enctype="multipart/form-data" method="post">
+                        <h2>Create a new car</h2>
                         <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
@@ -34,22 +34,15 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Transmition" class="label"></label>
-                            <select class="form-control" asp-for="Transmition" asp-items="Html.GetEnumSelectList<TransmitionType>()" value="@Model.Transmition">
+                            <select class="form-control" asp-for="Transmition" asp-items="Html.GetEnumSelectList<TransmitionType>()">
                                 <option value="">Select Transmition</option>
                             </select>
                             <span asp-validation-for="Transmition" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="HireStatus" class="label"></label>
-                            <select class="form-control" asp-for="HireStatus" asp-items="Html.GetEnumSelectList<HireStatus>()" value="@Model.HireStatus">
-                                <option value="">Select Transmition</option>
-                            </select>
-                            <span asp-validation-for="HireStatus" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ImgUrl" class="label"></label>
-                            <input asp-for="ImgUrl" class="form-control" placeholder="ImgUrl" />
-                            <span asp-validation-for="ImgUrl" class="text-danger"></span>
+                            <label asp-for="Image"></label>
+                            <input asp-for="Image" name="Image" type="file" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="PlateNumber" class="label"></label>
@@ -80,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="ParkingId" class="label"></label>
-                            <select class="form-control" asp-for="ParkingId" asp-items="@parkings" value=@currentParking>
+                            <select class="form-control" asp-for="ParkingId" asp-items="@parkings">
                                 <option value="">Select Parking</option>
                             </select>
                             <span asp-validation-for="ParkingId" class="text-danger"></span>

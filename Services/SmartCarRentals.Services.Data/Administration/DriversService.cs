@@ -29,7 +29,7 @@
                                                         Id = d.Id,
                                                         FirstName = d.FirstName,
                                                         LastName = d.LastName,
-                                                        ImageUrl = d.ImageUrl,
+                                                        Image = d.Image,
                                                         Rating = d.Ratings.Select(r => r.RatingVote).Average(),
                                                         Transfers = d.Transfers.Select(t => new Transfer()
                                                         {
@@ -51,7 +51,7 @@
                                                         Id = d.Id,
                                                         FirstName = d.FirstName,
                                                         LastName = d.LastName,
-                                                        ImageUrl = d.ImageUrl,
+                                                        Image = d.Image,
                                                         Rating = d.Ratings.Select(r => r.RatingVote).Average(),
                                                         Transfers = d.Transfers.Select(t => new Transfer()
                                                         {

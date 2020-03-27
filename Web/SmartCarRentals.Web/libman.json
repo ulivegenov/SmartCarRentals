@@ -33,7 +33,7 @@
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
       "files": [
         "dist/jquery.validate.unobtrusive.js",
-        "dist/jquery.validate.unobtrusive.min.js"
+        "dist/jquery.validate.unobtrusive.min.js",
       ]
     }
   ]

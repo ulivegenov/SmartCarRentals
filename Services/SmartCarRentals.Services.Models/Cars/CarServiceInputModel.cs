@@ -31,7 +31,7 @@
 
         [Required]
         [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
-        public string ImgUrl { get; set; }
+        public string Image { get; set; }
 
         [Required]
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]

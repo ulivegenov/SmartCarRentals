@@ -60,7 +60,7 @@
                                               .Select(c => new Car()
                                               {
                                                   Id = c.Id,
-                                                  ImgUrl = c.ImgUrl,
+                                                  Image = c.Image,
                                                   Make = c.Make,
                                                   Model = c.Model,
                                                   Class = c.Class,
@@ -90,7 +90,7 @@
                                               .Select(c => new Car()
                                               {
                                                   Id = c.Id,
-                                                  ImgUrl = c.ImgUrl,
+                                                  Image = c.Image,
                                                   Make = c.Make,
                                                   Model = c.Model,
                                                   Class = c.Class,

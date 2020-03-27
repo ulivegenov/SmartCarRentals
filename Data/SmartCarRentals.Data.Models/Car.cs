@@ -49,7 +49,7 @@
 
         [Required]
         [MaxLength(EntitiesAttributeConstraints.UrlMaxLength)]
-        public string ImgUrl { get; set; }
+        public string Image { get; set; }
 
         public ClassType Class { get; set; }
 

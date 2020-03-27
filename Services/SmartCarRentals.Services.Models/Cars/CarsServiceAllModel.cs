@@ -22,7 +22,7 @@
 
         public string Model { get; set; }
 
-        public string ImgUrl { get; set; }
+        public string Image { get; set; }
 
         public int PricePerDay { get; set; }
 
