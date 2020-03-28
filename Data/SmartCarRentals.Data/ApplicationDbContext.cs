@@ -42,6 +42,8 @@
 
         public DbSet<Transfer> Transfers { get; set; }
 
+        public DbSet<TransferType> TransfersTypes { get; set; }
+
         public DbSet<Trip> Trips { get; set; }
 
         public DbSet<CarRating> CarsRatings { get; set; }

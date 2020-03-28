@@ -25,12 +25,15 @@
         [MaxLength(EntitiesAttributeConstraints.AddressMaxLength)]
         public string EndingLokation { get; set; }
 
-        public int KmRun { get; set; }
-
         [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
 
         public int Points { get; set; }
+
+        [Required]
+        public int TransferTypeId { get; set; }
+
+        public virtual TransferType Type { get; set; }
 
         [Required]
         public string ClientId { get; set; }
