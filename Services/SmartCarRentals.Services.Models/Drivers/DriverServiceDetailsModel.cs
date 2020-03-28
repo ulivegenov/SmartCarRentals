@@ -25,7 +25,7 @@
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
         public string LastName { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
         public double Rating { get; set; }
 

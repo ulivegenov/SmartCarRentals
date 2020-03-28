@@ -38,7 +38,6 @@
         [MaxLength(EntitiesAttributeConstraints.PlateNumberMaxLength)]
         public string PlateNumber { get; set; }
 
-        [Required]
         [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
         public string Image { get; set; }
 

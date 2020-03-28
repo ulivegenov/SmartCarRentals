@@ -82,6 +82,14 @@
         [HttpPost]
         public async Task<IActionResult> Edit(CarEditInputModel carEditModel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
+                carEditModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
+
+                return this.View(carEditModel);
+            }
+
             var serviceCar = carEditModel.To<CarServiceDetailsModel>();
 
             if (carEditModel.Image.Length > 0)
@@ -92,14 +100,6 @@
                                                                         GlobalConstants.CarsImagesFolder);
 
                 serviceCar.Image = imageUrl;
-            }
-
-            if (!this.ModelState.IsValid)
-            {
-                var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
-                carEditModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
-
-                return this.View(carEditModel);
             }
 
             await this.carsService.EditAsync(serviceCar);

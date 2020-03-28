@@ -2,22 +2,18 @@
 @model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverDetailsViewModel
 @{
     ViewData["Title"] = "Details Driver";
-    var imageUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1584033892/SmartCarRentalsPics/Admin/dsc_0072_resized_hbldb4.jpg";
 }
 
 <section class="content" align="center">
     <div class="container">
         <div class="row">
-            <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center">
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
-                </div>
+            <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 text-center">
 
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
                             <img class="profile-user-img img-fluid img-circle"
-                                 src=@imageUrl
+                                 src=@Model.Image
                                  alt="User profile picture">
                         </div>
 

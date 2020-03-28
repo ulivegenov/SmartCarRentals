@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     using SmartCarRentals.Common;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Drivers;
@@ -15,5 +17,8 @@
         [Required]
         [StringLength(EntitiesAttributeConstraints.NameMaxLength, MinimumLength = EntitiesAttributeConstraints.NameMinLength)]
         public string LastName { get; set; }
+
+        [Required]
+        public virtual IFormFile Image { get; set; }
     }
 }

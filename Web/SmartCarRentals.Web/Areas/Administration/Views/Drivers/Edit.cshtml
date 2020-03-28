@@ -1,6 +1,6 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverDetailsViewModel
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Drivers.DriverEditInputModel
 @{
-    this.ViewData["Title"] = "Edit Country";
+    this.ViewData["Title"] = "Edit Driver";
 }
 
 <section class="content" align="center">
@@ -8,7 +8,7 @@
         <div class="row no-gutters">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <form class="request-form ftco-animate bg-primary" method="post">
+                    <form class="request-form ftco-animate bg-primary" enctype="multipart/form-data" method="post">
                         <h2>Driver Details</h2>
                         <hr />
                         <div class="form-group">
@@ -24,6 +24,11 @@
                             <label asp-for="LastName" class="label"></label>
                             <input asp-for="LastName" class="form-control" placeholder="LastName" />
                             <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Image"></label>
+                            <input asp-for="Image" name="Image" type="file" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success py-2 px-3" asp-area="Administration" asp-controller="Drivers" asp-action="Edit" asp-route-id="@Model.Id">Update</button>

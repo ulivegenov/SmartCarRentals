@@ -20,6 +20,8 @@
 
         public string LastName { get; set; }
 
+        public string Image { get; set; }
+
         public double Rating { get; set; }
 
         public ICollection<DriverRating> Ratings { get; set; }

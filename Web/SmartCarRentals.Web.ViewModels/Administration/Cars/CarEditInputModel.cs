@@ -20,6 +20,8 @@
 
         public string Id { get; set; }
 
+        public override IFormFile Image { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<CarServiceDetailsModel, CarEditInputModel>()

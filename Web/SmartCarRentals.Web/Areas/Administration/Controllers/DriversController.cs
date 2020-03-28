@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Drivers;
@@ -15,13 +15,16 @@
 
         private readonly IDriversService driversService;
         private readonly IDriversRatingsService driversRatingsService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public DriversController(
                                  IDriversService driversService,
-                                 IDriversRatingsService driversRatingsService)
+                                 IDriversRatingsService driversRatingsService,
+                                 ICloudinaryService cloudinaryService)
         {
             this.driversService = driversService;
             this.driversRatingsService = driversRatingsService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Create()
@@ -39,6 +42,13 @@
 
             var driverServiceModel = driverInputModel.To<DriverServiceInputModel>();
 
+            var imageUrl = await this.cloudinaryService.UploadImageAsync(
+                                                                         driverInputModel.Image,
+                                                                         $"{driverServiceModel.FirstName}-{driverServiceModel.LastName}",
+                                                                         GlobalConstants.DriversImagesFolder);
+
+            driverServiceModel.Image = imageUrl;
+
             await this.driversService.CreateAsync(driverServiceModel);
 
             return this.Redirect("/Administration/Drivers/All");
@@ -55,15 +65,30 @@
         public async Task<IActionResult> Edit(string id)
         {
             var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(id);
-            var viewModel = driver.To<DriverDetailsViewModel>();
+            var viewModel = driver.To<DriverEditInputModel>();
 
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DriverDetailsViewModel driverDetailsViewModel)
+        public async Task<IActionResult> Edit(DriverEditInputModel driverEditModel)
         {
-            var serviceDriver = driverDetailsViewModel.To<DriverServiceDetailsModel>();
+            var serviceDriver = driverEditModel.To<DriverServiceDetailsModel>();
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(driverEditModel);
+            }
+
+            if (driverEditModel.Image.Length > 0)
+            {
+                var imageUrl = await this.cloudinaryService.UploadImageAsync(
+                                                                         driverEditModel.Image,
+                                                                         $"{serviceDriver.FirstName}-{serviceDriver.LastName}",
+                                                                         GlobalConstants.DriversImagesFolder);
+
+                serviceDriver.Image = imageUrl;
+            }
 
             await this.driversService.EditAsync(serviceDriver);
 

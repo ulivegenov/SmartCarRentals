@@ -39,7 +39,8 @@
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
 
-        public IFormFile Image { get; set; }
+        [Required]
+        public virtual IFormFile Image { get; set; }
 
         public ClassType Class { get; set; }
 
