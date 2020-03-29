@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Data.Models.Enums.Trip
+﻿namespace SmartCarRentals.Data.Models.Enums.Transfer
 {
     public enum Status
     {

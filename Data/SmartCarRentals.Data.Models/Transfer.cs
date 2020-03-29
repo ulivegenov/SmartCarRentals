@@ -4,21 +4,21 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Models;
+    using SmartCarRentals.Data.Models.Enums.Transfer;
 
     public class Transfer : BaseDeletableModel<int>
     {
         public Transfer()
         {
+            this.Status = Status.Forthcoming;
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
         }
 
         public DateTime TransferDate { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
-        public decimal Price { get; set; }
+        public Status Status { get; set; }
 
         public int Points { get; set; }
 

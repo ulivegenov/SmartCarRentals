@@ -14,7 +14,7 @@
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
 
-            this.Status = Status.OnGoing;
+            this.Status = Status.Forthcoming;
         }
 
         public DateTime EndDate { get; set; }
