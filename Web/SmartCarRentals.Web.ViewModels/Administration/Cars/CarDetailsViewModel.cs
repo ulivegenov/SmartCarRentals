@@ -4,17 +4,14 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Microsoft.AspNetCore.Http;
-
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Cars;
-    using SmartCarRentals.Web.ViewModels.Administration.Contracts;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
-    public class CarDetailsViewModel : IDetailsViewModel<string>, IMapFrom<CarServiceDetailsModel>, IMapTo<CarServiceDetailsModel>
+    public class CarDetailsViewModel : IMapFrom<CarServiceDetailsModel>, IMapTo<CarServiceDetailsModel>
     {
         public CarDetailsViewModel()
         {

@@ -33,8 +33,10 @@
         public async Task<IActionResult> Create()
         {
             var towns = await this.townsService.GetAllAsync<TownsServiceDropDownModel>();
-            var viewModel = new ParkingInputModel();
-            viewModel.Towns = towns.Select(t => t.To<TownsDropDownViewModel>()).ToList();
+            var viewModel = new ParkingInputModel()
+            {
+                Towns = towns.Select(t => t.To<TownsDropDownViewModel>()).ToList(),
+            };
 
             return this.View(viewModel);
         }
@@ -109,8 +111,10 @@
         public async Task<IActionResult> All()
         {
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceAllModel>();
-            var viewModel = new ParkingsAllViewModelCollection();
-            viewModel.Parkings = parkings.Select(p => p.To<ParkingsAllViewModel>()).ToList();
+            var viewModel = new ParkingsAllViewModelCollection()
+            {
+                Parkings = parkings.Select(p => p.To<ParkingsAllViewModel>()).ToList(),
+            };
 
             return this.View(viewModel);
         }

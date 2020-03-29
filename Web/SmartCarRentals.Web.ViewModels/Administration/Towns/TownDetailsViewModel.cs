@@ -7,9 +7,8 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Towns;
-    using SmartCarRentals.Web.ViewModels.Administration.Contracts;
 
-    public class TownDetailsViewModel : IDetailsViewModel<int>, IMapFrom<TownServiceDetailsModel>, IMapTo<TownServiceDetailsModel>
+    public class TownDetailsViewModel : IMapFrom<TownServiceDetailsModel>, IMapTo<TownServiceDetailsModel>
     {
         public int Id { get; set; }
 

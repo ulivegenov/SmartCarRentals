@@ -10,7 +10,6 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Countries;
 
     public class CountriesService : AdministrationService<Country, int>, ICountriesService
     {
@@ -40,13 +39,5 @@
 
             return countries;
         }
-
-        //public async Task<CountryServiceDetailsModel> GetByIdAsync(int id)
-        //{
-        //    var country = await this.countryRepository.All().FirstOrDefaultAsync(c => c.Id == id);
-        //    var countryServiceModel = country.To<CountryServiceDetailsModel>();
-
-        //    return countryServiceModel;
-        //}
     }
 }

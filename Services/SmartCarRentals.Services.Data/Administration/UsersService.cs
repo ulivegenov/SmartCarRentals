@@ -142,7 +142,6 @@
             {
                 IdentityResult result;
 
-
                 if (roles[i].IsSelected && !(await this.userManager.IsInRoleAsync(user, roles[i].Name)))
                 {
                     result = await this.userManager.AddToRoleAsync(user, roles[i].Name);

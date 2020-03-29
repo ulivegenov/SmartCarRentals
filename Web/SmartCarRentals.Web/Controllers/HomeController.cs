@@ -14,22 +14,24 @@
 
     public class HomeController : BaseController
     {
-        private readonly IConfiguration configuration;
         private readonly IHomeService homeService;
+        private readonly IConfiguration configuration;
 
         public HomeController(
-                              IConfiguration configuration,
-                              IHomeService homeService)
+                              IHomeService homeService,
+                              IConfiguration configuration)
         {
-            this.configuration = configuration;
             this.homeService = homeService;
+            this.configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
         {
             var cars = await this.homeService.GetHotOffersCarsAsync();
-            var viewModel = new CarsHotOffersViewModelCollection();
-            viewModel.Cars = cars.Select(c => c.To<CarsHotOffersViewModel>()).ToList();
+            var viewModel = new CarsHotOffersViewModelCollection()
+            {
+                Cars = cars.Select(c => c.To<CarsHotOffersViewModel>()).ToList(),
+            };
 
             return this.View(viewModel);
         }
@@ -39,15 +41,15 @@
             return this.View();
         }
 
-        public IActionResult Services()
-        {
-            return this.View();
-        }
-
         public IActionResult Contact()
         {
             var model = this.configuration.GetValue<string>("GoogleMaps:ApiKey");
             this.ViewData["GoogleMapsApiKey"] = model;
+            return this.View();
+        }
+
+        public IActionResult Services()
+        {
             return this.View();
         }
 

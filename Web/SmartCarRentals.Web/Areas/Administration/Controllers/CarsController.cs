@@ -19,26 +19,25 @@
 
         private readonly ICarsService carsService;
         private readonly IParkingsService parkingsService;
-        private readonly IParkingSlotsService parkingSlotsService;
         private readonly ICloudinaryService cloudinaryService;
 
         public CarsController(
                               ICarsService carsService,
                               IParkingsService parkingsService,
-                              IParkingSlotsService parkingSlotsService,
                               ICloudinaryService cloudinaryService)
         {
             this.carsService = carsService;
             this.parkingsService = parkingsService;
-            this.parkingSlotsService = parkingSlotsService;
             this.cloudinaryService = cloudinaryService;
         }
 
         public async Task<IActionResult> Create()
         {
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
-            var viewModel = new CarInputModel();
-            viewModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
+            var viewModel = new CarInputModel()
+            {
+                Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList(),
+            };
 
             return this.View(viewModel);
         }
@@ -143,9 +142,10 @@
         {
             var cars = await this.carsService.GetAllAsync<CarsServiceAllModel>();
 
-            var viewModel = new CarsAllViewModelCollection();
-
-            viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
+            var viewModel = new CarsAllViewModelCollection()
+            {
+                Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList(),
+            };
 
             return this.View(viewModel);
         }

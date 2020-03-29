@@ -17,14 +17,6 @@
 
         public DateTime TransferDate { get; set; }
 
-        [Required]
-        [MaxLength(EntitiesAttributeConstraints.AddressMaxLength)]
-        public string StartingLocation { get; set; }
-
-        [Required]
-        [MaxLength(EntitiesAttributeConstraints.AddressMaxLength)]
-        public string EndingLokation { get; set; }
-
         [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
 

@@ -1,6 +1,6 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.TransfersTypes.TransferTypeDetailsViewModel
+﻿@model SmartCarRentals.Web.ViewModels.Administration.TransfersTypes.TransferTypeEditInputModel
 @{
-    ViewData["Title"] = "Edit TransferType";
+    this.ViewData["Title"] = "Edit Transfer Type";
 }
 
 <section class="content" align="center">
@@ -8,8 +8,8 @@
         <div class="row no-gutters">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <form class="request-form ftco-animate bg-primary" id="account" method="post">
-                        <h2>Edit TransferType</h2>
+                    <form class="request-form ftco-animate bg-primary" enctype="multipart/form-data" method="post">
+                        <h2>Create a new car</h2>
                         <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Price" class="label"></label>
-                            <input asp-for="Price" class="form-control" placeholder="Price" readonly />
+                            <input asp-for="Price" class="form-control" placeholder="Price" />
                             <span asp-validation-for="Price" class="text-danger"></span>
                         </div>
                         <div class="form-group">

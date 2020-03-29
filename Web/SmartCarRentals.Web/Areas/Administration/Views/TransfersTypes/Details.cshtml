@@ -1,0 +1,35 @@
+﻿@using SmartCarRentals.Common
+@model SmartCarRentals.Web.ViewModels.Administration.TransfersTypes.TransferTypeDetailsViewModel
+@{
+    ViewData["Title"] = "Details TransferType";
+}
+
+    <section class="content" align="center">
+        <div class="container-fluid">
+            <div class="row no-gutters">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h2>Transfer Type Details</h2>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Name" readonly />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="label"></label>
+                            <input asp-for="Price" class="form-control" placeholder="Price" readonly />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <a type="button" class="btn btn-success py-2 px-3" asp-area="Administration" asp-controller="TransfersTypes" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                            <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="TransfersTypes" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                            <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="TransfersTypes" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+

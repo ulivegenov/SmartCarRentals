@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Data.Models.Enums.Driver;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Drivers;
 
@@ -23,6 +24,8 @@
         public string Image { get; set; }
 
         public double Rating { get; set; }
+
+        public HireStatus HireStatus { get; set; }
 
         public ICollection<DriverRating> Ratings { get; set; }
 

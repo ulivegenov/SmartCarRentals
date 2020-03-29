@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Models.Roles;
     using SmartCarRentals.Services.Models.Users;

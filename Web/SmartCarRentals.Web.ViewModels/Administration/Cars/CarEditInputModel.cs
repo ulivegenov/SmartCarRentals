@@ -1,7 +1,7 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Cars
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
 
