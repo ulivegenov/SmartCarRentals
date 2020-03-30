@@ -32,19 +32,22 @@
                     <form class="request-form ftco-animate bg-primary" enctype="multipart/form-data" method="post">
                         <h2>Make Your Transfer</h2>
                         <hr />
-                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
-                            <input id="driverId" asp-for="@Model.DriverId" class="form-control" style="display:none" />
                             <span asp-validation-for="@Model.DriverId" class="text-danger"></span>
+                            <input id="driverId" asp-for="@Model.DriverId" class="form-control" style="display:none" />
+
                         </div>
                         <div class="form-group">
+                            <span asp-validation-for="@Model.TransferTypeId" class="text-danger"></span>
                             <select class="form-group" asp-for="@Model.TransferTypeId" asp-items="@transfersTypes">
                                 <option value="">Select Transfer Type</option>
                             </select>
-                            <span asp-validation-for="@Model.TransferTypeId" class="text-danger"></span>
+
                         </div>
                         <div class="form-group">
+                            <span asp-validation-for="@Model.TransferDate" class="text-danger"></span><br/>
                             <input data-provide="datepicker" data-date-format="dd-mm-yyyy" asp-for="@Model.TransferDate" value="Select Date">
+
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success py-3 px-4">Make Trip</button>

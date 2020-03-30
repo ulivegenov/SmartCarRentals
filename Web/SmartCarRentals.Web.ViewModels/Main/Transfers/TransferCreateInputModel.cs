@@ -21,6 +21,7 @@
             this.Drivers = new HashSet<DriverDetailsViewModel>();
         }
 
+        [Required]
         public DateTime TransferDate { get; set; }
 
         public Status Status { get; set; }
@@ -32,7 +33,6 @@
 
         public virtual TransferType Type { get; set; }
 
-        [Required]
         public string ClientId { get; set; }
 
         public virtual ApplicationUser Client { get; set; }

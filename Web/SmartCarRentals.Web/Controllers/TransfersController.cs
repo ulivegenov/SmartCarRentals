@@ -62,7 +62,10 @@
         [HttpPost]
         public async Task<IActionResult> Create(TransferCreateInputModel transferCreateInputModel, string searchByDriver)
         {
-            if (this.ModelState.IsValid)
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            transferCreateInputModel.ClientId = currentUser.Id;
+
+            if (!this.ModelState.IsValid)
             {
                 var drivers = await this.driversService.GetAllAsync<DriverServiceDetailsModel>();
                 var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
@@ -76,13 +79,12 @@
 
                 transferCreateInputModel.Drivers = drivers.Select(d => d.To<DriverDetailsViewModel>()).ToList();
                 transferCreateInputModel.TransfersTypes = transfersTypes.Select(t => t.To<TransfersTypesDropDownViewModel>()).ToList();
+                transferCreateInputModel.ClientId = currentUser.Id;
 
                 return this.View(transferCreateInputModel);
             }
 
             var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            serviceTransfer.ClientId = currentUser.Id;
 
             await this.transfersService.CreateAsync(serviceTransfer);
 
@@ -108,24 +110,36 @@
         [HttpPost("/Transfers/Create/{driverId}")]
         public async Task<IActionResult> CreateByDriver(TransferCreateInputModel transferCreateInputModel, string driverId)
         {
-            if (this.ModelState.IsValid)
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            if (!this.ModelState.IsValid)
             {
                 var driverService = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(driverId);
                 var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
-
                 transferCreateInputModel.Driver = driverService.To<Driver>();
                 transferCreateInputModel.TransfersTypes = transfersTypes.Select(t => t.To<TransfersTypesDropDownViewModel>()).ToList();
+                transferCreateInputModel.ClientId = currentUser.Id;
 
                 return this.View(transferCreateInputModel);
             }
 
             var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
-            var currentUser = await this.userManager.GetUserAsync(this.User);
             serviceTransfer.ClientId = currentUser.Id;
 
             await this.transfersService.CreateAsync(serviceTransfer);
 
             return this.Redirect("/");
+        }
+
+        public async Task<IActionResult> MyTransfers()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var transfers = await this.transfersService.GetByUser(user.Id);
+
+            var viewModel = new MyTransfersAllViewModelCollection();
+            viewModel.MyTransfers = transfers.Select(t => t.To<MyTransfersAllViewModel>()).ToList();
+
+            return this.View(viewModel);
         }
     }
 }
