@@ -1,20 +1,14 @@
-﻿namespace SmartCarRentals.Data.Models
+﻿namespace SmartCarRentals.Services.Models.Main.Transfers
 {
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using SmartCarRentals.Data.Common.Models;
+    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Transfer;
+    using SmartCarRentals.Services.Mapping;
 
-    public class Transfer : BaseDeletableModel<int>
+    public class TransferServiceInputModel : IMapTo<Transfer>
     {
-        public Transfer()
-        {
-            this.Status = Status.Forthcoming;
-            this.CreatedOn = DateTime.UtcNow;
-            this.IsDeleted = false;
-        }
-
         public DateTime TransferDate { get; set; }
 
         public Status Status { get; set; }
@@ -35,5 +29,7 @@
         public string DriverId { get; set; }
 
         public virtual Driver Driver { get; set; }
+
+        public int? DriverRatingId { get; set; }
     }
 }

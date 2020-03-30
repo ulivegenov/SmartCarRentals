@@ -135,6 +135,7 @@
             services.AddTransient<IHomeService, HomeService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<ITransfersTypesService, TransfersTypesService>();
+            services.AddTransient<ITransfersService, TransfersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -44,9 +44,8 @@
                             </p>
                             <div class="d-flex mb-3">
                                 <span class="cat">Count of Transfers: @driver.Transfers.Count</span>
-                                @*<p class="price ml-auto">$@car.PricePerDay <span>/day</span></p>*@
                             </div>
-                            <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Hire now</a> <a class="btn btn-secondary py-2 ml-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@driver.Id">Details</a></p>
+                            <p class="d-flex mb-0 d-block"><a class="btn btn-primary py-2 mr-1"asp-area="" asp-controller="Transfers" asp-action="Create" asp-route-id="@driver.Id">Hire now</a></p>
                         </div>
                     </div>
                 </div>

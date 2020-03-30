@@ -34,10 +34,6 @@
         [Required]
         public virtual Car Car { get; set; }
 
-        public int? CarRatingId { get; set; }
-
-        public CarRating CarRating { get; set; }
-
         public string ClientId { get; set; }
 
         public virtual ApplicationUser Client { get; set; }

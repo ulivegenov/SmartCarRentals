@@ -138,11 +138,11 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-one relationship between Trip and CarRating
-            builder.Entity<CarRating>()
-                .HasOne(cr => cr.Trip)
-                .WithOne(t => t.CarRating)
-                .HasForeignKey<CarRating>(cr => cr.TripId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<CarRating>()
+            //    .HasOne(cr => cr.Trip)
+            //    .WithOne(t => t.CarRating)
+            //    .HasForeignKey<CarRating>(cr => cr.TripId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             // Many-to-many relationship between User and Driver
             builder.Entity<DriverRating>()
@@ -161,11 +161,11 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to one relationship between Transfer and DriverRating
-            builder.Entity<DriverRating>()
-                .HasOne(dr => dr.Transfer)
-                .WithOne(t => t.DriverRating)
-                .HasForeignKey<DriverRating>(dr => dr.TransferId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<DriverRating>()
+            //    .HasOne(dr => dr.Transfer)
+            //    .WithOne(t => t.DriverRating)
+            //    .HasForeignKey<DriverRating>(dr => dr.TransferId)
+            //    .OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
