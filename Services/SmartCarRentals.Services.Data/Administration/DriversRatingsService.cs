@@ -7,6 +7,9 @@
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Main.DraversRatings;
 
     public class DriversRatingsService : IDriversRatingsService
     {
@@ -27,6 +30,25 @@
             {
                 this.driversRatingsEntityRepository.Delete(driverRating);
             }
+
+            var result = await this.driversRatingsEntityRepository.SaveChangesAsync();
+
+            return result;
+        }
+
+        public async Task<DriverRatingServiceDetailsModel> GetByTransferId(int transferId)
+        {
+            var driverRating = await this.driversRatingsEntityRepository.All()
+                                                                        .FirstOrDefaultAsync(dr => dr.TransferId == transferId);
+
+            return driverRating.To<DriverRatingServiceDetailsModel>();
+        }
+
+        public async Task<int> CreateAsync(DriverRatingServiceInputModel driverRatingServiceInputModel)
+        {
+            var driverRating = driverRatingServiceInputModel.To<DriverRating>();
+
+            await this.driversRatingsEntityRepository.AddAsync(driverRating);
 
             var result = await this.driversRatingsEntityRepository.SaveChangesAsync();
 

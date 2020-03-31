@@ -131,6 +131,7 @@
             return this.Redirect("/");
         }
 
+        [Authorize]
         public async Task<IActionResult> MyTransfers()
         {
             var user = await this.userManager.GetUserAsync(this.User);

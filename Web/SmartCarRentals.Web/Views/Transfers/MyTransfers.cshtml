@@ -39,11 +39,11 @@
                             <td class="align-middle">@Model.MyTransfers[i].Driver.FirstName @Model.MyTransfers[i].Driver.LastName</td>
                             <td class="align-middle">@Model.MyTransfers[i].Type.Name</td>
                             <td class="align-middle">@Model.MyTransfers[i].Type.Price.ToString("F2")</td>
-                            <td class="align-middle">@Model.MyTransfers[i].TransferDate</td>
+                            <td class="align-middle">@Model.MyTransfers[i].TransferDate.ToString("dd-MM-yyyy")</td>
                             <td class="align-middle">
                                 @Model.MyTransfers[i].Status @if (Model.MyTransfers[i].Status == Status.Finished)
                                 {
-                                    <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="TransfersTypes" asp-action="Create" asp-route-id="@Model.MyTransfers[i].Id">Vote</a>
+                                    <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="DriversRatings" asp-action="Create" asp-route-id="@Model.MyTransfers[i].Id">Vote</a>
                                 }
                             </td>
                         </tr>

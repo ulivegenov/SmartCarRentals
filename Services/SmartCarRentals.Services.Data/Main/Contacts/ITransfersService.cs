@@ -10,5 +10,7 @@
         Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel);
 
         Task<IEnumerable<MyTransfersServiceAllModel>> GetByUser(string userId);
+
+        Task<TransferServiceDetailsModel> GetByIdAsync(int transferId);
     }
 }
