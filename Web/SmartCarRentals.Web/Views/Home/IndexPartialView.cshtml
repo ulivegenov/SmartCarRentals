@@ -13,16 +13,17 @@
             <div class="text">
                 <h2 class="mb-0"><a href="#">@Model.Cars[i].Make @Model.Cars[i].Model</a></h2>
                 <p class="mb-0 rated">
-                    <span>Rating: @Model.Cars[i].Rating &emsp;</span>
+                    <span>Rating: @Model.Cars[i].Rating </span>
+                    <br />
                     <span>
                         @for (int j = 1; j <= Model.Cars[i].Rating; j++)
                         {
-                            <span class="ion-ios-star text-primary"></span>
+                            <span class="fas fa-star text-primary"></span>
                         }
 
                         @for (int j = EntitiesAttributeConstraints.MaxRatingVote; j > Model.Cars[i].Rating; j--)
                         {
-                            <span class="ion-ios-star-outline text-primary"></span>
+                            <span class="far fa-star text-primary"></span>
                         }
                     </span>
                 </p>

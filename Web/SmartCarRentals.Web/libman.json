@@ -15,9 +15,11 @@
       "destination": "wwwroot/lib/bootstrap/",
       "files": [
         "dist/css/bootstrap.css",
+        "dist/css/bootstrap.css.map",
         "dist/css/bootstrap.min.css",
         "dist/js/bootstrap.js",
-        "dist/js/bootstrap.min.js"
+        "dist/js/bootstrap.min.js",
+        "dist/js/bootstrap.min.js.map"
       ]
     },
     {
@@ -34,6 +36,169 @@
       "files": [
         "dist/jquery.validate.unobtrusive.js",
         "dist/jquery.validate.unobtrusive.min.js"
+      ]
+    },
+    {
+      "library": "aos@2.3.4",
+      "destination": "wwwroot/lib/aos/",
+      "files": [
+        "dist/aos.css",
+        "dist/aos.min.css",
+        "dist/aos.js",
+        "dist/aos.min.js"
+      ]
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/",
+      "files": [
+        "dist/css/bootstrap-datepicker.css",
+        "dist/css/bootstrap-datepicker.css.map",
+        "dist/css/bootstrap-datepicker.min.css",
+        "dist/js/bootstrap-datepicker.js"
+      ]
+    },
+    {
+      "library": "szmigiel-flaticon@1.0.0",
+      "destination": "wwwroot/lib/flaticons/",
+      "files": [
+        "flaticon.css",
+        "flaticon.min.css"
+      ]
+    },
+    {
+      "library": "@fortawesome/fontawesome-free@5.13.0",
+      "destination": "wwwroot/lib/fontawesome/",
+      "files": [
+        "css/fontawesome.css",
+        "css/fontawesome.min.css",
+        "webfonts/fa-brands-400.eot",
+        "webfonts/fa-brands-400.svg",
+        "webfonts/fa-brands-400.ttf",
+        "webfonts/fa-brands-400.woff",
+        "webfonts/fa-brands-400.woff2",
+        "webfonts/fa-regular-400.eot",
+        "webfonts/fa-regular-400.svg",
+        "webfonts/fa-regular-400.ttf",
+        "webfonts/fa-regular-400.woff",
+        "webfonts/fa-regular-400.woff2",
+        "webfonts/fa-solid-900.eot",
+        "webfonts/fa-solid-900.svg",
+        "webfonts/fa-solid-900.ttf",
+        "webfonts/fa-solid-900.woff",
+        "webfonts/fa-solid-900.woff2",
+        "css/all.css",
+        "css/all.min.css"
+      ]
+    },
+    {
+      "library": "@icon/ionicons@4.5.8",
+      "destination": "wwwroot/lib/ionicons/css/",
+      "files": [
+        "ionicons.css",
+        "ionicons.min.css"
+      ]
+    },
+    {
+      "library": "timepicker@1.13.3",
+      "destination": "wwwroot/lib/timepicker/",
+      "files": [
+        "jquery.timepicker.css",
+        "jquery.timepicker.js",
+        "jquery.timepicker.min.js"
+      ]
+    },
+    {
+      "library": "magnific-popup@1.1.0",
+      "destination": "wwwroot/lib/magnific-popup/",
+      "files": [
+        "dist/magnific-popup.css",
+        "dist/jquery.magnific-popup.js",
+        "dist/jquery.magnific-popup.min.js"
+      ]
+    },
+    {
+      "library": "open-iconic@1.1.1",
+      "destination": "wwwroot/lib/open-iconic/",
+      "files": [
+        "font/css/open-iconic-bootstrap.css",
+        "font/css/open-iconic-bootstrap.min.css"
+      ]
+    },
+    {
+      "library": "owl.carousel@2.3.4",
+      "destination": "wwwroot/lib/owl-carousel/",
+      "files": [
+        "dist/assets/owl.carousel.css",
+        "dist/assets/owl.carousel.min.css",
+        "dist/assets/owl.theme.default.css",
+        "dist/assets/owl.theme.default.min.css",
+        "dist/owl.carousel.js",
+        "dist/owl.carousel.min.js"
+      ]
+    },
+    {
+      "library": "@danielturner/google-map@3.0.1-latest",
+      "destination": "wwwroot/lib/google-map/",
+      "files": [ "google-map.js" ]
+    },
+    {
+      "library": "jquery.animate-number@0.0.14",
+      "destination": "wwwroot/lib/jquery-animate-number/",
+      "files": [
+        "jquery.animateNumber.js",
+        "jquery.animateNumber.min.js"
+      ]
+    },
+    {
+      "library": "jquery-easing@0.0.1",
+      "destination": "wwwroot/lib/jquery-easing/",
+      "files": [
+        "jquery.easing.1.3.js",
+        "jquery.easing.1.3.min.js"
+      ]
+    },
+    {
+      "library": "stellar.js@0.6.5",
+      "destination": "wwwroot/lib/jquery.stellar",
+      "files": [
+        "jquery.stellar.js",
+        "jquery.stellar.min.js"
+      ]
+    },
+    {
+      "library": "waypoints@4.0.1",
+      "destination": "wwwroot/",
+      "files": [
+        "lib/jquery.waypoints.js",
+        "lib/jquery.waypoints.min.js"
+      ]
+    },
+    {
+      "library": "jquery-migrate@3.1.0",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "dist/jquery-migrate.js",
+        "dist/jquery-migrate.min.js",
+        "dist/jquery-migrate.min.map"
+      ]
+    },
+    {
+      "library": "@popperjs/core@2.1.1",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "dist/umd/popper.js",
+        "dist/umd/popper.js.map",
+        "dist/umd/popper.min.js",
+        "dist/umd/popper.min.js.map"
+      ]
+    },
+    {
+      "library": "scrollax@1.0.0",
+      "destination": "wwwroot/lib/scrollax/",
+      "files": [
+        "scrollax.js",
+        "scrollax.min.js"
       ]
     }
   ]
