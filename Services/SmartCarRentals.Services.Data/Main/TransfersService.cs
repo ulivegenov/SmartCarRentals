@@ -51,6 +51,7 @@
                                                              Status = t.Status,
                                                              Type = new TransferType()
                                                              {
+                                                                 Id = t.Type.Id,
                                                                  Name = t.Type.Name,
                                                                  Price = t.Type.Price,
                                                              },
@@ -71,7 +72,7 @@
         {
             var transfer = await this.transferRepository.All()
                                                         .Where(t => t.Id == transferId)
-                                                        .Select(t => new TransferServiceDetailsModel()
+                                                        .Select(t => new Transfer()
                                                         {
                                                             Id = t.Id,
                                                             TransferDate = t.TransferDate,
@@ -89,11 +90,11 @@
                                                                 LastName = t.Driver.LastName,
                                                             },
                                                         })
+                                                        .To<TransferServiceDetailsModel>()
                                                         .FirstOrDefaultAsync();
 
             return transfer;
         }
-
 
         // Temp Method, only for Development
         private Status GetStatus(DateTime transferDate)

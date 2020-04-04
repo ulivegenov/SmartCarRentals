@@ -31,8 +31,8 @@
         public virtual ApplicationUser Client { get; set; }
 
         [Required]
-            public string DriverId { get; set; }
+        public string DriverId { get; set; }
 
-            public virtual Driver Driver { get; set; }
+        public virtual Driver Driver { get; set; }
     }
 }

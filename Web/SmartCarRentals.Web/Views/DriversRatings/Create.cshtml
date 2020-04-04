@@ -28,6 +28,10 @@
                         <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
+                            <input asp-for="DriverId" type="hidden" value="@Model.DriverId">
+                            <span asp-validation-for="DriverId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="RatingVote" class="label"></label>
                             <input asp-for="RatingVote" class="form-control" placeholder="RatingVote" />
                             <span asp-validation-for="RatingVote" class="text-danger"></span>

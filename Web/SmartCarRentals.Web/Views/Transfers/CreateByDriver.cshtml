@@ -45,7 +45,7 @@
 
                         </div>
                         <div class="form-group">
-                            <span asp-validation-for="@Model.TransferDate" class="text-danger"></span><br/>
+                            <span asp-validation-for="@Model.TransferDate" class="text-danger"></span><br />
                             <input data-provide="datepicker" data-date-format="dd-mm-yyyy" asp-for="@Model.TransferDate" value="Select Date">
 
                         </div>
@@ -63,16 +63,17 @@
                     <div class="text">
                         <h2 class="mb-0"><a>@Model.Driver.FirstName @Model.Driver.LastName</a></h2>
                         <p class="mb-0 rated">
-                            <span>Rating: @Model.Driver.Rating &emsp;</span>
+                            <span>Rating: @Model.Driver.Rating </span>
+                            <br />
                             <span>
                                 @for (int i = 1; i <= Model.Driver.Rating; i++)
                                 {
-                                    <span class="ion-ios-star text-primary"></span>
+                                    <span class="fas fa-star text-primary"></span>
                                 }
 
                                 @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > Model.Driver.Rating; i--)
                                 {
-                                    <span class="ion-ios-star-outline text-primary"></span>
+                                    <span class="far fa-star text-primary"></span>
                                 }
                             </span>
                         </p>

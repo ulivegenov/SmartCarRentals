@@ -17,24 +17,35 @@
     {
         private readonly IDriversRatingsService driversRatingsService;
         private readonly ITransfersService transfersService;
+        private readonly IDriversService driversService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public DriversRatingsController(
                                         IDriversRatingsService driversRatingsService,
                                         ITransfersService transfersService,
+                                        IDriversService driversService,
                                         UserManager<ApplicationUser> userManager)
         {
             this.driversRatingsService = driversRatingsService;
             this.transfersService = transfersService;
+            this.driversService = driversService;
             this.userManager = userManager;
         }
 
         [Authorize]
-        public IActionResult Create(int transferId)
+        public async Task<IActionResult> Create(int id)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var transferServiceModel = await this.transfersService.GetByIdAsync(id);
+            var transfer = transferServiceModel.To<Transfer>();
+            var draver = transfer.Driver;
             var viewModel = new DriverRatingCreateInputModel()
             {
-                TransferId = transferId,
+                Client = currentUser,
+                ClientId = currentUser.Id,
+                Transfer = transfer,
+                TransferId = id,
+                DriverId = draver.Id,
             };
             return this.View(viewModel);
         }
@@ -42,23 +53,25 @@
         // TODO REFACTORING - driver.Id is null???
         [Authorize]
         [Route("/DriversRatings/Create/{id}")]
-        public async Task<IActionResult> Create(DriverRatingCreateInputModel driverRatingCreateInputModel, int transferId)
+        [HttpPost]
+        public async Task<IActionResult> Create(DriverRatingCreateInputModel driverRatingCreateInputModel, int id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var transfer = await this.transfersService.GetByIdAsync(transferId);
+            var transfer = await this.transfersService.GetByIdAsync(id);
+            var driver = transfer.To<Transfer>().Driver;
 
             if (!this.ModelState.IsValid)
             {
                 driverRatingCreateInputModel.ClientId = currentUser.Id;
-                driverRatingCreateInputModel.TransferId = transferId;
-                driverRatingCreateInputModel.DriverId = transfer.Driver.Id;
+                driverRatingCreateInputModel.TransferId = id;
+                driverRatingCreateInputModel.DriverId = driver.Id;
 
                 return this.View(driverRatingCreateInputModel);
             }
 
             driverRatingCreateInputModel.ClientId = currentUser.Id;
-            driverRatingCreateInputModel.TransferId = transferId;
-            driverRatingCreateInputModel.DriverId = transfer.Driver.Id;
+            driverRatingCreateInputModel.TransferId = id;
+            driverRatingCreateInputModel.DriverId = driver.Id;
 
             var serviceModel = driverRatingCreateInputModel.To<DriverRatingServiceInputModel>();
 

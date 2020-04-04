@@ -15,6 +15,7 @@
     using SmartCarRentals.Services.Models.Main.Transfers;
     using SmartCarRentals.Services.Models.Main.TransfersTypes;
     using SmartCarRentals.Web.ViewModels.Administration.Drivers;
+    using SmartCarRentals.Web.ViewModels.Main.DriversRatings;
     using SmartCarRentals.Web.ViewModels.Main.Transfers;
     using SmartCarRentals.Web.ViewModels.Main.TransfersTypes;
 

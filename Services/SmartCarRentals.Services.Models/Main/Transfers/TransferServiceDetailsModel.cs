@@ -3,8 +3,9 @@
     using System;
 
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Mapping;
 
-    public class TransferServiceDetailsModel
+    public class TransferServiceDetailsModel : IMapFrom<Transfer>, IMapTo<Transfer>
     {
         public int Id { get; set; }
 
@@ -22,6 +23,6 @@
 
         public double Rating { get; set; }
 
-        public string Comment { get; set; }
+        //public string Comment { get; set; }
     }
 }
