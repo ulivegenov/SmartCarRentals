@@ -12,6 +12,8 @@
         {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
+            this.HasPaid = false;
+            this.HasVote = false;
         }
 
         public DateTime TransferDate { get; set; }
@@ -34,5 +36,9 @@
         public string DriverId { get; set; }
 
         public virtual Driver Driver { get; set; }
+
+        public bool HasPaid { get; set; }
+
+        public bool HasVote { get; set; }
     }
 }

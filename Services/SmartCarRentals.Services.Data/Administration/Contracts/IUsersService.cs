@@ -19,5 +19,7 @@
         Task<IEnumerable<RolesAllServiceModel>> GetUserRoles(string userId);
 
         Task<ApplicationUser> EditUserRoles(string id, List<RolesAllViewModel> roles);
+
+        Task<bool> GetPointsAsync(string id, int points);
     }
 }

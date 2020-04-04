@@ -6,10 +6,11 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Transfer;
+    using SmartCarRentals.Data.Models.Enums.User;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contacts;
     using SmartCarRentals.Services.Mapping;
@@ -18,14 +19,14 @@
     public class TransfersService : ITransfersService
     {
         private readonly IDeletableEntityRepository<Transfer> transferRepository;
-        private readonly IDriversRatingsService driversRatingsService;
+        private readonly IUsersService usersService;
 
         public TransfersService(
                                 IDeletableEntityRepository<Transfer> transferRepository,
-                                IDriversRatingsService driversRatingsService)
+                                IUsersService usersService)
         {
             this.transferRepository = transferRepository;
-            this.driversRatingsService = driversRatingsService;
+            this.usersService = usersService;
         }
 
         public async Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel)
@@ -42,6 +43,19 @@
 
         public async Task<IEnumerable<MyTransfersServiceAllModel>> GetByUser(string userId)
         {
+            var user = await this.usersService.GetByIdAsync(userId);
+            var discount = GlobalConstants.UserDiscount;
+
+            if (user.Rank == RankType.GoldUser)
+            {
+                discount = GlobalConstants.GoldUserDiscount;
+            }
+
+            if (user.Rank == RankType.PlatinumUser)
+            {
+                discount = GlobalConstants.PlatinumUserDiscount;
+            }
+
             var transfers = await this.transferRepository.All()
                                                          .Where(t => t.ClientId == userId)
                                                          .Select(t => new Transfer()
@@ -61,9 +75,18 @@
                                                                  FirstName = t.Driver.FirstName,
                                                                  LastName = t.Driver.LastName,
                                                              },
+                                                             HasPaid = t.HasPaid,
+                                                             HasVote = t.HasVote,
                                                          })
                                                          .To<MyTransfersServiceAllModel>()
+                                                         .OrderBy(t => t.HasPaid)
+                                                         .ThenBy(t => t.TransferDate)
                                                          .ToListAsync();
+
+            foreach (var transfer in transfers)
+            {
+                transfer.Type.Price -= transfer.Type.Price * discount / 100;
+            }
 
             return transfers;
         }
@@ -89,11 +112,70 @@
                                                                 FirstName = t.Driver.FirstName,
                                                                 LastName = t.Driver.LastName,
                                                             },
+                                                            HasPaid = t.HasPaid,
+                                                            HasVote = t.HasVote,
                                                         })
                                                         .To<TransferServiceDetailsModel>()
                                                         .FirstOrDefaultAsync();
 
             return transfer;
+        }
+
+        public async Task<int> PayByIdAsync(int transferId, string userId)
+        {
+            var user = await this.usersService.GetByIdAsync(userId);
+            var discount = GlobalConstants.UserDiscount;
+
+            if (user.Rank == RankType.GoldUser)
+            {
+                discount = GlobalConstants.GoldUserDiscount;
+            }
+
+            if (user.Rank == RankType.PlatinumUser)
+            {
+                discount = GlobalConstants.PlatinumUserDiscount;
+            }
+
+            var transfer = await this.transferRepository.All()
+                                                        .Where(t => t.Id == transferId)
+                                                        .Select(t => new Transfer()
+                                                        {
+                                                            Id = t.Id,
+                                                            TransferDate = t.TransferDate,
+                                                            Points = t.Points,
+                                                            Status = t.Status,
+                                                            ClientId = t.ClientId,
+                                                            DriverId = t.DriverId,
+                                                            TransferTypeId = t.TransferTypeId,
+                                                            Type = new TransferType()
+                                                            {
+                                                                Id = t.Type.Id,
+                                                                Name = t.Type.Name,
+                                                                Price = t.Type.Price,
+                                                            },
+                                                            HasPaid = t.HasPaid,
+                                                            HasVote = t.HasVote,
+                                                        })
+                                                        .FirstOrDefaultAsync();
+
+            transfer.HasPaid = true;
+            transfer.Type.Price -= transfer.Type.Price * discount / 100;
+            transfer.Points = (int)Math.Round(transfer.Type.Price / 10);
+            this.transferRepository.Update(transfer);
+
+            var result = await this.transferRepository.SaveChangesAsync();
+
+            return transfer.Points;
+        }
+
+        public async Task<int> VoteAsync(int transferId)
+        {
+            var transfer = await this.transferRepository.GetByIdWithDeletedAsync(transferId);
+
+            transfer.HasVote = true;
+            var result = await this.transferRepository.SaveChangesAsync();
+
+            return result;
         }
 
         // Temp Method, only for Development

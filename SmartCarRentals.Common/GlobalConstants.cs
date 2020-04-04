@@ -11,5 +11,14 @@
         // Cloudinary constants
         public const string CarsImagesFolder = "SmartCarRentalsPics/Cars";
         public const string DriversImagesFolder = "SmartCarRentalPics/Drivers";
+
+        // Points Constants
+        public const int GoldUserMinPoints = 200;
+        public const int PlatinumUserMinPoints = 500;
+
+        // Discounts Constants in percent
+        public const int UserDiscount = 0;
+        public const int GoldUserDiscount = 5;
+        public const int PlatinumUserDiscount = 10;
     }
 }

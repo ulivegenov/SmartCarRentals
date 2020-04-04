@@ -25,17 +25,20 @@
         private readonly IDriversService driversService;
         private readonly ITransfersTypesService transfersTypesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUsersService usersService;
 
         public TransfersController(
                                    ITransfersService transfersService,
                                    IDriversService driversService,
                                    ITransfersTypesService transfersTypesService,
-                                   UserManager<ApplicationUser> userManager)
+                                   UserManager<ApplicationUser> userManager,
+                                   IUsersService usersService)
         {
             this.transfersService = transfersService;
             this.driversService = driversService;
             this.transfersTypesService = transfersTypesService;
             this.userManager = userManager;
+            this.usersService = usersService;
         }
 
         public async Task<IActionResult> Create(string searchByDriver)
@@ -142,6 +145,18 @@
             viewModel.MyTransfers = transfers.Select(t => t.To<MyTransfersAllViewModel>()).ToList();
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost("/Transfers/Pay/{id}")]
+        public async Task<IActionResult> Pay(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var transferPoints = await this.transfersService.PayByIdAsync(id, user.Id);
+
+            await this.usersService.GetPointsAsync(user.Id, transferPoints);
+
+            return this.Redirect("/Transfers/MyTransfers");
         }
     }
 }

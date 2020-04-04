@@ -15,6 +15,8 @@
             this.IsDeleted = false;
 
             this.Status = Status.Forthcoming;
+            this.HasPaid = false;
+            this.HasVote = false;
         }
 
         public DateTime EndDate { get; set; }
@@ -27,6 +29,10 @@
         public decimal Price { get; set; }
 
         public int Points { get; set; }
+
+        public bool HasPaid { get; set; }
+
+        public bool HasVote { get; set; }
 
         [Required]
         public string CarId { get; set; }

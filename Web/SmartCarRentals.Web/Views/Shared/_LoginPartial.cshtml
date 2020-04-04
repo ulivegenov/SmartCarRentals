@@ -7,6 +7,7 @@
     <ul class="navbar-nav ml-auto">
         @if (this.SignInManager.IsSignedIn(this.User))
         {
+            var user = await this.UserManager.FindByNameAsync(this.User.Identity.Name);
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                     <a class="navbar-brand" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <span>@(this.User.Identity.Name)!</span></a>

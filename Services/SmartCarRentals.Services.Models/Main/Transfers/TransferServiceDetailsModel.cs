@@ -23,6 +23,8 @@
 
         public double Rating { get; set; }
 
-        //public string Comment { get; set; }
+        public bool HasPaid { get; set; }
+
+        public bool HasVote { get; set; }
     }
 }

@@ -20,5 +20,9 @@
         public virtual TransferType Type { get; set; }
 
         public virtual Driver Driver { get; set; }
+
+        public bool HasPaid { get; set; }
+
+        public bool HasVote { get; set; }
     }
 }

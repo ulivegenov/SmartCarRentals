@@ -12,5 +12,9 @@
         Task<IEnumerable<MyTransfersServiceAllModel>> GetByUser(string userId);
 
         Task<TransferServiceDetailsModel> GetByIdAsync(int transferId);
+
+        Task<int> PayByIdAsync(int transferId, string userId);
+
+        Task<int> VoteAsync(int transferId);
     }
 }

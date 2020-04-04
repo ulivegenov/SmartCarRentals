@@ -49,7 +49,6 @@
             var driverRating = driverRatingServiceInputModel.To<DriverRating>();
 
             await this.driversRatingsEntityRepository.AddAsync(driverRating);
-
             var result = await this.driversRatingsEntityRepository.SaveChangesAsync();
 
             return result;

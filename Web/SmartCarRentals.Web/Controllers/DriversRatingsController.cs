@@ -77,6 +77,8 @@
 
             await this.driversRatingsService.CreateAsync(serviceModel);
 
+            await this.transfersService.VoteAsync(id);
+
             return this.Redirect("/Transfers/MyTransfers");
         }
     }

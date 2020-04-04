@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Transfers <i class="ion-ios-arrow-forward"></i></span></p>
+                <p class="breadcrumbs"><span class="mr-2"><a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> <span>Transfers <i class="fas fa-greater-than"></i></span></p>
                 <h1 class="mb-3 bread">My Transfers</h1>
             </div>
         </div>
@@ -35,20 +35,29 @@
                 <tbody>
                     @for (int i = 0; i < @Model.MyTransfers.Count; i++)
                     {
-                    <tr>
-                        <th class="align-middle" scope="row">@(i + 1)</th>
-                        <th class="align-middle" scope="row">@Model.MyTransfers[i].Id</th>
-                        <td class="align-middle">@Model.MyTransfers[i].Driver.FirstName @Model.MyTransfers[i].Driver.LastName</td>
-                        <td class="align-middle">@Model.MyTransfers[i].Type.Name</td>
-                        <td class="align-middle">@Model.MyTransfers[i].Type.Price.ToString("F2")</td>
-                        <td class="align-middle">@Model.MyTransfers[i].TransferDate.ToString("dd-MM-yyyy")</td>
-                        <td class="align-middle">
-                            @Model.MyTransfers[i].Status @if (Model.MyTransfers[i].Status == Status.Finished)
-                            {
-                                <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="DriversRatings" asp-action="Create" asp-route-id="@Model.MyTransfers[i].Id">Vote</a>
-                            }
-                        </td>
-                    </tr>
+                        var availableVote = Model.MyTransfers[i].Status == Status.Finished &&
+                                            Model.MyTransfers[i].HasPaid == true &&
+                                            Model.MyTransfers[i].HasVote == false;
+                        <tr>
+                            <th class="align-middle" scope="row">@(i + 1)</th>
+                            <th class="align-middle" scope="row">@Model.MyTransfers[i].Id</th>
+                            <td class="align-middle">@Model.MyTransfers[i].Driver.FirstName @Model.MyTransfers[i].Driver.LastName</td>
+                            <td class="align-middle">@Model.MyTransfers[i].Type.Name</td>
+                            <td class="align-middle">@Model.MyTransfers[i].Type.Price.ToString("F2")</td>
+                            <td class="align-middle">@Model.MyTransfers[i].TransferDate.ToString("dd-MM-yyyy")</td>
+                            <td class="align-middle">
+                                @Model.MyTransfers[i].Status @if (!Model.MyTransfers[i].HasPaid)
+                                {
+                                    <form method="post">
+                                        <button type="submit" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Transfers" asp-action="Pay" asp-route-id="@Model.MyTransfers[i].Id">Pay Now</button>
+                                    </form>
+                                }
+                                else if (availableVote)
+                                {
+                                    <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="DriversRatings" asp-action="Create" asp-route-id="@Model.MyTransfers[i].Id">Vote</a>
+                                }
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

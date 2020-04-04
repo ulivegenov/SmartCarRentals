@@ -7,9 +7,10 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Data.Models.Enums.User;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Roles;
@@ -165,6 +166,27 @@
             }
 
             return user;
+        }
+
+        public async Task<bool> GetPointsAsync(string id, int points)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
+
+            user.Points += points;
+
+            if (user.Points >= GlobalConstants.PlatinumUserMinPoints)
+            {
+                user.Rank = RankType.PlatinumUser;
+            }
+
+            if (user.Points >= GlobalConstants.GoldUserMinPoints)
+            {
+                user.Rank = RankType.GoldUser;
+            }
+
+            var result = await this.userManager.UpdateAsync(user);
+
+            return result.Succeeded;
         }
     }
 }
