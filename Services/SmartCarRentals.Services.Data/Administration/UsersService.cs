@@ -13,8 +13,8 @@
     using SmartCarRentals.Data.Models.Enums.User;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Roles;
-    using SmartCarRentals.Services.Models.Users;
+    using SmartCarRentals.Services.Models.Administration.Roles;
+    using SmartCarRentals.Services.Models.Administration.Users;
     using SmartCarRentals.Web.ViewModels.Administration.Roles;
 
     public class UsersService : IUsersService

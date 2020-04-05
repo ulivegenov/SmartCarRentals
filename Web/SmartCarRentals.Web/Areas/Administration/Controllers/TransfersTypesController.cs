@@ -7,7 +7,7 @@
 
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.TransfersTypes;
+    using SmartCarRentals.Services.Models.Administration.TransfersTypes;
     using SmartCarRentals.Web.ViewModels.Administration.TransfersTypes;
 
     public class TransfersTypesController : AdministrationController

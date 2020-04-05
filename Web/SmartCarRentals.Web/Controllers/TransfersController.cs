@@ -11,11 +11,10 @@
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contacts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Drivers;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
     using SmartCarRentals.Services.Models.Main.Transfers;
     using SmartCarRentals.Services.Models.Main.TransfersTypes;
     using SmartCarRentals.Web.ViewModels.Administration.Drivers;
-    using SmartCarRentals.Web.ViewModels.Main.DriversRatings;
     using SmartCarRentals.Web.ViewModels.Main.Transfers;
     using SmartCarRentals.Web.ViewModels.Main.TransfersTypes;
 

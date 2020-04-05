@@ -26,12 +26,12 @@
     using SmartCarRentals.Services.Data.Main.Contacts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Messaging;
-    using SmartCarRentals.Services.Models.Cars;
-    using SmartCarRentals.Services.Models.Countries;
-    using SmartCarRentals.Services.Models.Drivers;
-    using SmartCarRentals.Services.Models.Parkings;
-    using SmartCarRentals.Services.Models.Towns;
-    using SmartCarRentals.Services.Models.Users;
+    using SmartCarRentals.Services.Models.Administration.Cars;
+    using SmartCarRentals.Services.Models.Administration.Countries;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
+    using SmartCarRentals.Services.Models.Administration.Parkings;
+    using SmartCarRentals.Services.Models.Administration.Towns;
+    using SmartCarRentals.Services.Models.Administration.Users;
     using SmartCarRentals.Web.ViewModels;
 
     public class Startup
@@ -136,6 +136,7 @@
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<ITransfersTypesService, TransfersTypesService>();
             services.AddTransient<ITransfersService, TransfersService>();
+            services.AddTransient<IReservationsService, ReservationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

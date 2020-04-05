@@ -12,7 +12,7 @@
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
 
-    public class CarsService : AdministrationService<Car, string>, ICarsService
+    public class CarsService : BaseService<Car, string>, ICarsService
     {
         private const string InvalidCarIdErrorMessage = "{0} with ID: {1} does not exist.";
         private const string InvalidOperationErrorMessage = "Car with ID: {1} can't be deleted, because is currently in use.";

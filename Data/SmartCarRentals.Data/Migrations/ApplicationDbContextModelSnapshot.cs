@@ -344,7 +344,7 @@ namespace SmartCarRentals.Data.Migrations
                     b.Property<int>("PricePerHour")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Rating")
+                    b.Property<double>("Rating")
                         .HasColumnType("float");
 
                     b.Property<int>("ReservationStatus")

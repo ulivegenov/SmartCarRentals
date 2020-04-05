@@ -63,7 +63,14 @@
       "destination": "wwwroot/lib/flaticons/",
       "files": [
         "flaticon.css",
-        "flaticon.min.css"
+        "flaticon.min.css",
+        "Flaticon.eot",
+        "Flaticon.svg",
+        "Flaticon.ttf",
+        "Flaticon.woff",
+        "Flaticon.woff2",
+        "_flaticon.scss",
+        "flaticon.html"
       ]
     },
     {
@@ -96,7 +103,12 @@
       "destination": "wwwroot/lib/ionicons/css/",
       "files": [
         "ionicons.css",
-        "ionicons.min.css"
+        "ionicons.min.css",
+        "ionicons.eot",
+        "ionicons.woff",
+        "ionicons.woff2",
+        "ionicons.svg",
+        "ionicons.ttf"
       ]
     },
     {

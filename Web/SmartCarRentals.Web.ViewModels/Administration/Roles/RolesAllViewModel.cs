@@ -1,7 +1,7 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Roles
 {
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Roles;
+    using SmartCarRentals.Services.Models.Administration.Roles;
 
     public class RolesAllViewModel : IMapFrom<RolesAllServiceModel>, IMapTo<RolesAllServiceModel>
     {

@@ -5,7 +5,7 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Towns;
+    using SmartCarRentals.Services.Models.Administration.Towns;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
 
     public class TownInputModel : IMapTo<TownServiceInputModel>

@@ -1,7 +1,7 @@
 ﻿@using SmartCarRentals.Data.Models.Enums.Transfer
 @model SmartCarRentals.Web.ViewModels.Main.Transfers.MyTransfersAllViewModelCollection
 @{
-    this.ViewData["Title"] = "Create Transfers page";
+    this.ViewData["Title"] = "My Transfers";
     string navImgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1583615677/SmartCarRentalsPics/Background/bg_3_dt2wuw.jpg";
 }
 
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
-                <p class="breadcrumbs"><span class="mr-2"><a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> <span>Transfers <i class="fas fa-greater-than"></i></span></p>
+                <p class="breadcrumbs"><span class="mr-2"><a asp-area="Identity" asp-page="/Account/Manage/Index">My info <i class="fas fa-greater-than"></i></a></span> <span>@this.ViewData["Title"] <i class="fas fa-greater-than"></i></span></p>
                 <h1 class="mb-3 bread">My Transfers</h1>
             </div>
         </div>

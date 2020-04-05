@@ -5,7 +5,7 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.TransfersTypes;
+    using SmartCarRentals.Services.Models.Administration.TransfersTypes;
 
     public class TransferTypeDetailsViewModel : IMapFrom<TransferTypeServiceDetailsModel>, IMapTo<TransferTypeServiceDetailsModel>
     {

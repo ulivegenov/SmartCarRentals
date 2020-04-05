@@ -7,22 +7,28 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Microsoft.Extensions.Configuration;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contacts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Main.TransfersTypes;
     using SmartCarRentals.Web.ViewModels;
     using SmartCarRentals.Web.ViewModels.Main.Cars;
+    using SmartCarRentals.Web.ViewModels.Main.TransfersTypes;
 
     public class HomeController : BaseController
     {
         private readonly IHomeService homeService;
         private readonly IConfiguration configuration;
+        private readonly ITransfersTypesService transfersTypesService;
 
         public HomeController(
                               IHomeService homeService,
-                              IConfiguration configuration)
+                              IConfiguration configuration,
+                              ITransfersTypesService transfersTypesService)
         {
             this.homeService = homeService;
             this.configuration = configuration;
+            this.transfersTypesService = transfersTypesService;
         }
 
         public async Task<IActionResult> Index()
@@ -48,9 +54,15 @@
             return this.View();
         }
 
-        public IActionResult Services()
+        public async Task<IActionResult> Services()
         {
-            return this.View();
+            var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
+            var viewModel = new TransfersTypesCollection()
+            {
+                TransfersTypes = transfersTypes.Select(t => t.To<TransfersTypesDropDownViewModel>()).ToList(),
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

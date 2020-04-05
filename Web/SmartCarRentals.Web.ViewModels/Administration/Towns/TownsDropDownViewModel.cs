@@ -1,7 +1,7 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Towns
 {
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Towns;
+    using SmartCarRentals.Services.Models.Administration.Towns;
 
     public class TownsDropDownViewModel : IMapFrom<TownsServiceDropDownModel>
     {

@@ -10,7 +10,7 @@
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
 
-    public class DriversService : AdministrationService<Driver, string>, IDriversService
+    public class DriversService : BaseService<Driver, string>, IDriversService
     {
         private readonly IDeletableEntityRepository<Driver> driverRepository;
 

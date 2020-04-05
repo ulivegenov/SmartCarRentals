@@ -29,17 +29,28 @@
                         <div class="text">
                             <h2 class="mb-0"><a asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@driver.Id">@driver.FirstName @driver.LastName</a></h2>
                             <p class="mb-0 rated">
-                                <span>Rating: @driver.Rating </span>
+                                <span>Rating: @driver.Rating.ToString("F2") </span>
                                 <br />
                                 <span>
                                     @for (int i = 1; i <= driver.Rating; i++)
                                     {
-                                        <span class="fas fa-star text-primary"></span>
+                                        if (i < 4)
+                                        {
+                                            <span class="fas fa-star text-yellow"></span>
+                                        }
+                                        else if (i > 7)
+                                        {
+                                            <span class="fas fa-star text-danger"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fas fa-star text-orange"></span>
+                                        }
                                     }
 
                                     @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > driver.Rating; i--)
                                     {
-                                        <span class="far fa-star text-primary"></span>
+                                        <span class="far fa-star text-yellow"></span>
                                     }
                                 </span>
                             </p>

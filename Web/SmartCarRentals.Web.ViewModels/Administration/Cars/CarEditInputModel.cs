@@ -8,7 +8,7 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Cars;
+    using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
     public class CarEditInputModel : CarInputModel, IMapTo<CarServiceDetailsModel>, IHaveCustomMappings

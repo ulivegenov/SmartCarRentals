@@ -5,7 +5,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Cars;
+    using SmartCarRentals.Services.Models.Administration.Cars;
 
     public class CarsAllViewModel : IMapFrom<CarsServiceAllModel>
     {
@@ -27,7 +27,7 @@
 
         public ClassType Class { get; set; }
 
-        public double? Rating { get; set; }
+        public double Rating { get; set; }
 
         public int? ParkingId { get; set; }
 

@@ -6,7 +6,7 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Drivers;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
 
     public class DriverInputModel : IMapTo<DriverServiceInputModel>
     {

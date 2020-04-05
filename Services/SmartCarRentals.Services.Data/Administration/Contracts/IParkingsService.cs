@@ -5,7 +5,7 @@
 
     using SmartCarRentals.Data.Models;
 
-    public interface IParkingsService : IAdministrationService<int>
+    public interface IParkingsService : IBaseService<int>
     {
         Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId);
 

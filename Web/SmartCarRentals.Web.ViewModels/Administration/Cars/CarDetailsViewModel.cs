@@ -8,7 +8,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Cars;
+    using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 
     public class CarDetailsViewModel : IMapFrom<CarServiceDetailsModel>, IMapTo<CarServiceDetailsModel>
@@ -61,7 +61,7 @@
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
         public int PassengersCapacity { get; set; }
 
-        public double? Rating { get; set; }
+        public double Rating { get; set; }
 
         public int? ParkingId { get; set; }
 

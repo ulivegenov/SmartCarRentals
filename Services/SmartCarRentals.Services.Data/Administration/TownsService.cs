@@ -12,7 +12,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Contracts;
 
-    public class TownsService : AdministrationService<Town, int>, ITownsService
+    public class TownsService : BaseService<Town, int>, ITownsService
     {
         private readonly IDeletableEntityRepository<Town> townRepository;
 

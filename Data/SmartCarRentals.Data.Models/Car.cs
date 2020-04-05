@@ -68,7 +68,7 @@
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
         public int PassengersCapacity { get; set; }
 
-        public double? Rating { get; set; }
+        public double Rating { get; set; }
 
         public int? ParkingId { get; set; }
 

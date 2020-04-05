@@ -1,6 +1,6 @@
 ﻿namespace SmartCarRentals.Services.Data.Administration.Contracts
 {
-    public interface IDriversService : IAdministrationService<string>
+    public interface IDriversService : IBaseService<string>
     {
     }
 }

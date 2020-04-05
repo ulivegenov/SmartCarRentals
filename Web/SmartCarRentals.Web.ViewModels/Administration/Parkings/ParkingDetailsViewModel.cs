@@ -5,7 +5,7 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Parkings;
+    using SmartCarRentals.Services.Models.Administration.Parkings;
 
     public class ParkingDetailsViewModel : IMapFrom<ParkingServiceDetailsModel>, IMapTo<ParkingServiceDetailsModel>
     {

@@ -13,7 +13,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Contracts;
 
-    public class ParkingsService : AdministrationService<Parking, int>, IParkingsService
+    public class ParkingsService : BaseService<Parking, int>, IParkingsService
     {
         private readonly IDeletableEntityRepository<Parking> parkingRepository;
         private readonly IDeletableEntityRepository<ParkingSlot> parkingSlotRepository;

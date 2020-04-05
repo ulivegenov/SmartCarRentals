@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Drivers;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
     using SmartCarRentals.Web.ViewModels.Administration.Drivers;
 
     public class DriversController : BaseController

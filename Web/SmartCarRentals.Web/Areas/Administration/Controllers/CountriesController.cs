@@ -7,7 +7,7 @@
 
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Countries;
+    using SmartCarRentals.Services.Models.Administration.Countries;
     using SmartCarRentals.Web.ViewModels.Administration.Countries;
 
     public class CountriesController : AdministrationController

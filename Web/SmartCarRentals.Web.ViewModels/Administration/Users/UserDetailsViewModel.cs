@@ -6,7 +6,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.User;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Users;
+    using SmartCarRentals.Services.Models.Administration.Users;
 
     public class UserDetailsViewModel : IMapTo<UserServiceDetailsModel>, IMapFrom<UserServiceDetailsModel>
     {

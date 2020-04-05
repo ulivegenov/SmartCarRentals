@@ -5,7 +5,7 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models.Enums.Driver;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Drivers;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
 
     public class DriverDetailsViewModel : IMapFrom<DriverServiceDetailsModel>, IMapTo<DriverServiceDetailsModel>
     {

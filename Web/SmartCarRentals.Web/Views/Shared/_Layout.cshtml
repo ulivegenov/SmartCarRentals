@@ -1,5 +1,4 @@
 ﻿@using SmartCarRentals.Common
-@using Microsoft.AspNetCore.Identity
 <!DOCTYPE html>
 
 <html lang="en">
@@ -23,7 +22,6 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="~/lib/open-iconic/font/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="~/lib/animate/animate.css">
 
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="~/lib/fontawesome/css/fontawesome.min.css">
@@ -68,12 +66,14 @@
                 </ul>
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <partial name="_LoginPartial" />
+                <div class="mx-auto order-0">
+                    <partial name="_LoginPartial" />
+                </div>
+                
             </div>
         </nav>
     </header>
 
-    <partial name="_CookieConsentPartial" />
     <main role="main" class="pb-3">
         @this.RenderBody()
     </main>

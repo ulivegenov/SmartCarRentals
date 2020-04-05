@@ -13,17 +13,28 @@
             <div class="text">
                 <h2 class="mb-0"><a href="#">@Model.Cars[i].Make @Model.Cars[i].Model</a></h2>
                 <p class="mb-0 rated">
-                    <span>Rating: @Model.Cars[i].Rating </span>
+                    <span>Rating: @Model.Cars[i].Rating.ToString("F2") </span>
                     <br />
                     <span>
                         @for (int j = 1; j <= Model.Cars[i].Rating; j++)
                         {
-                            <span class="fas fa-star text-primary"></span>
+                            if (i < 4)
+                            {
+                                <span class="fas fa-star text-yellow"></span>
+                            }
+                            else if (i > 7)
+                            {
+                                <span class="fas fa-star text-danger"></span>
+                            }
+                            else
+                            {
+                                <span class="fas fa-star text-orange"></span>
+                            }
                         }
 
                         @for (int j = EntitiesAttributeConstraints.MaxRatingVote; j > Model.Cars[i].Rating; j--)
                         {
-                            <span class="far fa-star text-primary"></span>
+                            <span class="far fa-star text-yellow"></span>
                         }
                     </span>
                 </p>
@@ -31,7 +42,13 @@
                     <span class="cat">@Model.Cars[i].Class</span>
                     <p class="price ml-auto">$@Model.Cars[i].PricePerDay <span>/day</span></p>
                 </div>
-                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Rent now</a> <a class="btn btn-secondary py-2 ml-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@Model.Cars[i].Id">Details</a></p>
+                <hr />
+                <p class="d-flex mb-0 d-block">
+                    <a class="btn btn-primary py-2 mr-1" asp-area="" asp-controller="Cars" asp-action="Rent" asp-route-id="@Model.Cars[i].Id">Rent</a>
+                    <a class="btn btn-secondary py-2 mr-1" asp-area="" asp-controller="Reservations" asp-action="Create" asp-route-id="@Model.Cars[i].Id">Reserve</a>
+                    <a class="btn btn-warning py-2 mr-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@Model.Cars[i].Id">Details</a>
+                    <hr />
+                </p>
             </div>
         </div>
     </div>

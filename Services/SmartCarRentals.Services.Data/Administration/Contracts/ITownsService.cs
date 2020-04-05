@@ -5,7 +5,7 @@
 
     using SmartCarRentals.Data.Models;
 
-    public interface ITownsService : IAdministrationService<int>
+    public interface ITownsService : IBaseService<int>
     {
         Task<IEnumerable<Town>> GetAllByCountryIdAsync(int countryId);
     }

@@ -4,7 +4,7 @@
 
     using Microsoft.AspNetCore.Identity;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Users;
+    using SmartCarRentals.Services.Models.Administration.Users;
 
     public class UserRolesViewModel : IMapFrom<UserRolesServiceModel>
     {

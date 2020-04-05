@@ -4,7 +4,7 @@
 
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Towns;
+    using SmartCarRentals.Services.Models.Administration.Towns;
 
     public class TownsAllViewModel : IMapFrom<TownsServiceAllModel>
     {

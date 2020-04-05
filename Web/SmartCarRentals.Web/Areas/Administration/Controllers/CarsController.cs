@@ -8,8 +8,8 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Cars;
-    using SmartCarRentals.Services.Models.Parkings;
+    using SmartCarRentals.Services.Models.Administration.Cars;
+    using SmartCarRentals.Services.Models.Administration.Parkings;
     using SmartCarRentals.Web.ViewModels.Administration.Cars;
     using SmartCarRentals.Web.ViewModels.Administration.Parkings;
 

@@ -11,7 +11,7 @@
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
 
-    public class CountriesService : AdministrationService<Country, int>, ICountriesService
+    public class CountriesService : BaseService<Country, int>, ICountriesService
     {
         private readonly IDeletableEntityRepository<Country> countryRepository;
 

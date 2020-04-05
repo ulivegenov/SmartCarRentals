@@ -60,17 +60,28 @@
                         <div class="text">
                             <h2 class="mb-0"><a asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id">@car.Make @car.Model</a></h2>
                             <p class="mb-0 rated">
-                                <span>Rating: @car.Rating </span>
+                                <span>Rating: @car.Rating.ToString("F2") </span>
                                 <br />
                                 <span>
                                     @for (int i = 1; i <= car.Rating; i++)
                                     {
-                                        <span class="fas fa-star text-primary"></span>
+                                        if (i < 4)
+                                        {
+                                            <span class="fas fa-star text-yellow"></span>
+                                        }
+                                        else if (i > 7)
+                                        {
+                                            <span class="fas fa-star text-danger"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fas fa-star text-orange"></span>
+                                        }
                                     }
 
                                     @for (int i = EntitiesAttributeConstraints.MaxRatingVote; i > car.Rating; i--)
                                     {
-                                        <span class="far fa-star text-primary"></span>
+                                        <span class="far fa-star text-yellow"></span>
                                     }
                                 </span>
                             </p>
@@ -78,7 +89,13 @@
                                 <span class="cat">@car.Parking.Town.Name, @car.Parking.Address</span>
                                 <p class="price ml-auto">$@car.PricePerDay <span>/day</span></p>
                             </div>
-                            <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Rent now</a> <a class="btn btn-secondary py-2 ml-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id">Details</a></p>
+                            <hr />
+                            <p class="d-flex mb-0 d-block">
+                                <a class="btn btn-primary py-2 mr-1" asp-area="" asp-controller="Cars" asp-action="Rent" asp-route-id="@car.Id">Rent</a>
+                                <a class="btn btn-secondary py-2 mr-1" asp-area="" asp-controller="Reservations" asp-action="Create" asp-route-id="@car.Id">Reserve</a>
+                                <a class="btn btn-warning py-2 mr-1" asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id">Details</a>
+                                <hr />
+                            </p>
                         </div>
                     </div>
                 </div>

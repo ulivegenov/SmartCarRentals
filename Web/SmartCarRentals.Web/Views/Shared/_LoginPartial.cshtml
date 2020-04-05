@@ -4,28 +4,28 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-    <ul class="navbar-nav ml-auto">
-        @if (this.SignInManager.IsSignedIn(this.User))
-        {
-            var user = await this.UserManager.FindByNameAsync(this.User.Identity.Name);
-            <li class="nav-item">
-                <form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                    <a class="navbar-brand" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <span>@(this.User.Identity.Name)!</span></a>
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                    {
-                        <a class="nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
-                    }
-            <button type="submit" class="nav-link btn btn-sm text-light">Logout</button>
+<ul class="navbar-nav ml-auto">
+    @if (this.SignInManager.IsSignedIn(this.User))
+    {
+        var user = await this.UserManager.FindByNameAsync(this.User.Identity.Name);
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                <a class="navbar-brand" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <span>@(this.User.Identity.Name)!</span></a>
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <a class="nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+                }
+                <button type="submit" class="nav-link btn btn-sm text-light">Logout</button>
             </form>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-            </li>
-        }
-    </ul>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>

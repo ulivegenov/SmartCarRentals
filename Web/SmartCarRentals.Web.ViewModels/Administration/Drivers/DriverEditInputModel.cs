@@ -5,7 +5,7 @@
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Drivers;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
 
     public class DriverEditInputModel : DriverInputModel, IMapTo<DriverServiceDetailsModel>, IHaveCustomMappings
     {

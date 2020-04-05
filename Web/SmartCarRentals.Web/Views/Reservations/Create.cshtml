@@ -1,0 +1,56 @@
+﻿@model SmartCarRentals.Web.ViewModels.Main.Reservations.ReservationCreateInputModel
+@{
+    this.ViewData["Title"] = "Create Reservation";
+    var bgUrl = Model.Car.Image;
+}
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@bgUrl');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs"><span class="mr-2">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> 
+                    <a asp-area="" asp-controller="Cars" asp-action="All"><span>Cars <i class="fas fa-greater-than"></i></span></a>
+                </p>
+                <h1 class="mb-3 bread">Reserve Car</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr />
+
+<section class="content" align="center">
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <form class="request-form ftco-animate bg-primary" method="post">
+                        <h2>Make a Reservation</h2>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <input asp-for="CarId" type="hidden" class="form-control" placeholder="CarId" />
+                            <span asp-validation-for="CarId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="ParkingId" type="hidden" class="form-control" placeholder="ParkingId" />
+                            <span asp-validation-for="ParkingId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="ClientId" type="hidden" class="form-control" placeholder="ClientId" />
+                            <span asp-validation-for="ClientId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input data-provide="datepicker" data-date-format="yyyy-mm-dd" asp-for="@Model.ReservationDate" value="Select Date">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Make Reservation</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

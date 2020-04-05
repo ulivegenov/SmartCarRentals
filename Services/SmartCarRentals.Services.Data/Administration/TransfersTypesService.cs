@@ -4,7 +4,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
 
-    public class TransfersTypesService : AdministrationService<TransferType, int>, ITransfersTypesService
+    public class TransfersTypesService : BaseService<TransferType, int>, ITransfersTypesService
     {
         private readonly IDeletableEntityRepository<TransferType> transferTypeRepository;
 

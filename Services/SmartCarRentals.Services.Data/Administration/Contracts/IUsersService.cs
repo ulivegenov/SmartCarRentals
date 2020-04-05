@@ -4,8 +4,8 @@
     using System.Threading.Tasks;
 
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Services.Models.Roles;
-    using SmartCarRentals.Services.Models.Users;
+    using SmartCarRentals.Services.Models.Administration.Roles;
+    using SmartCarRentals.Services.Models.Administration.Users;
     using SmartCarRentals.Web.ViewModels.Administration.Roles;
 
     public interface IUsersService
