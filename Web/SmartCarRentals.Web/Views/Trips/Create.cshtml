@@ -1,0 +1,67 @@
+﻿@model SmartCarRentals.Web.ViewModels.Main.Trips.TripCreateInputModel
+@{
+    this.ViewData["Title"] = "Create Trip";
+}
+@{
+    string navImgUrl = Model.Car.Image;
+}
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@navImgUrl');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs"><span class="mr-2"><a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> <span>@this.ViewData["Title"] <i class="fas fa-greater-than"></i></span></p>
+                <h1 class="mb-3 bread">@this.ViewData["Title"]</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section ftco-cart">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <form class="request-form ftco-animate bg-primary" enctype="multipart/form-data" method="post">
+                        <h2>@this.ViewData["Title"]</h2>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="item">
+                            <div class="car-wrap rounded ftco-animate">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(@Model.Car.Image);">
+                                </div>
+                                <div class="text">
+                                    <h2 class="mb-0"><a href="#">@Model.Car.Make @Model.Car.Model</a></h2>
+                                    <div class="d-flex mb-3">
+                                        <span class="cat">@Model.Car.Class &emsp;</span>
+                                        <br />
+                                        <span class="cat">Price per Day: &nbsp;</span>
+                                        <p class="price ml-auto">$@Model.Car.PricePerDay <span>/day &emsp;&emsp;</span></p>
+                                        <br />
+                                        <span class="cat">Price per Houry: &nbsp;</span>
+                                        <p class="price ml-auto">$@Model.Car.PricePerHour <span>/hour</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input asp-for="CarId" type="hidden" class="form-control" placeholder="CarId" />
+                            <span asp-validation-for="CarId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="ClientId" type="hidden" class="form-control" placeholder="ClientId" />
+                            <span asp-validation-for="ClientId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success py-3 px-4">Rent Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -38,6 +38,7 @@
         [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
         public string Image { get; set; }
 
+        [Required]
         public int KmRun { get; set; }
 
         [Required]
@@ -63,6 +64,7 @@
 
         public double Rating { get; set; }
 
+        [Display(Name = "Parking")]
         public int? ParkingId { get; set; }
 
         public Parking Parking { get; set; }

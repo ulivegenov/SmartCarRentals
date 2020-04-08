@@ -1,4 +1,5 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarDetailsViewModel
+﻿@using SmartCarRentals.Data.Models.Enums.Car
+@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarDetailsViewModel
 @{
     ViewData["Title"] = "Details Car-Users";
     var bgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1585135294/SmartCarRentalsPics/Background/bg_3_s4tpcl.jpg";
@@ -25,8 +26,20 @@
                     <div class="img rounded" style="background-image: url(@Model.Image);"></div>
                     <div class="text text-center">
                         <h2>@Model.Make @Model.Model</h2>
-                        <span class="subheading">Adress: @Model.Parking.Town.Name, @Model.Parking.Address</span>
+                        @if (Model.ParkingId != null)
+                        {
+                            <span class="subheading">Adress: @Model.Parking.Town.Name, @Model.Parking.Address</span>
+                        }
                         <span class="subheading">Hire Status: @Model.HireStatus</span>
+                        <hr />
+                        <span>
+                            @if (Model.HireStatus != HireStatus.Unavailable)
+                            {
+                                <a class="btn btn-primary py-2 mr-1" asp-area="" asp-controller="Trips" asp-action="Create" asp-route-id="@Model.Id">Rent</a>
+                                <a class="btn btn-secondary py-2 mr-1" asp-area="" asp-controller="Reservations" asp-action="Create" asp-route-id="@Model.Id">Reserve</a>
+                            }
+                            <a class="btn btn-warning py-2 mr-1" asp-area="" asp-controller="Cars" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
+                        </span>
                     </div>
                 </div>
             </div>

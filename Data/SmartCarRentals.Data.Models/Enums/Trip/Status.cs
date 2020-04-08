@@ -2,8 +2,7 @@
 {
     public enum Status
     {
-        Forthcoming = 1,
-        OnGoing = 2,
-        Finished = 3,
+        OnGoing = 1,
+        Finished = 2,
     }
 }

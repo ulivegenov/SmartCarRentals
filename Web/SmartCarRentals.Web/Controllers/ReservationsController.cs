@@ -92,7 +92,7 @@
             var reservationServiceModel = reservationCreateInputModel.To<ReservationServiceInputModel>();
             await this.reservationsService.CreateAsync(reservationServiceModel);
 
-            return this.Redirect("/Cars/All");
+            return this.Redirect("/Reservations/MyReservations");
         }
 
         [Authorize]

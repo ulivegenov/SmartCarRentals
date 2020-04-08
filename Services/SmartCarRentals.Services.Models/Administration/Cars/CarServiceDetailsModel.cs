@@ -39,6 +39,7 @@
         [StringLength(EntitiesAttributeConstraints.UrlMaxLength, MinimumLength = EntitiesAttributeConstraints.UrlMinLength)]
         public string Image { get; set; }
 
+        [Required]
         public int KmRun { get; set; }
 
         public int PricePerHour { get; set; }

@@ -137,6 +137,7 @@
             services.AddTransient<ITransfersTypesService, TransfersTypesService>();
             services.AddTransient<ITransfersService, TransfersService>();
             services.AddTransient<IReservationsService, ReservationsService>();
+            services.AddTransient<ITripsService, TripsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -188,6 +189,7 @@
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute("default2", "{controller=Home}/{action=Index}/{id?}/{secondId?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });

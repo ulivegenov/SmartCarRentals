@@ -24,7 +24,6 @@
 
             this.Points = 0;
             this.Rank = RankType.User;
-            this.Cars = new HashSet<Car>();
             this.CarRatings = new HashSet<CarRating>();
             this.Trips = new HashSet<Trip>();
             this.Transfers = new HashSet<Transfer>();
@@ -74,8 +73,6 @@
         public int? ParkingId { get; set; }
 
         public virtual Parking Parking { get; set; }
-
-        public virtual ICollection<Car> Cars { get; set; }
 
         public virtual ICollection<CarRating> CarRatings { get; set; }
 

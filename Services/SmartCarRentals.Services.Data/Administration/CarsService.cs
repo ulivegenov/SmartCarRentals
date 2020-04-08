@@ -11,6 +11,7 @@
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Administration.Cars;
 
     public class CarsService : BaseService<Car, string>, ICarsService
     {
@@ -64,6 +65,7 @@
                                                   Make = c.Make,
                                                   Model = c.Model,
                                                   Class = c.Class,
+                                                  HireStatus = c.HireStatus,
                                                   Fuel = c.Fuel,
                                                   Transmition = c.Transmition,
                                                   KmRun = c.KmRun,
@@ -94,6 +96,7 @@
                                                   Make = c.Make,
                                                   Model = c.Model,
                                                   Class = c.Class,
+                                                  HireStatus = c.HireStatus,
                                                   PricePerDay = c.PricePerDay,
                                                   Rating = c.Ratings.Count != 0
                                                            ? c.Ratings.Select(r => r.RatingVote).Average()

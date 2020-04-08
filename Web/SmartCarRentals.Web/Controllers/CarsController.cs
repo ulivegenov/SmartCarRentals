@@ -4,14 +4,22 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.Main.Contacts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Services.Models.Administration.Countries;
     using SmartCarRentals.Services.Models.Administration.Parkings;
     using SmartCarRentals.Services.Models.Administration.Towns;
+    using SmartCarRentals.Services.Models.Main.Trips;
     using SmartCarRentals.Web.ViewModels.Administration.Cars;
+    using SmartCarRentals.Web.ViewModels.Administration.Parkings;
+    using SmartCarRentals.Web.ViewModels.Main.Cars;
+    using SmartCarRentals.Web.ViewModels.Main.Trips;
 
     public class CarsController : BaseController
     {
@@ -19,17 +27,20 @@
         private readonly IParkingsService parkingsService;
         private readonly ITownsService townsService;
         private readonly ICountriesService countriesService;
+        private readonly ITripsService tripsService;
 
         public CarsController(
                               ICarsService carsService,
                               IParkingsService parkingsService,
                               ITownsService townsService,
-                              ICountriesService countriesService)
+                              ICountriesService countriesService,
+                              ITripsService tripsService)
         {
             this.carsService = carsService;
             this.parkingsService = parkingsService;
             this.townsService = townsService;
             this.countriesService = countriesService;
+            this.tripsService = tripsService;
         }
 
         public async Task<IActionResult> Details(string id)
@@ -77,6 +88,39 @@
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ReturnCar(string id)
+        {
+            var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
+
+            var car = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(id);
+            var viewModel = car.To<CarDetailsViewModel>();
+            viewModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
+
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ReturnCar(CarDetailsViewModel carReturnViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
+                carReturnViewModel.Parkings = parkings.Select(p => p.To<ParkingsDropDownViewModel>()).ToList();
+
+                return this.View(carReturnViewModel);
+            }
+
+            var carServiceModel = carReturnViewModel.To<CarServiceDetailsModel>();
+            carServiceModel.HireStatus = HireStatus.Available;
+            carServiceModel.ReservationStatus = ReservationStatus.Free;
+
+            await this.carsService.EditAsync(carServiceModel);
+
+            return this.Redirect("/Trips/MyTrips");
         }
     }
 }

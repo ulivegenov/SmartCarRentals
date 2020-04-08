@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartCarRentals.Data;
 
 namespace SmartCarRentals.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200406085318_TripRefactoring")]
+    partial class TripRefactoring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,6 +284,9 @@ namespace SmartCarRentals.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Class")
                         .HasColumnType("int");
 
@@ -354,6 +359,8 @@ namespace SmartCarRentals.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("IsDeleted");
 
@@ -940,6 +947,10 @@ namespace SmartCarRentals.Data.Migrations
 
             modelBuilder.Entity("SmartCarRentals.Data.Models.Car", b =>
                 {
+                    b.HasOne("SmartCarRentals.Data.Models.ApplicationUser", null)
+                        .WithMany("Cars")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("SmartCarRentals.Data.Models.Parking", "Parking")
                         .WithMany("Cars")
                         .HasForeignKey("ParkingId");

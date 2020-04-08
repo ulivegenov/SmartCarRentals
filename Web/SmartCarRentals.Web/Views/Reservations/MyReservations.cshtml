@@ -43,10 +43,10 @@
                             <td class="align-middle">@Model.MyReservations[i].ReservationDate.ToString("dd-MM-yyyy")</td>
                             <td class="align-middle">@Model.MyReservations[i].Parking.Town.Name, @Model.MyReservations[i].Parking.Address</td>
                             <td class="align-middle">
-                                @Model.MyReservations[i].Status @if (Model.MyReservations[i].ReservationDate.CompareTo(DateTime.UtcNow) == 0)
+                                @Model.MyReservations[i].Status @if (Model.MyReservations[i].ReservationDate.Date.CompareTo(DateTime.UtcNow.Date) == 0)
                                 {
                                     <form method="post">
-                                        <button type="submit" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Cars" asp-action="Rent" asp-route-id="@Model.MyReservations[i].CarId">Rent Now</button>
+                                        <button type="submit" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Trips" asp-action="Create" asp-route-id="@Model.MyReservations[i].CarId">Rent Now</button>
                                     </form>
                                 }
                                 else if(Model.MyReservations[i].Status == Status.Awaiting)

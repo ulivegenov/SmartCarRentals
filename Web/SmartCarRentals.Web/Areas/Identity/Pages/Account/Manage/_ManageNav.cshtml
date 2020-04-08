@@ -3,7 +3,7 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
     <ul class="nav nav-pills flex-column">
-        <li class="nav-item"><a class="nav-link" id="trips" asp-page="./Index">My Trips</a></li>
+        <li class="nav-item"><a class="nav-link" id="trips" asp-area="" asp-controller="Trips" asp-action="MyTrips">My Trips</a></li>
         <li class="nav-item"><a class="nav-link" id="reservations" asp-area="" asp-controller="Reservations" asp-action="MyReservations">My Reservations</a></li>
         <li class="nav-item"><a class="nav-link" id="transfers" asp-area="" asp-controller="Transfers" asp-action="MyTransfers">My Transfers</a></li>
         <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>

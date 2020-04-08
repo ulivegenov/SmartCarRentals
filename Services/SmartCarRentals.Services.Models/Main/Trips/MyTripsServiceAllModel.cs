@@ -1,24 +1,16 @@
-﻿namespace SmartCarRentals.Data.Models
+﻿namespace SmartCarRentals.Services.Models.Main.Trips
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    using SmartCarRentals.Data.Common.Models;
+    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Trip;
+    using SmartCarRentals.Services.Mapping;
 
-    public class Trip : BaseDeletableModel<int>
+    public class MyTripsServiceAllModel : IMapFrom<Trip>, IMapTo<Trip>
     {
-        public Trip()
-        {
-            this.CreatedOn = DateTime.UtcNow;
-            this.IsDeleted = false;
+        public int Id { get; set; }
 
-            this.EndDate = null;
-            this.Status = Status.OnGoing;
-            this.HasPaid = false;
-            this.HasVote = false;
-        }
+        public DateTime CreatedOn { get; set; }
 
         public DateTime? EndDate { get; set; }
 
@@ -26,7 +18,6 @@
 
         public Status Status { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
 
         public int Points { get; set; }
@@ -35,7 +26,6 @@
 
         public bool HasVote { get; set; }
 
-        [Required]
         public string CarId { get; set; }
 
         public virtual Car Car { get; set; }

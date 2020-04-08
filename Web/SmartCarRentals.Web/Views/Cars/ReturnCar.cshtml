@@ -1,0 +1,103 @@
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Cars.CarDetailsViewModel
+@{
+    this.ViewData["Title"] = "Return Car";
+}
+@{
+    string navImgUrl = Model.Image;
+    var parkings = Model.Parkings.Select(p => new SelectListItem(p.Name, p.Id.ToString()));
+}
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@navImgUrl');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs"><span class="mr-2"><a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> <span>@this.ViewData["Title"] <i class="fas fa-greater-than"></i></span></p>
+                <h1 class="mb-3 bread">@this.ViewData["Title"]</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section ftco-cart">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <form class="bg-primary" method="post">
+                        <h2 class="text-white">@this.ViewData["Title"]</h2>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="item">
+                            <div class="car-wrap rounded ftco-animate">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(@Model.Image);">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Make" type="hidden" class="form-control" placeholder="Make" />
+                            <span asp-validation-for="Make" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Model" type="hidden" class="form-control" placeholder="Model" />
+                            <span asp-validation-for="Model" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Class" type="hidden" class="form-control" placeholder="Class" />
+                            <span asp-validation-for="Class" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Transmition" type="hidden" class="form-control" placeholder="Transmition" />
+                            <span asp-validation-for="Transmition" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PlateNumber" type="hidden" class="form-control" placeholder="PlateNumber" />
+                            <span asp-validation-for="PlateNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PricePerHour" type="hidden" class="form-control" placeholder="PricePerHour" />
+                            <span asp-validation-for="PricePerHour" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PricePerDay" type="hidden" class="form-control" placeholder="PricePerDay" />
+                            <span asp-validation-for="PricePerDay" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Fuel" type="hidden" class="form-control" placeholder="Fuel" />
+                            <span asp-validation-for="Fuel" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PassengersCapacity" type="hidden" class="form-control" placeholder="PassengersCapacity" />
+                            <span asp-validation-for="PassengersCapacity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ParkingId" class="label"></label>
+                            <select class="form-control" asp-for="ParkingId" asp-items="@parkings">
+                                <option class="bg-primary" value="">Select Parking</option>
+                            </select>
+                            <span asp-validation-for="ParkingId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="KmRun" class="label"></label>
+                            <input asp-for="KmRun" class="form-control" placeholder="KmRun" />
+                            <span asp-validation-for="KmRun" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Image" type="hidden" class="form-control" placeholder="Image" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Id" type="hidden" class="form-control" placeholder="Id" />
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success py-3 px-4">Return Car</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
