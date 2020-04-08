@@ -1,8 +1,12 @@
 ﻿namespace SmartCarRentals.Web
 {
+    using System;
     using System.Reflection;
 
     using CloudinaryDotNet;
+
+    using Hangfire;
+    using Hangfire.SqlServer;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -22,6 +26,8 @@
     using SmartCarRentals.Data.Seeding;
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.AppServices;
+    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
@@ -32,6 +38,7 @@
     using SmartCarRentals.Services.Models.Administration.Parkings;
     using SmartCarRentals.Services.Models.Administration.Towns;
     using SmartCarRentals.Services.Models.Administration.Users;
+    using SmartCarRentals.Web.Infrastructure;
     using SmartCarRentals.Web.ViewModels;
 
     public class Startup
@@ -102,6 +109,25 @@
 
             services.AddSingleton(this.configuration);
 
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(this.configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+            {
+                CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                QueuePollInterval = TimeSpan.Zero,
+                UseRecommendedIsolationLevel = true,
+                UsePageLocksOnDequeue = true,
+                DisableGlobalLocks = true,
+            }));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+
+            // Cloudinary Api set
             Account cloudinaryCredentials = new Account(
                                         this.configuration["Cloudinary:CloudName"],
                                         this.configuration["Cloudinary:ApiKey"],
@@ -185,6 +211,12 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseHangfireServer();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() },
+            });
 
             app.UseEndpoints(
                 endpoints =>

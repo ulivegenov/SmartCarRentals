@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data.Administration
+﻿namespace SmartCarRentals.Services.Data.AppServices
 {
     using System.IO;
     using System.Threading.Tasks;
@@ -6,7 +6,7 @@
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Http;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.AppServices.Contracts;
 
     public class CloudinaryService : ICloudinaryService
     {

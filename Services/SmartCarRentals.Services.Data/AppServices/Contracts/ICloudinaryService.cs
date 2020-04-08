@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data.Administration.Contracts
+﻿namespace SmartCarRentals.Services.Data.AppServices.Contracts
 {
     using System.Threading.Tasks;
 

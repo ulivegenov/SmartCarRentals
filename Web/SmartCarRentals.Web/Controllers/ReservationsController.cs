@@ -109,6 +109,8 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
+        [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
             var reservation = await this.reservationsService.GetByIdAsync<ReservationServiceDetailsModel>(id);

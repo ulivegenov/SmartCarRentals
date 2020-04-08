@@ -20,6 +20,9 @@
 
   <ItemGroup>
     <PackageReference Include="Cloudinary.Core" Version="1.31.0" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.10" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.10" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
