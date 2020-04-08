@@ -8,7 +8,7 @@
 
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.DraversRatings;
     using SmartCarRentals.Web.ViewModels.Main.DriversRatings;
@@ -50,7 +50,6 @@
             return this.View(viewModel);
         }
 
-        // TODO REFACTORING - driver.Id is null???
         [Authorize]
         [Route("/DriversRatings/Create/{id}")]
         [HttpPost]
@@ -58,7 +57,7 @@
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             var transfer = await this.transfersService.GetByIdAsync(id);
-            var driver = transfer.To<Transfer>().Driver;
+            var driver = transfer.Driver;
 
             if (!this.ModelState.IsValid)
             {

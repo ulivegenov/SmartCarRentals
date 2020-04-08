@@ -1,6 +1,6 @@
-﻿@model SmartCarRentals.Web.ViewModels.Main.DriversRatings.DriverRatingCreateInputModel
+﻿@model SmartCarRentals.Web.ViewModels.Main.CarsRatings.CarRatingCreateInputModel
 @{
-    this.ViewData["Title"] = "Create Driver Ratings";
+    this.ViewData["Title"] = "Create Car Ratings";
 }
 @{
     string navImgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1583615677/SmartCarRentalsPics/Background/bg_3_dt2wuw.jpg";
@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
-                <p class="breadcrumbs"><span class="mr-2"><a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> <span>REgister<i class="fas fa-greater-than"></i></span></p>
+                <p class="breadcrumbs"><span class="mr-2"><a asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fas fa-greater-than"></i></a></span> <span>@ViewData["Title"]<i class="fas fa-greater-than"></i></span></p>
                 <h1 class="mb-3 bread">@ViewData["Title"]</h1>
             </div>
         </div>
@@ -28,8 +28,8 @@
                         <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
-                            <input asp-for="DriverId" type="hidden" value="@Model.DriverId">
-                            <span asp-validation-for="DriverId" class="text-danger"></span>
+                            <input asp-for="CarId" type="hidden" value="@Model.CarId">
+                            <span asp-validation-for="CarId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="RatingVote" class="label"></label>

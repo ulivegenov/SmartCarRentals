@@ -23,7 +23,7 @@
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Messaging;
     using SmartCarRentals.Services.Models.Administration.Cars;
@@ -138,6 +138,7 @@
             services.AddTransient<ITransfersService, TransfersService>();
             services.AddTransient<IReservationsService, ReservationsService>();
             services.AddTransient<ITripsService, TripsService>();
+            services.AddTransient<ICarsRatingsService, CarsRatingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

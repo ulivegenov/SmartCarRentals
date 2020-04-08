@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Drivers;
     using SmartCarRentals.Services.Models.Main.Transfers;
@@ -138,7 +138,7 @@
         public async Task<IActionResult> MyTransfers()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var transfers = await this.transfersService.GetByUser(user.Id);
+            var transfers = await this.transfersService.GetByUserAsync(user.Id);
 
             var viewModel = new MyTransfersAllViewModelCollection();
             viewModel.MyTransfers = transfers.Select(t => t.To<MyTransfersAllViewModel>()).ToList();

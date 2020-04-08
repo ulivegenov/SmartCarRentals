@@ -4,39 +4,54 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Data.Models.Enums.Trip;
+    using SmartCarRentals.Data.Models.Enums.User;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Services.Models.Main.Trips;
-    using SmartCarRentals.Web.ViewModels.Main.Trips;
 
     public class TripsService : BaseService<Trip, int>, ITripsService
     {
         private readonly IDeletableEntityRepository<Trip> tripsRepository;
         private readonly IDeletableEntityRepository<Car> carRepository;
         private readonly ICarsService carsService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public TripsService(
                             IDeletableEntityRepository<Trip> tripsRepository,
                             IDeletableEntityRepository<Car> carRepository,
-                            ICarsService carsService)
+                            ICarsService carsService,
+                            UserManager<ApplicationUser> userManager)
             : base(tripsRepository)
         {
             this.tripsRepository = tripsRepository;
             this.carRepository = carRepository;
             this.carsService = carsService;
+            this.userManager = userManager;
         }
 
         public async Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId)
         {
+            var user = await this.userManager.FindByIdAsync(userId);
+            var discount = GlobalConstants.UserDiscount;
+
+            if (user.Rank == RankType.GoldUser)
+            {
+                discount = GlobalConstants.GoldUserDiscount;
+            }
+
+            if (user.Rank == RankType.PlatinumUser)
+            {
+                discount = GlobalConstants.PlatinumUserDiscount;
+            }
+
             var trips = await this.tripsRepository.All()
                                                   .Where(t => t.ClientId == userId)
                                                   .Select(t => new Trip()
@@ -63,11 +78,30 @@
                                                   .To<MyTripsServiceAllModel>()
                                                   .ToListAsync();
 
+            foreach (var trip in trips)
+            {
+                trip.Price -= trip.Price * discount / 100;
+            }
+
             return trips;
         }
 
-        public async Task<int> PayTrip(MyTripsServiceAllModel tripServiceModel)
+        public async Task<int> PayAsync(MyTripsServiceAllModel tripServiceModel)
         {
+            var userId = tripServiceModel.ClientId;
+            var user = await this.userManager.FindByIdAsync(userId);
+            var discount = GlobalConstants.UserDiscount;
+
+            if (user.Rank == RankType.GoldUser)
+            {
+                discount = GlobalConstants.GoldUserDiscount;
+            }
+
+            if (user.Rank == RankType.PlatinumUser)
+            {
+                discount = GlobalConstants.PlatinumUserDiscount;
+            }
+
             tripServiceModel.EndDate = DateTime.UtcNow;
 
             var car = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(tripServiceModel.CarId);
@@ -87,7 +121,7 @@
                 price = days * car.PricePerDay;
             }
 
-            tripServiceModel.Price = price;
+            tripServiceModel.Price = price - (price * discount / 100);
             tripServiceModel.Points = (int)Math.Round(price / 10);
             tripServiceModel.Status = Status.Finished;
             tripServiceModel.HasPaid = true;
@@ -99,6 +133,16 @@
             await this.tripsRepository.SaveChangesAsync();
 
             return tripServiceModel.Points;
+        }
+
+        public async Task<int> VoteAsync(int triprId)
+        {
+            var trip = await this.tripsRepository.GetByIdWithDeletedAsync(triprId);
+
+            trip.HasVote = true;
+            var result = await this.tripsRepository.SaveChangesAsync();
+
+            return result;
         }
     }
 }

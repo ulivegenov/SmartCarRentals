@@ -8,7 +8,7 @@
 
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.Cars;
 

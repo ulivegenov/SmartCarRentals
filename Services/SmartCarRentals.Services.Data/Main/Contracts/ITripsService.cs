@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data.Main.Contacts
+﻿namespace SmartCarRentals.Services.Data.Main.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -9,6 +9,8 @@
     {
         Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId);
 
-        Task<int> PayTrip(MyTripsServiceAllModel tripServiceModel);
+        Task<int> PayAsync(MyTripsServiceAllModel tripServiceModel);
+
+        Task<int> VoteAsync(int triprId);
     }
 }

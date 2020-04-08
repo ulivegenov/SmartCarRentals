@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data.Main.Contacts
+﻿namespace SmartCarRentals.Services.Data.Main.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -9,7 +9,7 @@
     {
         Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel);
 
-        Task<IEnumerable<MyTransfersServiceAllModel>> GetByUser(string userId);
+        Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId);
 
         Task<TransferServiceDetailsModel> GetByIdAsync(int transferId);
 

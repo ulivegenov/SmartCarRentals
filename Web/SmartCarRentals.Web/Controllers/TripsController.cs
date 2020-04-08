@@ -1,6 +1,5 @@
 ﻿namespace SmartCarRentals.Web.Controllers
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -11,12 +10,10 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
-    using SmartCarRentals.Services.Models.Administration.Parkings;
     using SmartCarRentals.Services.Models.Main.Trips;
-    using SmartCarRentals.Web.ViewModels.Administration.Parkings;
     using SmartCarRentals.Web.ViewModels.Main.Trips;
 
     public class TripsController : BaseController
@@ -127,7 +124,7 @@
             tripsAllViewModel.ClientId = currentUser.Id;
             var tripServiceModel = tripsAllViewModel.To<MyTripsServiceAllModel>();
 
-            var points = await this.tripsService.PayTrip(tripServiceModel);
+            var points = await this.tripsService.PayAsync(tripServiceModel);
 
             await this.usersService.GetPointsAsync(currentUser.Id, points);
 

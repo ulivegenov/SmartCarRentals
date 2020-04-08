@@ -5,28 +5,29 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Data.Models.Enums.User;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.Transfers;
 
     public class TransfersService : ITransfersService
     {
         private readonly IDeletableEntityRepository<Transfer> transferRepository;
-        private readonly IUsersService usersService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public TransfersService(
                                 IDeletableEntityRepository<Transfer> transferRepository,
-                                IUsersService usersService)
+                                UserManager<ApplicationUser> userManager)
         {
             this.transferRepository = transferRepository;
-            this.usersService = usersService;
+            this.userManager = userManager;
         }
 
         public async Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel)
@@ -41,9 +42,9 @@
             return result;
         }
 
-        public async Task<IEnumerable<MyTransfersServiceAllModel>> GetByUser(string userId)
+        public async Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId)
         {
-            var user = await this.usersService.GetByIdAsync(userId);
+            var user = await this.userManager.FindByIdAsync(userId);
             var discount = GlobalConstants.UserDiscount;
 
             if (user.Rank == RankType.GoldUser)
@@ -123,7 +124,7 @@
 
         public async Task<int> PayByIdAsync(int transferId, string userId)
         {
-            var user = await this.usersService.GetByIdAsync(userId);
+            var user = await this.userManager.FindByIdAsync(userId);
             var discount = GlobalConstants.UserDiscount;
 
             if (user.Rank == RankType.GoldUser)

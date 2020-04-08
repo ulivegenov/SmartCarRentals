@@ -6,7 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.DraversRatings;
 

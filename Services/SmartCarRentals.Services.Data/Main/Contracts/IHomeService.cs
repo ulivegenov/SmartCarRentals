@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data.Main.Contacts
+﻿namespace SmartCarRentals.Services.Data.Main.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

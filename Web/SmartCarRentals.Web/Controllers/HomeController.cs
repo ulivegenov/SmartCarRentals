@@ -8,7 +8,7 @@
 
     using Microsoft.Extensions.Configuration;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.TransfersTypes;
     using SmartCarRentals.Web.ViewModels;

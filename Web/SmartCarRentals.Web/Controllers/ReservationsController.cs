@@ -9,7 +9,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contacts;
+    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Services.Models.Main.Reservations;

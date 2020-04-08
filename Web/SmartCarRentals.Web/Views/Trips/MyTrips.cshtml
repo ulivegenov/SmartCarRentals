@@ -60,7 +60,7 @@
                             {
                                 <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Cars" asp-action="ReturnCar" asp-route-id="@Model.MyTrips[i].CarId">Return Car</a>
                             }
-                            else if(Model.MyTrips[i].HasPaid != true)
+                            else if (Model.MyTrips[i].HasPaid != true)
                             {
                                 <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Trips" asp-action="Pay" asp-route-id="@Model.MyTrips[i].Id" asp-route-secondId="@Model.MyTrips[i].CarId">Pay Trip</a>
                             }
