@@ -6,7 +6,7 @@
     using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Mapping;
 
-    public class MyReservationsServiceAllModel : IMapFrom<Reservation>
+    public class MyReservationsServiceAllModel : IMapFrom<Reservation>, IMapTo<Reservation>
     {
         public int Id { get; set; }
 

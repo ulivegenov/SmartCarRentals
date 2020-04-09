@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.Reservations;
@@ -51,6 +52,25 @@
                                                                .ToListAsync();
 
             return reservations;
+        }
+
+        public async Task<IEnumerable<MyReservationsServiceAllModel>> GetAllAwaitingReservationsAsync()
+        {
+            var resevations = await this.reservationRepository.All()
+                                                              .Where(r => r.Status == Status.Awaiting)
+                                                              .Select(r => new Reservation()
+                                                              {
+                                                                  Id = r.Id,
+                                                                  Status = r.Status,
+                                                                  ReservationDate = r.ReservationDate,
+                                                                  CarId = r.CarId,
+                                                                  ClientId = r.ClientId,
+                                                                  ParkingId = r.ParkingId,
+                                                              })
+                                                              .To<MyReservationsServiceAllModel>()
+                                                              .ToListAsync();
+
+            return resevations;
         }
     }
 }

@@ -6,6 +6,7 @@
     using CloudinaryDotNet;
 
     using Hangfire;
+    using Hangfire.Common;
     using Hangfire.SqlServer;
 
     using Microsoft.AspNetCore.Builder;
@@ -165,10 +166,11 @@
             services.AddTransient<IReservationsService, ReservationsService>();
             services.AddTransient<ITripsService, TripsService>();
             services.AddTransient<ICarsRatingsService, CarsRatingsService>();
+            services.AddScoped<IHangfireService, HangfireService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobs)
         {
             AutoMapperConfig.RegisterMappings(
                 typeof(ErrorViewModel).GetTypeInfo().Assembly,
@@ -217,6 +219,9 @@
             {
                 Authorization = new[] { new HangfireAuthorizationFilter() },
             });
+
+            // configure recurring jobs
+            recurringJobs.AddOrUpdate("CancelExpiredReservations", Job.FromExpression<IHangfireService>(j => j.CancelExpiredReservations()), Cron.Daily());
 
             app.UseEndpoints(
                 endpoints =>
