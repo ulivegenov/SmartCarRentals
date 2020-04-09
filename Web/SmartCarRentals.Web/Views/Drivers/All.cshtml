@@ -27,7 +27,7 @@
                         <div class="img rounded d-flex align-items-end" style="background-image: url(@driver.Image);">
                         </div>
                         <div class="text">
-                            <h2 class="mb-0"><a asp-area="" asp-controller="Cars" asp-action="Details" asp-route-id="@driver.Id">@driver.FirstName @driver.LastName</a></h2>
+                            <h2 class="mb-0">@driver.FirstName @driver.LastName</h2>
                             <p class="mb-0 rated">
                                 <span>Rating: @driver.Rating.ToString("F2") </span>
                                 <br />

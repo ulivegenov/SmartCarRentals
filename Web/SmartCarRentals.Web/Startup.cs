@@ -222,6 +222,7 @@
 
             // configure recurring jobs
             recurringJobs.AddOrUpdate("CancelExpiredReservations", Job.FromExpression<IHangfireService>(j => j.CancelExpiredReservations()), Cron.Daily());
+            recurringJobs.AddOrUpdate("ChangeDriverHireStatus", Job.FromExpression<IHangfireService>(j => j.ChangeDriverHireStatus()), Cron.Hourly());
 
             app.UseEndpoints(
                 endpoints =>

@@ -42,6 +42,15 @@
         public const int MinRatingVote = 1;
         public const int MaxRatingVote = 10;
 
+        // Comment
         public const int CommentMaxLength = 250;
+
+        // Message
+        public const int MessageMinLength = 10;
+        public const int MessageMaxLength = 5000;
+
+        // Subject
+        public const int SubjectMinLength = 2;
+        public const int SubjectMaxLength = 50;
     }
 }

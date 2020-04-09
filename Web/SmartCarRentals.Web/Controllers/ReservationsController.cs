@@ -76,16 +76,21 @@
             }
 
             var reservations = await this.reservationsService.GetAllAsync<ReservationServiceDetailsModel>();
-            var possibleReservation = reservations.FirstOrDefault(r => r.CarId == reservationCreateInputModel.CarId &&
-                                                       r.ReservationDate == reservationCreateInputModel.ReservationDate);
+            var possibleReservations = reservations.Where(r => r.CarId == reservationCreateInputModel.CarId &&
+                                                       r.ReservationDate == reservationCreateInputModel.ReservationDate).ToList();
 
-            if (possibleReservation != null)
+            if (possibleReservations != null)
             {
-                if (possibleReservation.Status != Status.Canceled)
+                if (possibleReservations.Any(r => r.Status != Status.Canceled))
                 {
                     this.TempData["Error"] = ReservationErrorMessage;
 
-                    return this.View(); // TODO ERROR MESSAGE VIEW!!!
+                    reservationCreateInputModel.CarId = id;
+                    reservationCreateInputModel.Car = car.To<Car>();
+                    reservationCreateInputModel.ClientId = currentUser.Id;
+                    reservationCreateInputModel.ParkingId = (int)car.ParkingId;
+
+                    return this.View(reservationCreateInputModel); // TODO ERROR MESSAGE VIEW!!!
                 }
             }
 

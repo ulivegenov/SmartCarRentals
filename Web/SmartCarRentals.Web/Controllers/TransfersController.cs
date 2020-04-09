@@ -20,6 +20,8 @@
 
     public class TransfersController : BaseController
     {
+        private const string UnavailableDriverErrorMessage = "Sorry! This Driver is unavailable, for this date.";
+
         private readonly ITransfersService transfersService;
         private readonly IDriversService driversService;
         private readonly ITransfersTypesService transfersTypesService;
@@ -87,6 +89,13 @@
                 return this.View(transferCreateInputModel);
             }
 
+            if (!await this.transfersService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
+            {
+                this.TempData["Error"] = UnavailableDriverErrorMessage;
+
+                return this.View(transferCreateInputModel); // TODO ERROR MESSAGE VIEW!!!
+            }
+
             var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
 
             await this.transfersService.CreateAsync(serviceTransfer);
@@ -114,21 +123,27 @@
         public async Task<IActionResult> CreateByDriver(TransferCreateInputModel transferCreateInputModel, string driverId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
+            transferCreateInputModel.ClientId = currentUser.Id;
+            var driverServiceModel = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(driverId);
 
             if (!this.ModelState.IsValid)
             {
-                var driverService = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(driverId);
                 var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
-                transferCreateInputModel.Driver = driverService.To<Driver>();
+                transferCreateInputModel.Driver = driverServiceModel.To<Driver>();
                 transferCreateInputModel.TransfersTypes = transfersTypes.Select(t => t.To<TransfersTypesDropDownViewModel>()).ToList();
                 transferCreateInputModel.ClientId = currentUser.Id;
 
                 return this.View(transferCreateInputModel);
             }
 
-            var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
-            serviceTransfer.ClientId = currentUser.Id;
+            if (!await this.transfersService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
+            {
+                this.TempData["Error"] = UnavailableDriverErrorMessage;
 
+                return this.View(transferCreateInputModel); // TODO ERROR MESSAGE VIEW!!!
+            }
+
+            var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
             await this.transfersService.CreateAsync(serviceTransfer);
 
             return this.Redirect("/");

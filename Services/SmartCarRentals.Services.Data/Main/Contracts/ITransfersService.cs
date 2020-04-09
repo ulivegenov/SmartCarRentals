@@ -1,5 +1,6 @@
 ﻿namespace SmartCarRentals.Services.Data.Main.Contracts
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@
         Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId);
 
         Task<TransferServiceDetailsModel> GetByIdAsync(int transferId);
+
+        Task<bool> IsDriverAvailableByDate(DateTime date, string driverId);
 
         Task<int> PayByIdAsync(int transferId, string userId);
 

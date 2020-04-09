@@ -11,22 +11,28 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Data.Models.Enums.Driver;
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Data.Models.Enums.User;
+    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Administration.Drivers;
     using SmartCarRentals.Services.Models.Main.Transfers;
 
     public class TransfersService : ITransfersService
     {
         private readonly IDeletableEntityRepository<Transfer> transferRepository;
+        private readonly IDriversService driversService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TransfersService(
                                 IDeletableEntityRepository<Transfer> transferRepository,
+                                IDriversService driversService,
                                 UserManager<ApplicationUser> userManager)
         {
             this.transferRepository = transferRepository;
+            this.driversService = driversService;
             this.userManager = userManager;
         }
 
@@ -38,6 +44,10 @@
             await this.transferRepository.AddAsync(transfer);
 
             var result = await this.transferRepository.SaveChangesAsync();
+
+            var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transfer.DriverId);
+            driver.HireStatus = HireStatus.Unavailable;
+            await this.driversService.EditAsync(driver);
 
             return result;
         }
@@ -122,6 +132,21 @@
             return transfer;
         }
 
+        public async Task<bool> IsDriverAvailableByDate(DateTime date, string driverId)
+        {
+            var transfers = await this.transferRepository.All()
+                                                         .Where(t => t.TransferDate.Date.CompareTo(date.Date) == 0)
+                                                         .Select(t => new Transfer()
+                                                         {
+                                                             DriverId = t.DriverId,
+                                                         })
+                                                         .ToListAsync();
+
+            var unavailableDriversIds = transfers.Select(t => t.DriverId);
+
+            return !unavailableDriversIds.Contains(driverId);
+        }
+
         public async Task<int> PayByIdAsync(int transferId, string userId)
         {
             var user = await this.userManager.FindByIdAsync(userId);
@@ -162,9 +187,14 @@
             transfer.HasPaid = true;
             transfer.Type.Price -= transfer.Type.Price * discount / 100;
             transfer.Points = (int)Math.Round(transfer.Type.Price / 10);
+            transfer.Status = Status.Finished;
             this.transferRepository.Update(transfer);
 
-            var result = await this.transferRepository.SaveChangesAsync();
+            await this.transferRepository.SaveChangesAsync();
+
+            var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transfer.DriverId);
+            driver.HireStatus = HireStatus.Available;
+            await this.driversService.EditAsync(driver);
 
             return transfer.Points;
         }

@@ -14,6 +14,7 @@
             this.IsDeleted = false;
             this.HasPaid = false;
             this.HasVote = false;
+            this.Status = Status.Forthcoming;
         }
 
         public DateTime TransferDate { get; set; }

@@ -3,6 +3,7 @@
     using System;
 
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Mapping;
 
     public class TransferServiceDetailsModel : IMapFrom<Transfer>, IMapTo<Transfer>
@@ -10,6 +11,8 @@
         public int Id { get; set; }
 
         public DateTime TransferDate { get; set; }
+
+        public Status Status { get; set; }
 
         public int Points { get; set; }
 
