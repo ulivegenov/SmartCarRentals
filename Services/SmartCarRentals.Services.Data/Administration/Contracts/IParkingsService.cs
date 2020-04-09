@@ -4,10 +4,11 @@
     using System.Threading.Tasks;
 
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Models.Administration.Parkings;
 
     public interface IParkingsService : IBaseService<int>
     {
-        Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId);
+        Task<IEnumerable<ParkingsServiceAllModel>> GetAllByTownIdAsync(int townId);
 
         Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId);
 

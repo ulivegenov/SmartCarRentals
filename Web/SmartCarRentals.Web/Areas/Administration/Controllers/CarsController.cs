@@ -139,6 +139,18 @@
             return this.Redirect("/Administration/Cars/All");
         }
 
+        public async Task<IActionResult> ByParking(int id)
+        {
+            var cars = await this.carsService.GetAllByParkingAsync<CarsServiceAllModel>(id);
+
+            var viewModel = new CarsAllViewModelCollection()
+            {
+                Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList(),
+            };
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> All()
         {
             var cars = await this.carsService.GetAllAsync<CarsServiceAllModel>();

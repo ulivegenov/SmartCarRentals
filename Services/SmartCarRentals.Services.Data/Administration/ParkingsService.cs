@@ -11,6 +11,7 @@
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Administration.Parkings;
     using SmartCarRentals.Services.Models.Contracts;
 
     public class ParkingsService : BaseService<Parking, int>, IParkingsService
@@ -127,11 +128,10 @@
             return parkingServiceModel;
         }
 
-        public async Task<IEnumerable<Parking>> GetAllByTownIdAsync(int townId)
+        public async Task<IEnumerable<ParkingsServiceAllModel>> GetAllByTownIdAsync(int townId)
         {
-            var townParkings = await this.parkingRepository.All()
-                                                       .Where(p => p.TownId == townId)
-                                                       .ToListAsync();
+            var parkings = await this.GetAllAsync<ParkingsServiceAllModel>();
+            var townParkings = parkings.Where(p => p.Town.Id == townId).ToList();
 
             return townParkings;
         }

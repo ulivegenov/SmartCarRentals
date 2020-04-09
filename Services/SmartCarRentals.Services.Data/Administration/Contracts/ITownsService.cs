@@ -4,9 +4,10 @@
     using System.Threading.Tasks;
 
     using SmartCarRentals.Data.Models;
+    using SmartCarRentals.Services.Models.Administration.Towns;
 
     public interface ITownsService : IBaseService<int>
     {
-        Task<IEnumerable<Town>> GetAllByCountryIdAsync(int countryId);
+        Task<IEnumerable<TownsServiceAllModel>> GetAllByCountryIdAsync(int countryId);
     }
 }

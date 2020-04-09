@@ -30,7 +30,7 @@
                             </div>
                         </td>
                         <td class="align-middle"><span>@Model.Drivers[i].FirstName</span><span> @Model.Drivers[i].LastName</span></td>
-                        <td class="align-middle">@Model.Drivers[i].Rating</td>
+                        <td class="align-middle">@Model.Drivers[i].Rating.ToString("F2")</td>
                         <td class="align-middle">@Model.Drivers[i].Transfers.Count</td>
                         <td class="align-middle"><a type="button" class="btn btn-primary py-1 px-1" asp-area="Administration" asp-controller="Drivers" asp-action="Details" asp-route-id="@Model.Drivers[i].Id">Details</a></td>
                     </tr>

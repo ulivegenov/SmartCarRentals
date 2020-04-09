@@ -10,6 +10,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Administration.Towns;
     using SmartCarRentals.Services.Models.Contracts;
 
     public class TownsService : BaseService<Town, int>, ITownsService
@@ -64,10 +65,11 @@
             return townServiseModel;
         }
 
-        public async Task<IEnumerable<Town>> GetAllByCountryIdAsync(int countryId)
+        public async Task<IEnumerable<TownsServiceAllModel>> GetAllByCountryIdAsync(int countryId)
         {
             var towns = await this.townRepository.All()
                                            .Where(t => t.CountryId == countryId)
+                                           .To<TownsServiceAllModel>()
                                            .ToListAsync();
 
             return towns;

@@ -113,11 +113,24 @@
             return this.Redirect("/Administration/Towns/All");
         }
 
+        public async Task<IActionResult> ByCountry(int id)
+        {
+            var towns = await this.townsService.GetAllByCountryIdAsync(id);
+            var viewModel = new TownsAllViewModelCollection()
+            {
+                Towns = towns.Select(t => t.To<TownsAllViewModel>()).ToList(),
+            };
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> All()
         {
             var towns = await this.townsService.GetAllAsync<TownsServiceAllModel>();
-            var viewModel = new TownsAllViewModelCollection();
-            viewModel.Towns = towns.Select(t => t.To<TownsAllViewModel>()).ToList();
+            var viewModel = new TownsAllViewModelCollection()
+            {
+                Towns = towns.Select(t => t.To<TownsAllViewModel>()).ToList(),
+            };
 
             return this.View(viewModel);
         }

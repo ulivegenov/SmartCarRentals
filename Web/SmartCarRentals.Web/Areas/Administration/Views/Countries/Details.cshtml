@@ -17,6 +17,11 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <span>
+                            <a class="text-light" asp-area="Administration" asp-controller="Towns" asp-action="ByCountry" asp-route-id="@Model.Id"><strong><u>Towns List</u></strong></a>
+                        </span>
+                    </div>
+                    <div class="form-group">
                         <a type="button" class="btn btn-danger py-2 px-3" asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
                         <a type="button" class="btn btn-warning py-2 px-3" asp-area="Administration" asp-controller="Countries" asp-action="All" asp-route-id="@Model.Id">Go Back</a>
                     </div>

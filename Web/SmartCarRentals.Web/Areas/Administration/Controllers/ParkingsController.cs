@@ -108,6 +108,17 @@
             return this.Redirect("/Administration/Parkings/All");
         }
 
+        public async Task<IActionResult> ByTown(int id)
+        {
+            var parkings = await this.parkingsService.GetAllByTownIdAsync(id);
+            var viewModel = new ParkingsAllViewModelCollection()
+            {
+                Parkings = parkings.Select(p => p.To<ParkingsAllViewModel>()).ToList(),
+            };
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> All()
         {
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceAllModel>();
