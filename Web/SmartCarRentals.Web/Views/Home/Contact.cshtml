@@ -22,18 +22,22 @@
     <div class="container">
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-8 block-9 mb-md-5">
-                <form action="post" class="ftco-animate bg-primary p-5 contact-form">
+                <form method="post" class="ftco-animate bg-primary p-5 contact-form">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name">
+                        <input type="text" class="form-control" asp-for="Name" placeholder="Your Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Email">
+                        <input type="text" class="form-control" asp-for="Email" placeholder="Your Email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Subject">
+                        <input type="text" class="form-control" asp-for="Subject" placeholder="Subject">
+                        <span asp-validation-for="Subject" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                        <textarea cols="30" rows="7" class="form-control" asp-for="Message" placeholder="Message"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Send Message" class="btn btn-secondary py-3 px-5">
@@ -80,18 +84,10 @@
 </section>
 
 <script>
-    // Initialize and add the map
-    function initMap() {
-        // The location of Uluru
-        var uluru = { lat: 42.700167, lng: 23.315572 };
-        // The map, centered at Uluru
-        var map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 4, center: uluru });
-        // The marker, positioned at Uluru
-        var marker = new google.maps.Marker({ position: uluru, map: map });
-    }
+    var map = L.map('map').setView([42.700167, 23.315572], 15);
+    L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=dPGyH01bwsnn7Gd1wicQ', {
+        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+    }).addTo(map);
+    var marker = L.marker([42.700167, 23.315572]).addTo(map);
 </script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewData["GoogleMapsApiKey"]&v=3&callback=initMap"
-        async defer></script>
 

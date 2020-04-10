@@ -150,11 +150,6 @@
       ]
     },
     {
-      "library": "@danielturner/google-map@3.0.1-latest",
-      "destination": "wwwroot/lib/google-map/",
-      "files": [ "google-map.js" ]
-    },
-    {
       "library": "jquery.animate-number@0.0.14",
       "destination": "wwwroot/lib/jquery-animate-number/",
       "files": [

@@ -8,11 +8,13 @@
 
     using Microsoft.Extensions.Configuration;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.TransfersTypes;
     using SmartCarRentals.Web.ViewModels;
     using SmartCarRentals.Web.ViewModels.Main.Cars;
+    using SmartCarRentals.Web.ViewModels.Main.Home;
     using SmartCarRentals.Web.ViewModels.Main.TransfersTypes;
 
     public class HomeController : BaseController
@@ -20,15 +22,18 @@
         private readonly IHomeService homeService;
         private readonly IConfiguration configuration;
         private readonly ITransfersTypesService transfersTypesService;
+        private readonly IMailService mailService;
 
         public HomeController(
                               IHomeService homeService,
                               IConfiguration configuration,
-                              ITransfersTypesService transfersTypesService)
+                              ITransfersTypesService transfersTypesService,
+                              IMailService mailService)
         {
             this.homeService = homeService;
             this.configuration = configuration;
             this.transfersTypesService = transfersTypesService;
+            this.mailService = mailService;
         }
 
         public async Task<IActionResult> Index()
@@ -49,9 +54,25 @@
 
         public IActionResult Contact()
         {
-            var model = this.configuration.GetValue<string>("GoogleMaps:ApiKey");
-            this.ViewData["GoogleMapsApiKey"] = model;
-            return this.View();
+            //var model = this.configuration.GetValue<string>("GoogleMaps:ApiKey");
+            //this.ViewData["GoogleMapsApiKey"] = model;
+
+            var viewModel = new ContactViewModel();
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactViewModel contactViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(contactViewModel);
+            }
+
+            var result = await this.mailService.ReceiveEmailAsync(contactViewModel.Email, contactViewModel.Name, contactViewModel.Subject, contactViewModel.Message);
+
+            return this.Redirect("/");
         }
 
         public async Task<IActionResult> Services()

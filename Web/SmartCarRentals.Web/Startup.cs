@@ -19,6 +19,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
+    using SendGrid;
+
     using SmartCarRentals.Data;
     using SmartCarRentals.Data.Common;
     using SmartCarRentals.Data.Common.Repositories;
@@ -138,6 +140,10 @@
 
             services.AddSingleton(cloudinary);
 
+            // SendGrid Api set
+            SendGridClient sendGrid = new SendGridClient(this.configuration["Sendgrid:ApiKey"]);
+            services.AddSingleton(sendGrid);
+
             // Google Maps Api set
             Account googleMapsCredentials = new Account(this.configuration["GoogleMaps : ApiKey"]);
 
@@ -166,6 +172,7 @@
             services.AddTransient<IReservationsService, ReservationsService>();
             services.AddTransient<ITripsService, TripsService>();
             services.AddTransient<ICarsRatingsService, CarsRatingsService>();
+            services.AddTransient<IMailService, SendGridService>();
             services.AddScoped<IHangfireService, HangfireService>();
         }
 

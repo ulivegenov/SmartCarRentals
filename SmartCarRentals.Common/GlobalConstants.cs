@@ -20,5 +20,8 @@
         public const int UserDiscount = 0;
         public const int GoldUserDiscount = 5;
         public const int PlatinumUserDiscount = 10;
+
+        // Emai
+        public const string ApplicationEmail = "yuliyan.vegenov@gmail.com";
     }
 }
