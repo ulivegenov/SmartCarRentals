@@ -50,15 +50,17 @@
         public async Task<IActionResult> All(string searchByCountry, string searchByTown, string searchByParking, int id = 1)
         {
             var page = id;
-            var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerpage, (page - 1) * GlobalConstants.ItemsPerpage);
+            var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
             var countries = await this.countriesService.GetAllAsync<CountriesServiceDropDownModel>();
             var towns = await this.townsService.GetAllAsync<TownsServiceDropDownModel>();
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
 
             foreach (var car in cars)
             {
-                var town = towns.FirstOrDefault(t => t.Id == car.Parking.TownId);
-                car.Parking.Town = new Town() { Name = town.Name };
+                var parking = parkings.FirstOrDefault(p => p.Id == car.ParkingId);
+                var counrty = countries.FirstOrDefault(c => c.Id == parking.Town.CountryId);
+                car.Parking.Town = parking.Town;
+                car.Parking.Town.Country = new Country() { Name = counrty.Name };
             }
 
             this.ViewData["CountryFilter"] = searchByCountry;
@@ -89,7 +91,7 @@
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
 
             var count = await this.carsService.GetCountAsync();
-            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerpage);
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
 
             if (viewModel.PagesCount == 0)
             {

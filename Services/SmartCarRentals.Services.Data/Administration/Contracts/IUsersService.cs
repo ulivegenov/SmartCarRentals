@@ -16,6 +16,8 @@
 
         Task<UserServiceDetailsModel> GetByIdAsync(string id);
 
+        Task<IEnumerable<UsersServiceAllModel>> GetAllWithPagingAsync(int? take = null, int skip = 0);
+
         Task<IEnumerable<RolesAllServiceModel>> GetUserRoles(string userId);
 
         Task<ApplicationUser> EditUserRoles(string id, List<RolesAllViewModel> roles);

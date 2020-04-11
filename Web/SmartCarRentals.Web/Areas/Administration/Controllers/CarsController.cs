@@ -1,5 +1,6 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -151,14 +152,32 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
-            var cars = await this.carsService.GetAllAsync<CarsServiceAllModel>();
+            var page = id;
+            var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
+            var carsWithAddress = await this.carsService.GetAllAsync<CarsServiceAllModel>();
 
-            var viewModel = new CarsAllViewModelCollection()
+            var viewModel = new CarsAllViewModelCollection();
+
+            foreach (var car in cars)
             {
-                Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList(),
-            };
+                car.Rating = carsWithAddress.Where(c => c.Id == car.Id)
+                                                  .Select(d => d.Rating)
+                                                  .FirstOrDefault();
+
+                viewModel.Cars.Add(car.To<CarsAllViewModel>());
+            }
+
+            var count = await this.carsService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPageAdmin);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

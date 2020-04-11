@@ -1,5 +1,7 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -121,15 +123,31 @@
             return this.Redirect("/Administration/Drivers/All");
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
-            var drivers = await this.driversService.GetAllAsync<DriversServiceAllModel>();
+            var page = id;
+            var drivers = this.driversService.GetAllWithPaging<DriversServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
+            var driversWithRatings = await this.driversService.GetAllAsync<DriversServiceAllModel>();
             var viewModel = new DriversAllViewModelCollection();
 
             foreach (var driver in drivers)
             {
+                driver.Rating = driversWithRatings.Where(d => d.Id == driver.Id)
+                                                  .Select(d => d.Rating)
+                                                  .FirstOrDefault();
+
                 viewModel.Drivers.Add(driver.To<DriversAllViewModel>());
             }
+
+            var count = await this.driversService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPageAdmin);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

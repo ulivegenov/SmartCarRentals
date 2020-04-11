@@ -72,6 +72,30 @@
             return users;
         }
 
+        public async Task<IEnumerable<UsersServiceAllModel>> GetAllWithPagingAsync(int? take = null, int skip = 0)
+        {
+            var users = this.userRepository.All()
+                                           .OrderByDescending(u => u.Points)
+                                           .To<UsersServiceAllModel>()
+                                           .Skip(skip);
+
+            foreach (var user in users)
+            {
+                foreach (var identityRole in user.Roles)
+                {
+                    var applicationRole = await this.roleManager.FindByIdAsync(identityRole.RoleId);
+                    user.ApplicationRoles.Add(applicationRole);
+                }
+            }
+
+            if (take.HasValue)
+            {
+                users = users.Take(take.Value);
+            }
+
+            return users.ToList();
+        }
+
         public async Task<UserServiceDetailsModel> GetByIdAsync(string id)
         {
             var user = await this.userRepository.All()

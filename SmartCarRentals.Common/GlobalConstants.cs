@@ -25,6 +25,10 @@
         public const string ApplicationEmail = "yuliyan.vegenov@gmail.com";
 
         // Controllers constants
-        public const int ItemsPerpage = 9;
+        public const int ItemsPerPage = 6;
+        public const int ItemsPerPageAdmin = 5;
+        public const int UsersPerPageAdmin = 10;
+        public const int MorePagesToShow = 2;
+
     }
 }

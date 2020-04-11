@@ -1,9 +1,11 @@
 ﻿namespace SmartCarRentals.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using SmartCarRentals.Common;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Drivers;
@@ -18,14 +20,32 @@
             this.driversService = driversService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
-            var drivers = await this.driversService.GetAllAsync<DriversServiceAllModel>();
+            var page = id;
+            var drivers = this.driversService.GetAllWithPaging<DriversServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
+            var driversWithRatings = await this.driversService.GetAllAsync<DriversServiceAllModel>();
 
-            var viewModel = new DriversAllViewModelCollection()
+            var viewModel = new DriversAllViewModelCollection();
+
+            foreach (var driver in drivers)
             {
-                Drivers = drivers.Select(d => d.To<DriversAllViewModel>()).ToList(),
-            };
+                driver.Rating = driversWithRatings.Where(d => d.Id == driver.Id)
+                                                  .Select(d => d.Rating)
+                                                  .FirstOrDefault();
+
+                viewModel.Drivers.Add(driver.To<DriversAllViewModel>());
+            }
+
+            var count = await this.driversService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

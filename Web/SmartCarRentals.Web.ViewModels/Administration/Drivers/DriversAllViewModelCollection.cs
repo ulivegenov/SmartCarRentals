@@ -1,8 +1,6 @@
 ﻿namespace SmartCarRentals.Web.ViewModels.Administration.Drivers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
 
     public class DriversAllViewModelCollection
     {
@@ -10,6 +8,10 @@
         {
             this.Drivers = new List<DriversAllViewModel>();
         }
+
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
 
         public List<DriversAllViewModel> Drivers { get; set; }
     }

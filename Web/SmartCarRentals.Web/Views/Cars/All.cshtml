@@ -1,4 +1,5 @@
-﻿@using SmartCarRentals.Common
+﻿@using SmartCarRentals.Common;
+@using System.Linq;
 @model SmartCarRentals.Web.ViewModels.Administration.Cars.CarsAllViewModelCollection
 @{
     this.ViewData["Title"] = "Cars All";
@@ -41,7 +42,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <input type="submit" value="Search" class="btn btn-primary mb-2 py-2 px-4" /> |
+                <input id="searchBtn" type="submit" value="Search" class="btn btn-primary mb-2 py-2 px-4" /> |
                 <a asp-action="All">Back to Full List</a>
             </div>
         </div>
@@ -119,13 +120,37 @@
                             </li>
                         }
 
-                        @for (int i = 1; i <= this.Model.PagesCount; i++)
+                        @{
+                            var pagesToShow = new List<int>();
+                            for (var i = 1; i <= GlobalConstants.MorePagesToShow; i++)
+                            {
+                                pagesToShow.Add(i);
+                            }
+                            for (var i = this.Model.CurrentPage - GlobalConstants.MorePagesToShow; i <= this.Model.CurrentPage + GlobalConstants.MorePagesToShow; i++)
+                            {
+                                if (i > 0)
+                                {
+                                    pagesToShow.Add(i);
+                                }
+                            }
+                            for (var i = this.Model.PagesCount - GlobalConstants.MorePagesToShow + 1; i <= this.Model.PagesCount; i++)
+                            {
+                                if (i > 0)
+                                {
+                                    pagesToShow.Add(i);
+                                }
+                            }
+                            pagesToShow = pagesToShow.Where(x => x <= this.Model.PagesCount).Distinct().OrderBy(x => x).ToList();
+                        }
+                        @for (var i = 0; i < pagesToShow.Count; i++)
                         {
-                            var active = i == this.Model.CurrentPage ? "active" : string.Empty;
-                            <li class="@active">
-                                <a asp-route="default"
-                                   asp-route-id="@i">@i</a>
-                            </li>
+                            var pageNumber = pagesToShow[i];
+                            var active = pagesToShow[i] == this.Model.CurrentPage ? "active" : string.Empty;
+                            if (i > 0 && pageNumber - 1 != pagesToShow[i - 1])
+                            {
+                                <li class="@active"><a asp-route="default" asp-route-id="@(pagesToShow[i - 1] + 1)">...</a></li>
+                            }
+                            <li class="@active"><a asp-route="default" asp-route-id="@pagesToShow[i]">@pagesToShow[i]</a></li>
                         }
 
                         @if (this.Model.CurrentPage == this.Model.PagesCount)
@@ -149,10 +174,9 @@
 </section>
 
 <script>
-    const inputCountry = document.getElementById("inputCountry");
-    const inputTown = document.getElementById("inputTown");
-    const inputParking = document.getElementById("inputParking");
-
+    const inputCountry = document.getElementById('inputCountry');
+    const inputTown = document.getElementById('inputTown');
+    const inputParking = document.getElementById('inputParking');
     inputCountry.addEventListener('change', (event) => {
         inputTown.value = "Search by Town";
         inputParking.value = "Search by Parking";

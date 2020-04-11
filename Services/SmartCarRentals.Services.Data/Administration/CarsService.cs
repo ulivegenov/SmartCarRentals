@@ -110,7 +110,11 @@
                                                        Town = new Town()
                                                        {
                                                            Name = c.Parking.Town.Name,
-                                                           Country = new Country { Name = c.Parking.Town.Country.Name },
+                                                           Country = new Country
+                                                           {
+                                                               Id = c.Parking.Town.CountryId,
+                                                               Name = c.Parking.Town.Country.Name,
+                                                           },
                                                        },
                                                    },
                                                })
