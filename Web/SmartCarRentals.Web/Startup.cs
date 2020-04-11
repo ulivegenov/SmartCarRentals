@@ -144,11 +144,6 @@
             SendGridClient sendGrid = new SendGridClient(this.configuration["Sendgrid:ApiKey"]);
             services.AddSingleton(sendGrid);
 
-            // Google Maps Api set
-            Account googleMapsCredentials = new Account(this.configuration["GoogleMaps : ApiKey"]);
-
-            services.AddSingleton(googleMapsCredentials);
-
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

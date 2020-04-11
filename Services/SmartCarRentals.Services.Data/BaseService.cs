@@ -53,6 +53,20 @@
             return entity;
         }
 
+        public virtual IEnumerable<T> GetAllWithPaging<T>(int? take = null, int skip = 0)
+        {
+            var entity = this.deletableEntityRepository.All()
+                                                       .OrderByDescending(e => e.CreatedOn)
+                                                       .Skip(skip);
+
+            if (take.HasValue)
+            {
+                entity = entity.Take(take.Value);
+            }
+
+            return entity.To<T>().ToList();
+        }
+
         public virtual async Task<T> GetByIdAsync<T>(TKey id)
         {
             var entity = await this.deletableEntityRepository.All()

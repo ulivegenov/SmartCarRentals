@@ -23,5 +23,8 @@
 
         // Emai
         public const string ApplicationEmail = "yuliyan.vegenov@gmail.com";
+
+        // Controllers constants
+        public const int ItemsPerpage = 9;
     }
 }

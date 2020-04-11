@@ -6,6 +6,8 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SmartCarRentals.Common;
+    using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
@@ -45,12 +47,19 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> All(string searchByCountry, string searchByTown, string searchByParking)
+        public async Task<IActionResult> All(string searchByCountry, string searchByTown, string searchByParking, int id = 1)
         {
-            var cars = await this.carsService.GetAllAsync<CarsServiceAllModel>();
+            var page = id;
+            var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerpage, (page - 1) * GlobalConstants.ItemsPerpage);
             var countries = await this.countriesService.GetAllAsync<CountriesServiceDropDownModel>();
             var towns = await this.townsService.GetAllAsync<TownsServiceDropDownModel>();
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
+
+            foreach (var car in cars)
+            {
+                var town = towns.FirstOrDefault(t => t.Id == car.Parking.TownId);
+                car.Parking.Town = new Town() { Name = town.Name };
+            }
 
             this.ViewData["CountryFilter"] = searchByCountry;
             this.ViewData["TownFilter"] = searchByTown;
@@ -78,6 +87,16 @@
             viewModel.Parkings = parkings.Select(p => p.Name).ToList();
 
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
+
+            var count = await this.carsService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerpage);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

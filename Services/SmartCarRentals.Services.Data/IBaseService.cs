@@ -13,6 +13,8 @@
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 
+        IEnumerable<T> GetAllWithPaging<T>(int? take = null, int skip = 0);
+
         Task<T> GetByIdAsync<T>(TKey id);
 
         Task<int> EditAsync(IServiceDetailsModel<TKey> serviceDetailsModel);

@@ -13,6 +13,10 @@
             this.Parkings = new List<string>();
         }
 
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
+
         public List<CarsAllViewModel> Cars { get; set; }
 
         public List<string> Countries { get; set; }
