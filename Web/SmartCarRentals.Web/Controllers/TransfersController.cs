@@ -1,14 +1,17 @@
 ﻿namespace SmartCarRentals.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Hangfire;
     using Microsoft.AspNetCore.Authorization;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Drivers;
@@ -27,19 +30,25 @@
         private readonly ITransfersTypesService transfersTypesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUsersService usersService;
+        private readonly IBackgroundJobClient backgroungJobClient;
+        private readonly IHangfireService hangfireService;
 
         public TransfersController(
                                    ITransfersService transfersService,
                                    IDriversService driversService,
                                    ITransfersTypesService transfersTypesService,
                                    UserManager<ApplicationUser> userManager,
-                                   IUsersService usersService)
+                                   IUsersService usersService,
+                                   IBackgroundJobClient backgroungJobClient,
+                                   IHangfireService hangfireService)
         {
             this.transfersService = transfersService;
             this.driversService = driversService;
             this.transfersTypesService = transfersTypesService;
             this.userManager = userManager;
             this.usersService = usersService;
+            this.backgroungJobClient = backgroungJobClient;
+            this.hangfireService = hangfireService;
         }
 
         public async Task<IActionResult> Create(string searchByDriver)
@@ -69,6 +78,7 @@
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             transferCreateInputModel.ClientId = currentUser.Id;
+            var driverServiceModel = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transferCreateInputModel.DriverId);
 
             if (!this.ModelState.IsValid)
             {
@@ -89,7 +99,7 @@
                 return this.View(transferCreateInputModel);
             }
 
-            if (!await this.transfersService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
+            if (!await this.driversService.IsDriverAvailableByDate(DateTime.UtcNow, transferCreateInputModel.DriverId))
             {
                 this.TempData["Error"] = UnavailableDriverErrorMessage;
 
@@ -136,7 +146,7 @@
                 return this.View(transferCreateInputModel);
             }
 
-            if (!await this.transfersService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
+            if (!await this.driversService.IsDriverAvailableByDate(DateTime.UtcNow, transferCreateInputModel.DriverId))
             {
                 this.TempData["Error"] = UnavailableDriverErrorMessage;
 

@@ -45,9 +45,9 @@
 
             var result = await this.transferRepository.SaveChangesAsync();
 
-            var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transfer.DriverId);
-            driver.HireStatus = HireStatus.Unavailable;
-            await this.driversService.EditAsync(driver);
+            //var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transfer.DriverId);
+            //driver.HireStatus = HireStatus.Unavailable;
+            //await this.driversService.EditAsync(driver);
 
             return result;
         }
