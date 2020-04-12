@@ -11,29 +11,33 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Driver;
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Data.Models.Enums.User;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Administration.Drivers;
     using SmartCarRentals.Services.Models.Main.Transfers;
 
     public class TransfersService : ITransfersService
     {
         private readonly IDeletableEntityRepository<Transfer> transferRepository;
-        private readonly IDriversService driversService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TransfersService(
                                 IDeletableEntityRepository<Transfer> transferRepository,
-                                IDriversService driversService,
                                 UserManager<ApplicationUser> userManager)
         {
             this.transferRepository = transferRepository;
-            this.driversService = driversService;
             this.userManager = userManager;
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            var users = await this.transferRepository.All()
+                                                     .Select(t => t.Id)
+                                                     .ToListAsync();
+
+            return users.Count;
         }
 
         public async Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel)
@@ -45,14 +49,10 @@
 
             var result = await this.transferRepository.SaveChangesAsync();
 
-            //var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transfer.DriverId);
-            //driver.HireStatus = HireStatus.Unavailable;
-            //await this.driversService.EditAsync(driver);
-
             return result;
         }
 
-        public async Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId)
+        public async Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             var discount = GlobalConstants.UserDiscount;
@@ -67,39 +67,39 @@
                 discount = GlobalConstants.PlatinumUserDiscount;
             }
 
-            var transfers = await this.transferRepository.All()
-                                                         .Where(t => t.ClientId == userId)
-                                                         .Select(t => new Transfer()
-                                                         {
-                                                             Id = t.Id,
-                                                             TransferDate = t.TransferDate,
-                                                             Status = t.Status,
-                                                             Type = new TransferType()
-                                                             {
-                                                                 Id = t.Type.Id,
-                                                                 Name = t.Type.Name,
-                                                                 Price = t.Type.Price,
-                                                             },
-                                                             Driver = new Driver()
-                                                             {
-                                                                 Id = t.Driver.Id,
-                                                                 FirstName = t.Driver.FirstName,
-                                                                 LastName = t.Driver.LastName,
-                                                             },
-                                                             HasPaid = t.HasPaid,
-                                                             HasVote = t.HasVote,
-                                                         })
-                                                         .To<MyTransfersServiceAllModel>()
-                                                         .OrderBy(t => t.HasPaid)
-                                                         .ThenBy(t => t.TransferDate)
-                                                         .ToListAsync();
+            var transfers = this.transferRepository.All()
+                                                   .Where(t => t.ClientId == userId)
+                                                   .Select(t => new Transfer()
+                                                   {
+                                                       Id = t.Id,
+                                                       TransferDate = t.TransferDate,
+                                                       Status = t.Status,
+                                                       Type = new TransferType()
+                                                       {
+                                                           Id = t.Type.Id,
+                                                           Name = t.Type.Name,
+                                                           Price = t.Type.Price - (t.Type.Price * discount / 100),
+                                                       },
+                                                       Driver = new Driver()
+                                                       {
+                                                           Id = t.Driver.Id,
+                                                           FirstName = t.Driver.FirstName,
+                                                           LastName = t.Driver.LastName,
+                                                       },
+                                                       HasPaid = t.HasPaid,
+                                                       HasVote = t.HasVote,
+                                                   })
+                                                   .To<MyTransfersServiceAllModel>()
+                                                   .OrderByDescending(t => t.TransferDate)
+                                                   .ThenBy(t => t.HasPaid)
+                                                   .Skip(skip);
 
-            foreach (var transfer in transfers)
+            if (take.HasValue)
             {
-                transfer.Type.Price -= transfer.Type.Price * discount / 100;
+                transfers = transfers.Take(take.Value);
             }
 
-            return transfers;
+            return await transfers.ToListAsync();
         }
 
         public async Task<TransferServiceDetailsModel> GetByIdAsync(int transferId)
@@ -191,10 +191,6 @@
             this.transferRepository.Update(transfer);
 
             await this.transferRepository.SaveChangesAsync();
-
-            var driver = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transfer.DriverId);
-            driver.HireStatus = HireStatus.Available;
-            await this.driversService.EditAsync(driver);
 
             return transfer.Points;
         }

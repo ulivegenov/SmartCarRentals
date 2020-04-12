@@ -9,6 +9,10 @@
             this.MyTransfers = new List<MyTransfersAllViewModel>();
         }
 
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
+
         public List<MyTransfersAllViewModel> MyTransfers { get; set; }
     }
 }

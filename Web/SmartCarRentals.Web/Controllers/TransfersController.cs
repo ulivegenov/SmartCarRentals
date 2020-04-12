@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.AppServices.Contracts;
@@ -160,13 +160,24 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> MyTransfers()
+        public async Task<IActionResult> MyTransfers(int id = 1)
         {
+            var page = id;
             var user = await this.userManager.GetUserAsync(this.User);
-            var transfers = await this.transfersService.GetByUserAsync(user.Id);
+            var transfers = await this.transfersService.GetByUserAsync(user.Id, GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
 
             var viewModel = new MyTransfersAllViewModelCollection();
             viewModel.MyTransfers = transfers.Select(t => t.To<MyTransfersAllViewModel>()).ToList();
+
+            var count = await this.transfersService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.UsersPerPageAdmin);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

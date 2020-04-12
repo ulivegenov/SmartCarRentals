@@ -1,5 +1,6 @@
 ﻿namespace SmartCarRentals.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Services.Data.Administration.Contracts;
@@ -91,15 +93,26 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> MyTrips()
+        public async Task<IActionResult> MyTrips(int id = 1)
         {
+            var page = id;
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var trips = await this.tripsService.GetByUserAsync(currentUser.Id);
+            var trips = await this.tripsService.GetByUserAsync(currentUser.Id, GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
 
             var viewModel = new MyTripsAllViewModelCollection()
             {
                 MyTrips = trips.Select(r => r.To<MyTripsAllViewModel>()).ToList(),
             };
+
+            var count = await this.tripsService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.UsersPerPageAdmin);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

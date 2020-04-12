@@ -7,7 +7,7 @@
 
     public interface ITripsService : IBaseService<int>
     {
-        Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId);
+        Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0);
 
         Task<int> PayAsync(MyTripsServiceAllModel tripServiceModel);
 

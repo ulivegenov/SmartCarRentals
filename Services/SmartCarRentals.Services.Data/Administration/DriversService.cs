@@ -10,7 +10,6 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
 
     public class DriversService : BaseService<Driver, string>, IDriversService

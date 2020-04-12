@@ -9,6 +9,10 @@
             this.MyTrips = new List<MyTripsAllViewModel>();
         }
 
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
+
         public List<MyTripsAllViewModel> MyTrips { get; set; }
     }
 }

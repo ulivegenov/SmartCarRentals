@@ -37,7 +37,7 @@
             this.userManager = userManager;
         }
 
-        public async Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId)
+        public async Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             var discount = GlobalConstants.UserDiscount;
@@ -52,38 +52,39 @@
                 discount = GlobalConstants.PlatinumUserDiscount;
             }
 
-            var trips = await this.tripsRepository.All()
-                                                  .Where(t => t.ClientId == userId)
-                                                  .Select(t => new Trip()
-                                                  {
-                                                      Id = t.Id,
-                                                      EndDate = t.EndDate,
-                                                      KmRun = t.KmRun,
-                                                      CarId = t.CarId,
-                                                      Car = new Car()
-                                                      {
-                                                          Make = t.Car.Make,
-                                                          Model = t.Car.Model,
-                                                          ParkingId = t.Car.ParkingId,
-                                                          PlateNumber = t.Car.PlateNumber,
-                                                          PricePerDay = t.Car.PricePerDay,
-                                                          PricePerHour = t.Car.PricePerHour,
-                                                      },
-                                                      HasPaid = t.HasPaid,
-                                                      HasVote = t.HasVote,
-                                                      Points = t.Points,
-                                                      Price = t.Price,
-                                                      Status = t.Status,
-                                                  })
-                                                  .To<MyTripsServiceAllModel>()
-                                                  .ToListAsync();
+            var trips = this.tripsRepository.All()
+                                            .Where(t => t.ClientId == userId)
+                                            .Select(t => new Trip()
+                                            {
+                                                Id = t.Id,
+                                                EndDate = t.EndDate,
+                                                KmRun = t.KmRun,
+                                                CarId = t.CarId,
+                                                Car = new Car()
+                                                {
+                                                    Make = t.Car.Make,
+                                                    Model = t.Car.Model,
+                                                    ParkingId = t.Car.ParkingId,
+                                                    PlateNumber = t.Car.PlateNumber,
+                                                    PricePerDay = t.Car.PricePerDay,
+                                                    PricePerHour = t.Car.PricePerHour,
+                                                },
+                                                HasPaid = t.HasPaid,
+                                                HasVote = t.HasVote,
+                                                Points = t.Points,
+                                                Price = t.Price - (t.Price * discount / 100),
+                                                Status = t.Status,
+                                            })
+                                            .To<MyTripsServiceAllModel>()
+                                            .Skip(skip);
 
-            foreach (var trip in trips)
+
+            if (take.HasValue)
             {
-                trip.Price -= trip.Price * discount / 100;
+                trips = trips.Take(take.Value);
             }
 
-            return trips;
+            return await trips.ToListAsync();
         }
 
         public async Task<int> PayAsync(MyTripsServiceAllModel tripServiceModel)

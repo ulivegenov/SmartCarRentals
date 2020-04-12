@@ -52,7 +52,6 @@
         {
             var page = id;
             var users = await this.usersService.GetAllWithPagingAsync(GlobalConstants.UsersPerPageAdmin, (page - 1) * GlobalConstants.UsersPerPageAdmin);
-            //var users = await this.usersService.GetAllAsync();
 
             var viewModel = new UsersAllViewModelCollection()
             {

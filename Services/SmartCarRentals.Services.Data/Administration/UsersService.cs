@@ -38,7 +38,8 @@
         public async Task<int> GetCountAsync()
         {
             var users = await this.userRepository.All()
-                                                      .Select(u => new ApplicationUser() { Id = u.Id }).ToListAsync();
+                                                 .Select(u => new ApplicationUser() { Id = u.Id })
+                                                 .ToListAsync();
 
             return users.Count;
         }

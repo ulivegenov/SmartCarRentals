@@ -7,7 +7,7 @@
 
     public interface IReservationsService : IBaseService<int>
     {
-        Task<IEnumerable<MyReservationsServiceAllModel>> GetByUserAsync(string userId);
+        Task<IEnumerable<MyReservationsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0);
 
         Task<IEnumerable<MyReservationsServiceAllModel>> GetAllAwaitingReservationsAsync();
     }

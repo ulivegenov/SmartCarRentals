@@ -22,36 +22,41 @@
             this.reservationRepository = reservationRepository;
         }
 
-        public async Task<IEnumerable<MyReservationsServiceAllModel>> GetByUserAsync(string userId)
+        public async Task<IEnumerable<MyReservationsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
         {
-            var reservations = await this.reservationRepository.All()
-                                                               .Where(r => r.ClientId == userId)
-                                                               .Select(r => new Reservation()
-                                                               {
-                                                                   Id = r.Id,
-                                                                   CarId = r.CarId,
-                                                                   Car = new Car()
-                                                                   {
-                                                                       Make = r.Car.Make,
-                                                                       Model = r.Car.Model,
-                                                                       PlateNumber = r.Car.PlateNumber,
-                                                                   },
-                                                                   ReservationDate = r.ReservationDate,
-                                                                   Status = r.Status,
-                                                                   Parking = new Parking()
-                                                                   {
-                                                                       Address = r.Parking.Address,
-                                                                       Town = new Town()
-                                                                       {
-                                                                           Name = r.Parking.Town.Name,
-                                                                       },
-                                                                   },
-                                                               })
-                                                               .OrderBy(r => r.Status)
-                                                               .To<MyReservationsServiceAllModel>()
-                                                               .ToListAsync();
+            var reservations = this.reservationRepository.All()
+                                                         .Where(r => r.ClientId == userId)
+                                                         .Select(r => new Reservation()
+                                                         {
+                                                             Id = r.Id,
+                                                             CarId = r.CarId,
+                                                             Car = new Car()
+                                                             {
+                                                                 Make = r.Car.Make,
+                                                                 Model = r.Car.Model,
+                                                                 PlateNumber = r.Car.PlateNumber,
+                                                             },
+                                                             ReservationDate = r.ReservationDate,
+                                                             Status = r.Status,
+                                                             Parking = new Parking()
+                                                             {
+                                                                 Address = r.Parking.Address,
+                                                                 Town = new Town()
+                                                                 {
+                                                                     Name = r.Parking.Town.Name,
+                                                                 },
+                                                             },
+                                                         })
+                                                         .OrderBy(r => r.Status)
+                                                         .To<MyReservationsServiceAllModel>()
+                                                         .Skip(skip);
 
-            return reservations;
+            if (take.HasValue)
+            {
+                reservations = reservations.Take(take.Value);
+            }
+
+            return await reservations.ToListAsync();
         }
 
         public async Task<IEnumerable<MyReservationsServiceAllModel>> GetAllAwaitingReservationsAsync()

@@ -8,9 +8,10 @@
 
     public interface ITransfersService
     {
+        Task<int> GetCountAsync();
         Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel);
 
-        Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId);
+        Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0);
 
         Task<TransferServiceDetailsModel> GetByIdAsync(int transferId);
 
