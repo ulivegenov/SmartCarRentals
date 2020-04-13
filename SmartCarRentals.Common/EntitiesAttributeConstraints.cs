@@ -52,5 +52,8 @@
         // Subject
         public const int SubjectMinLength = 2;
         public const int SubjectMaxLength = 50;
+
+        // Date
+        public const string InvalidDateMessage = "Inavlid date!";
     }
 }

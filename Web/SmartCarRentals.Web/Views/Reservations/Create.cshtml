@@ -43,7 +43,8 @@
                             <span asp-validation-for="ClientId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input data-provide="datepicker" data-date-format="yyyy-mm-dd" asp-for="@Model.ReservationDate" value="Select Date">
+                            <label for="inputDate">Select Date</label>
+                            <input id="inputDate" asp-for="@Model.ReservationDate" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">Make Reservation</button>

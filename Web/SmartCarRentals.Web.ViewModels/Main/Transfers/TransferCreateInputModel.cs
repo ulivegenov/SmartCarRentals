@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.Transfers;
+    using SmartCarRentals.Web.Infrastructure.CustomAttributes;
     using SmartCarRentals.Web.ViewModels.Administration.Drivers;
-    using SmartCarRentals.Web.ViewModels.Main.Drivers;
     using SmartCarRentals.Web.ViewModels.Main.TransfersTypes;
 
     public class TransferCreateInputModel : IMapTo<TransferServiceInputModel>
@@ -22,6 +22,8 @@
         }
 
         [Required]
+        [DateRange]
+        [Display(Name = "Transfer Date")]
         public DateTime TransferDate { get; set; }
 
         public Status Status { get; set; }
@@ -29,6 +31,7 @@
         public int Points { get; set; }
 
         [Required]
+        [Display(Name = "Transfer Type")]
         public int TransferTypeId { get; set; }
 
         public virtual TransferType Type { get; set; }
@@ -37,12 +40,15 @@
 
         public virtual ApplicationUser Client { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Driver")]
         public string DriverId { get; set; }
 
         public virtual Driver Driver { get; set; }
 
         public int? DriverRatingId { get; set; }
+
+        [NotMapped]
+        public string Message { get; set; }
 
         public IEnumerable<TransfersTypesDropDownViewModel> TransfersTypes { get; set; }
 

@@ -24,30 +24,33 @@
 
 <section class="ftco-section ftco-cart">
     <div class="container">
+        @if (this.TempData.ContainsKey("Error"))
+        {
+            <div class="alert alert-danger col-8" role="alert">
+                @this.TempData["Error"]. Choose someone else!
+                <span>&emsp;</span>
+                <a class="btn btn-primary" asp-area="" asp-controller="Drivers" asp-action="All">Drivers</a>
+            </div>
+        }
         <div class="row no-gutters">
-
             <div class="small-box bg-primary">
                 <div class="inner">
-
                     <form class="request-form ftco-animate bg-primary" enctype="multipart/form-data" method="post">
                         <h2>Make Your Transfer</h2>
                         <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
-                            <span asp-validation-for="@Model.DriverId" class="text-danger"></span>
                             <input id="driverId" asp-for="@Model.DriverId" class="form-control" style="display:none" />
-
                         </div>
+                        <label for="inputTransferType">Select Transfer Type</label>
                         <div class="form-group">
-                            <span asp-validation-for="@Model.TransferTypeId" class="text-danger"></span>
-                            <select class="form-group" asp-for="@Model.TransferTypeId" asp-items="@transfersTypes">
+                            <select class="form-group" id="inputTransferType" asp-for="@Model.TransferTypeId" asp-items="@transfersTypes">
                                 <option value="">Select Transfer Type</option>
                             </select>
-
                         </div>
                         <div class="form-group">
-                            <span asp-validation-for="@Model.TransferDate" class="text-danger"></span><br />
-                            <input data-provide="datepicker" data-date-format="dd-mm-yyyy" asp-for="@Model.TransferDate" value="Select Date">
-
+                            <label for="inputDate">Select Date</label>
+                            <input id="inputDate" asp-for="@Model.TransferDate" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success py-3 px-4">Make Trip</button>
@@ -55,7 +58,7 @@
                     </form>
                 </div>
             </div>
-
+            <span>&emsp;&emsp;</span>
             <div id="@Model.Driver.Id" class="col-md-4">
                 <div class="car-wrap rounded ftco-animate">
                     <div class="img rounded d-flex align-items-end" style="background-image: url(@Model.Driver.Image);">

@@ -60,7 +60,7 @@
 
             if (!string.IsNullOrEmpty(searchByDriver))
             {
-                drivers = drivers.Where(d => $"{d.FirstName} {d.LastName}" == searchByDriver);
+                drivers = drivers.Where(d => d.Id == searchByDriver);
             }
 
             var viewModel = new TransferCreateInputModel()
@@ -89,7 +89,7 @@
 
                 if (!string.IsNullOrEmpty(searchByDriver))
                 {
-                    drivers = drivers.Where(d => $"{d.FirstName} {d.LastName}" == searchByDriver);
+                    drivers = drivers.Where(d => d.Id == searchByDriver);
                 }
 
                 transferCreateInputModel.Drivers = drivers.Select(d => d.To<DriverDetailsViewModel>()).ToList();
@@ -99,18 +99,27 @@
                 return this.View(transferCreateInputModel);
             }
 
-            if (!await this.driversService.IsDriverAvailableByDate(DateTime.UtcNow, transferCreateInputModel.DriverId))
+            if (!await this.driversService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
             {
                 this.TempData["Error"] = UnavailableDriverErrorMessage;
 
-                return this.View(transferCreateInputModel); // TODO ERROR MESSAGE VIEW!!!
+                var drivers = await this.driversService.GetAllAsync<DriverServiceDetailsModel>();
+                var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
+
+                this.ViewData["DriverFilter"] = searchByDriver;
+
+                transferCreateInputModel.Drivers = drivers.Select(d => d.To<DriverDetailsViewModel>()).ToList();
+                transferCreateInputModel.TransfersTypes = transfersTypes.Select(t => t.To<TransfersTypesDropDownViewModel>()).ToList();
+                transferCreateInputModel.ClientId = currentUser.Id;
+
+                return this.View(transferCreateInputModel);
             }
 
             var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
 
             await this.transfersService.CreateAsync(serviceTransfer);
 
-            return this.Redirect("/");
+            return this.Redirect("/Transfers/MyTransfers");
         }
 
         [HttpGet("/Transfers/Create/{driverId}")]
@@ -146,9 +155,14 @@
                 return this.View(transferCreateInputModel);
             }
 
-            if (!await this.driversService.IsDriverAvailableByDate(DateTime.UtcNow, transferCreateInputModel.DriverId))
+            if (!await this.driversService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
             {
                 this.TempData["Error"] = UnavailableDriverErrorMessage;
+
+                var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
+                transferCreateInputModel.Driver = driverServiceModel.To<Driver>();
+                transferCreateInputModel.TransfersTypes = transfersTypes.Select(t => t.To<TransfersTypesDropDownViewModel>()).ToList();
+                transferCreateInputModel.ClientId = currentUser.Id;
 
                 return this.View(transferCreateInputModel); // TODO ERROR MESSAGE VIEW!!!
             }
@@ -156,7 +170,7 @@
             var serviceTransfer = transferCreateInputModel.To<TransferServiceInputModel>();
             await this.transfersService.CreateAsync(serviceTransfer);
 
-            return this.Redirect("/");
+            return this.Redirect("/Transfers/MyTransfers");
         }
 
         [Authorize]
