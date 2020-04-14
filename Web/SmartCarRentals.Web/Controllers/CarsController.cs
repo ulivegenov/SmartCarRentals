@@ -57,10 +57,13 @@
 
             foreach (var car in cars)
             {
-                var parking = parkings.FirstOrDefault(p => p.Id == car.ParkingId);
-                var counrty = countries.FirstOrDefault(c => c.Id == parking.Town.CountryId);
-                car.Parking.Town = parking.Town;
-                car.Parking.Town.Country = new Country() { Name = counrty.Name };
+                if (car.ParkingId != null)
+                {
+                    var parking = parkings.FirstOrDefault(p => p.Id == car.ParkingId);
+                    var counrty = countries.FirstOrDefault(c => c.Id == parking.Town.CountryId);
+                    car.Parking.Town = parking.Town;
+                    car.Parking.Town.Country = new Country() { Name = counrty.Name };
+                }
             }
 
             this.ViewData["CountryFilter"] = searchByCountry;

@@ -5,8 +5,9 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Trip;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class MyTripsServiceAllModel : IMapFrom<Trip>, IMapTo<Trip>
+    public class MyTripsServiceAllModel : IServiceDetailsModel<int>, IMapFrom<Trip>, IMapTo<Trip>
     {
         public int Id { get; set; }
 

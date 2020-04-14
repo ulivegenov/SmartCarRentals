@@ -11,21 +11,24 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
+    using SmartCarRentals.Data.Models.Enums.Trip;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
+    using SmartCarRentals.Services.Models.Main.Reservations;
     using SmartCarRentals.Services.Models.Main.Trips;
     using SmartCarRentals.Web.ViewModels.Main.Trips;
 
     public class TripsController : BaseController
     {
-        private const string UnavailableCarErrorMessage = "Sorry! This Car is unavailable, at the moment.";
+        private const string UnavailableCarErrorMessage = "Sorry! This Car is unavailable, at the moment. Selecr some other!";
 
         private readonly ICarsService carsService;
         private readonly ITripsService tripsService;
         private readonly IParkingsService parkingsService;
         private readonly IUsersService usersService;
+        private readonly IReservationsService reservationsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TripsController(
@@ -33,12 +36,14 @@
                                ITripsService tripsService,
                                IParkingsService parkingsService,
                                IUsersService usersService,
+                               IReservationsService reservationsService,
                                UserManager<ApplicationUser> userManager)
         {
             this.carsService = carsService;
             this.tripsService = tripsService;
             this.parkingsService = parkingsService;
             this.usersService = usersService;
+            this.reservationsService = reservationsService;
             this.userManager = userManager;
         }
 
@@ -61,22 +66,26 @@
         public async Task<IActionResult> Create(TripCreateInputModel tripCreateInputModel, string id)
         {
             var carServiceModel = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(id);
-            var currentUser = await this.userManager.GetUserAsync(this.User);
 
-            tripCreateInputModel.CarId = carServiceModel.Id;
-            tripCreateInputModel.ClientId = currentUser.Id;
-
-            if (carServiceModel.HireStatus == HireStatus.Unavailable)
+            if (tripCreateInputModel.CarId == null)
             {
-                this.TempData["Error"] = UnavailableCarErrorMessage;
-
-                return this.View(); // TODO ERROR MESSAGE VIEW!!!
+                tripCreateInputModel.CarId = id;
+                await this.reservationsService.SettingUpReservationStatusToAccomplished(id);
             }
 
-            if (!this.ModelState.IsValid)
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            tripCreateInputModel.ClientId = currentUser.Id;
+
+            if (!this.ModelState.IsValid ||
+                carServiceModel.HireStatus == HireStatus.Unavailable)
             {
-                tripCreateInputModel.CarId = carServiceModel.Id;
+                tripCreateInputModel.Car = carServiceModel.To<Car>();
                 tripCreateInputModel.ClientId = currentUser.Id;
+
+                if (carServiceModel.HireStatus == HireStatus.Unavailable)
+                {
+                    this.TempData["Error"] = UnavailableCarErrorMessage;
+                }
 
                 return this.View(tripCreateInputModel);
             }
@@ -85,11 +94,9 @@
             await this.tripsService.CreateAsync(tripServiceCreateModel);
 
             carServiceModel.HireStatus = HireStatus.Unavailable;
-            carServiceModel.ParkingId = null;
-            carServiceModel.Parking = null;
             await this.carsService.EditAsync(carServiceModel);
 
-            return this.Redirect("/Cars/All");
+            return this.Redirect("/Trips/MyTrips");
         }
 
         [Authorize]
@@ -105,7 +112,7 @@
             };
 
             var count = await this.tripsService.GetCountAsync();
-            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.UsersPerPageAdmin);
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
 
             if (viewModel.PagesCount == 0)
             {
@@ -115,6 +122,17 @@
             viewModel.CurrentPage = page;
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost("Trips/MyTrips")]
+        public async Task<IActionResult> FinishTrip(int id)
+        {
+            var trip = await this.tripsService.GetByIdAsync<MyTripsServiceAllModel>(id);
+            trip.Status = Status.Finished;
+            await this.tripsService.EditAsync(trip);
+
+            return this.Redirect("/Trips/MyTrips");
         }
 
         [Authorize]

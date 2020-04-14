@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Hangfire;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -12,6 +12,7 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
@@ -20,8 +21,7 @@
 
     public class ReservationsController : BaseController
     {
-        private const string UnavailableCarErrorMessage = "Sorry! This Car is unavailable, at the moment.";
-        private const string ReservationErrorMessage = "Sorry! This Car is already reserved for this date";
+        private const string ReservationErrorMessage = "Sorry! This Car is unavailable for this date";
 
         private readonly ICarsService carsService;
         private readonly IReservationsService reservationsService;
@@ -61,40 +61,21 @@
             reservationCreateInputModel.ClientId = currentUser.Id;
             reservationCreateInputModel.ParkingId = (int)car.ParkingId;
 
-            if (car.ParkingId == null)
-            {
-                this.TempData["Error"] = UnavailableCarErrorMessage;
+            var isCarAvailableByDate = await this.carsService.IsCarAvailableByDate(reservationCreateInputModel.ReservationDate, id);
 
-                return this.View(); // TODO ERROR MESSAGE VIEW!!!
-            }
-
-            if (!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid ||
+                !isCarAvailableByDate)
             {
-                reservationCreateInputModel.CarId = id;
+                if (!isCarAvailableByDate)
+                {
+                    this.TempData["Error"] = ReservationErrorMessage;
+                }
+
                 reservationCreateInputModel.Car = car.To<Car>();
                 reservationCreateInputModel.ClientId = currentUser.Id;
                 reservationCreateInputModel.ParkingId = (int)car.ParkingId;
 
                 return this.View(reservationCreateInputModel);
-            }
-
-            var reservations = await this.reservationsService.GetAllAsync<ReservationServiceDetailsModel>();
-            var possibleReservations = reservations.Where(r => r.CarId == reservationCreateInputModel.CarId &&
-                                                       r.ReservationDate == reservationCreateInputModel.ReservationDate).ToList();
-
-            if (possibleReservations != null)
-            {
-                if (possibleReservations.Any(r => r.Status != Status.Canceled))
-                {
-                    this.TempData["Error"] = ReservationErrorMessage;
-
-                    reservationCreateInputModel.CarId = id;
-                    reservationCreateInputModel.Car = car.To<Car>();
-                    reservationCreateInputModel.ClientId = currentUser.Id;
-                    reservationCreateInputModel.ParkingId = (int)car.ParkingId;
-
-                    return this.View(reservationCreateInputModel); // TODO ERROR MESSAGE VIEW!!!
-                }
             }
 
             var reservationServiceModel = reservationCreateInputModel.To<ReservationServiceInputModel>();
@@ -116,7 +97,7 @@
             };
 
             var count = await this.reservationsService.GetCountAsync();
-            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.UsersPerPageAdmin);
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
 
             if (viewModel.PagesCount == 0)
             {
@@ -132,10 +113,7 @@
         [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
-            var reservation = await this.reservationsService.GetByIdAsync<ReservationServiceDetailsModel>(id);
-            reservation.Status = Status.Canceled;
-
-            await this.reservationsService.EditAsync(reservation);
+            await this.reservationsService.CancelAsync(id);
 
             return this.Redirect("/Reservations/MyReservations");
         }

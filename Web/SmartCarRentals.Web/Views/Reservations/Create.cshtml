@@ -23,6 +23,13 @@
 
 <section class="content" align="center">
     <div class="container-fluid">
+        @if (this.TempData.ContainsKey("Error"))
+        {
+            <div class="alert alert-danger col-5" role="alert">
+                @this.TempData["Error"]
+            </div>
+        }
+
         <div class="row no-gutters">
             <div class="small-box bg-primary">
                 <div class="inner">

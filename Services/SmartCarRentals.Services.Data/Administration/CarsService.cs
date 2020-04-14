@@ -9,9 +9,9 @@
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
+    using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Administration.Cars;
 
     public class CarsService : BaseService<Car, string>, ICarsService
     {
@@ -19,14 +19,20 @@
         private const string InvalidOperationErrorMessage = "Car with ID: {1} can't be deleted, because is currently in use.";
 
         private readonly IDeletableEntityRepository<Car> carRepository;
+        private readonly IDeletableEntityRepository<Trip> tripsRepository;
+        private readonly IDeletableEntityRepository<Reservation> reservationsRepository;
         private readonly IParkingsService parkingsService;
 
         public CarsService(
-                           IDeletableEntityRepository<Car> carRepository,
+                           IDeletableEntityRepository<Car> carsRepository,
+                           IDeletableEntityRepository<Trip> tripsRepository,
+                           IDeletableEntityRepository<Reservation> reservationsRepository,
                            IParkingsService parkingsService)
-            : base(carRepository)
+            : base(carsRepository)
         {
-            this.carRepository = carRepository;
+            this.carRepository = carsRepository;
+            this.tripsRepository = tripsRepository;
+            this.reservationsRepository = reservationsRepository;
             this.parkingsService = parkingsService;
         }
 
@@ -157,6 +163,31 @@
                                                .ToListAsync();
 
             return cars;
+        }
+
+        public async Task<bool> IsCarAvailableByDate(DateTime date, string carId)
+        {
+            var trips = await this.tripsRepository.All()
+                                                  .Where(t => t.CreatedOn.Date.CompareTo(date.Date) <= 0
+                                                         && t.EndDate == null)
+                                                  .Select(t => t.CarId)
+                                                  .ToListAsync();
+
+            var reservations = await this.reservationsRepository.All()
+                                                                .Where(r => r.ReservationDate.Date.CompareTo(date.Date) == 0
+                                                                       && r.Status != Status.Canceled)
+                                                                .Select(r => r.CarId)
+                                                                .ToListAsync();
+
+            var cars = await this.carRepository.All()
+                                               .Where(c => trips.Contains(c.Id)
+                                                      || reservations.Contains(c.Id))
+                                               .Select(c => c.Id)
+                                               .ToListAsync();
+
+            var result = !cars.Contains(carId);
+
+            return result;
         }
     }
 }

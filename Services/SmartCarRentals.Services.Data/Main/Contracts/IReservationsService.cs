@@ -10,5 +10,9 @@
         Task<IEnumerable<MyReservationsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0);
 
         Task<IEnumerable<MyReservationsServiceAllModel>> GetAllAwaitingReservationsAsync();
+
+        Task<int> CancelAsync(int reservationId);
+
+        Task<int> SettingUpReservationStatusToAccomplished(string carId);
     }
 }

@@ -224,7 +224,7 @@
 
             // configure recurring jobs
             recurringJobs.AddOrUpdate("CancelExpiredReservations", Job.FromExpression<IHangfireService>(j => j.CancelExpiredReservationsAsync()), Cron.Daily());
-            recurringJobs.AddOrUpdate("SettingUPTransfersStatusByDate", Job.FromExpression<IHangfireService>(j => j.SettingUPTransfersStatusByDate()), Cron.Minutely());
+            recurringJobs.AddOrUpdate("SettingUPTransfersStatusByDate", Job.FromExpression<IHangfireService>(j => j.SettingUpTransfersStatusByDateAsync()), Cron.Hourly());
 
             app.UseEndpoints(
                 endpoints =>

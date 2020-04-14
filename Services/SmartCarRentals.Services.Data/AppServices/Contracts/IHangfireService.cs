@@ -7,6 +7,6 @@
     {
         Task<int> CancelExpiredReservationsAsync();
 
-        Task<int> SettingUPTransfersStatusByDate();
+        Task<int> SettingUpTransfersStatusByDateAsync();
     }
 }

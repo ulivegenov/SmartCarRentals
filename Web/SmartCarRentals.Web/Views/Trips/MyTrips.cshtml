@@ -1,5 +1,6 @@
 ﻿@using SmartCarRentals.Common
 @using SmartCarRentals.Data.Models.Enums.Trip
+@using SmartCarRentals.Data.Models.Enums.Car
 @model SmartCarRentals.Web.ViewModels.Main.Trips.MyTripsAllViewModelCollection
 @{
     this.ViewData["Title"] = "My Trips";
@@ -12,7 +13,7 @@
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
                 <p class="breadcrumbs"><span class="mr-2"><a asp-area="Identity" asp-page="/Account/Manage/Index">My info <i class="fas fa-greater-than"></i></a></span> <span>@this.ViewData["Title"] <i class="fas fa-greater-than"></i></span></p>
-                <h1 class="mb-3 bread">My Transfers</h1>
+                <h1 class="mb-3 bread">@this.ViewData["Title"]</h1>
             </div>
         </div>
     </div>
@@ -29,8 +30,9 @@
                         <th scope="col">Car</th>
                         <th scope="col">Plate Number</th>
                         <th scope="col">Km Run</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">End Date</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,22 +48,27 @@
                             <th class="align-middle" scope="row">@Model.MyTrips[i].Id</th>
                             <td class="align-middle">@Model.MyTrips[i].Car.Make @Model.MyTrips[i].Car.Model</td>
                             <td class="align-middle">@Model.MyTrips[i].Car.PlateNumber</td>
-                            <td class="align-middle">@Model.MyTrips[i].KmRun</td>
-                            <td class="align-middle">@Model.MyTrips[i].Status</td>
                             @if (Model.MyTrips[i].Status != Status.OnGoing)
                             {
+                                <td class="align-middle">@Model.MyTrips[i].KmRun</td>
+                                <td class="align-middle">@(Model.MyTrips[i].EndDate.HasValue ? Model.MyTrips[i].EndDate.Value.ToString("dd-MM-yyyy") : "[N/A]")</td>
                                 <td class="align-middle">@Model.MyTrips[i].Price.ToString("F2")</td>
                             }
                             else
                             {
-                                <td class="align-middle">-</td>
+                                <td class="align-middle">[N/A]</td>
+                                <td class="align-middle">[N/A]</td>
+                                <td class="align-middle">[N/A]</td>
                             }
+                            <td class="align-middle">@Model.MyTrips[i].Status</td>
                             <td class="align-middle">
-                                @if (Model.MyTrips[i].Car.ParkingId == null)
+                                @if (Model.MyTrips[i].Car.HireStatus == HireStatus.Unavailable &&
+                               Model.MyTrips[i].Status == Status.OnGoing)
                                 {
                                     <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Cars" asp-action="ReturnCar" asp-route-id="@Model.MyTrips[i].CarId">Return Car</a>
                                 }
-                                else if (Model.MyTrips[i].HasPaid != true)
+                                else if (Model.MyTrips[i].Car.HireStatus == HireStatus.Available &&
+                                         Model.MyTrips[i].HasPaid != true)
                                 {
                                     <a type="button" class="btn btn-primary py-1 px-1" asp-area="" asp-controller="Trips" asp-action="Pay" asp-route-id="@Model.MyTrips[i].Id" asp-route-secondId="@Model.MyTrips[i].CarId">Pay Trip</a>
                                 }

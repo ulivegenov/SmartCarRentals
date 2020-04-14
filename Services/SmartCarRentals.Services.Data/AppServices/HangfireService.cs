@@ -14,6 +14,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Services.Models.Administration.Drivers;
+    using SmartCarRentals.Services.Models.Main.Reservations;
 
     public class HangfireService : IHangfireService
     {
@@ -46,28 +47,20 @@
         public async Task<int> CancelExpiredReservationsAsync()
         {
             var reservations = await this.reservationsService.GetAllAwaitingReservationsAsync();
+            var reservationsToCancel = reservations.Where(r => r.ReservationDate.CompareTo(DateTime.UtcNow) < 0
+                                                          && r.Status != Status.Accomplished);
 
-            foreach (var reservation in reservations)
+            var result = 0;
+
+            foreach (var reservation in reservationsToCancel)
             {
-                if (reservation.ReservationDate.CompareTo(DateTime.UtcNow) < 0 && reservation.Status != Status.Accomplished)
-                {
-                    reservation.Status = Status.Canceled;
-                    this.reservationsRepository.Update(reservation.To<Reservation>());
-
-                    var currentCar = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(reservation.CarId);
-                    currentCar.HireStatus = HireStatus.Available;
-                    currentCar.ReservationStatus = ReservationStatus.Free;
-                    this.carsRepository.Update(currentCar.To<Car>());
-                }
+                result = await this.reservationsService.CancelAsync(reservation.Id);
             }
-
-            await this.reservationsRepository.SaveChangesAsync();
-            var result = await this.carsRepository.SaveChangesAsync();
 
             return result;
         }
 
-        public async Task<int> SettingUPTransfersStatusByDate()
+        public async Task<int> SettingUpTransfersStatusByDateAsync()
         {
             var transfers = await this.transfersRepository.All()
                                                           .Where(t => t.TransferDate.Date.CompareTo(DateTime.UtcNow.Date) == 0

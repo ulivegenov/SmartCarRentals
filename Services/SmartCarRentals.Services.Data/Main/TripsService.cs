@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
+
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
@@ -64,6 +66,7 @@
                                                 {
                                                     Make = t.Car.Make,
                                                     Model = t.Car.Model,
+                                                    HireStatus = t.Car.HireStatus,
                                                     ParkingId = t.Car.ParkingId,
                                                     PlateNumber = t.Car.PlateNumber,
                                                     PricePerDay = t.Car.PricePerDay,
@@ -75,9 +78,9 @@
                                                 Price = t.Price - (t.Price * discount / 100),
                                                 Status = t.Status,
                                             })
+                                            .OrderBy(t => t.Status)
                                             .To<MyTripsServiceAllModel>()
                                             .Skip(skip);
-
 
             if (take.HasValue)
             {
