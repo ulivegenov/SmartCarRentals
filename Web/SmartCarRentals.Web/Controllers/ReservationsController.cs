@@ -3,16 +3,14 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Hangfire;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;

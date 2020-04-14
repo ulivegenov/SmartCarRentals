@@ -43,11 +43,8 @@
             var viewModel = new CarRatingCreateInputModel()
             {
                 ClientId = currentUser.Id,
-                //Client = currentUser,
                 TripId = tripServiceModel.Id,
-                //Trip = tripServiceModel.To<Trip>(),
                 CarId = carServiceModel.Id,
-                //Car = carServiceModel.To<Car>(),
             };
 
             return this.View(viewModel);

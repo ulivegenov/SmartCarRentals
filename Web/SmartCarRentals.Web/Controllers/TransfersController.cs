@@ -4,14 +4,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Hangfire;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Data.Administration.Contracts;
-    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Drivers;
@@ -30,25 +28,19 @@
         private readonly ITransfersTypesService transfersTypesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUsersService usersService;
-        private readonly IBackgroundJobClient backgroungJobClient;
-        private readonly IHangfireService hangfireService;
 
         public TransfersController(
                                    ITransfersService transfersService,
                                    IDriversService driversService,
                                    ITransfersTypesService transfersTypesService,
                                    UserManager<ApplicationUser> userManager,
-                                   IUsersService usersService,
-                                   IBackgroundJobClient backgroungJobClient,
-                                   IHangfireService hangfireService)
+                                   IUsersService usersService)
         {
             this.transfersService = transfersService;
             this.driversService = driversService;
             this.transfersTypesService = transfersTypesService;
             this.userManager = userManager;
             this.usersService = usersService;
-            this.backgroungJobClient = backgroungJobClient;
-            this.hangfireService = hangfireService;
         }
 
         public async Task<IActionResult> Create(string searchByDriver)
@@ -80,15 +72,17 @@
             transferCreateInputModel.ClientId = currentUser.Id;
             var driverServiceModel = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(transferCreateInputModel.DriverId);
 
+            var isDriverAvailableByDate = await this.transfersService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId);
+
             if (!this.ModelState.IsValid ||
-                !await this.driversService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
+                !isDriverAvailableByDate)
             {
                 var drivers = await this.driversService.GetAllAsync<DriverServiceDetailsModel>();
                 var transfersTypes = await this.transfersTypesService.GetAllAsync<TransfersTypesServiceDropDownModel>();
 
                 this.ViewData["DriverFilter"] = searchByDriver;
 
-                if (!await this.driversService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId))
+                if (!isDriverAvailableByDate)
                 {
                     this.TempData["Error"] = UnavailableDriverErrorMessage;
                 }
@@ -107,6 +101,7 @@
             return this.Redirect("/Transfers/MyTransfers");
         }
 
+        [Authorize]
         [HttpGet("/Transfers/Create/{driverId}")]
         public async Task<IActionResult> CreateByDriver(string driverId)
         {
@@ -130,7 +125,7 @@
             transferCreateInputModel.ClientId = currentUser.Id;
             var driverServiceModel = await this.driversService.GetByIdAsync<DriverServiceDetailsModel>(driverId);
 
-            var isDriverAvailableByDate = await this.driversService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId);
+            var isDriverAvailableByDate = await this.transfersService.IsDriverAvailableByDate(transferCreateInputModel.TransferDate, transferCreateInputModel.DriverId);
 
             if (!this.ModelState.IsValid ||
                 !isDriverAvailableByDate)

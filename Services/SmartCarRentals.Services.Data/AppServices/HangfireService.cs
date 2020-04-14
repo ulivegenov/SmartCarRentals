@@ -3,45 +3,26 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Data.Models.Enums.Reservation;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
-    using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Administration.Cars;
-    using SmartCarRentals.Services.Models.Administration.Drivers;
-    using SmartCarRentals.Services.Models.Main.Reservations;
 
     public class HangfireService : IHangfireService
     {
-        private readonly ICarsService carsService;
         private readonly IReservationsService reservationsService;
-        private readonly IDriversService driversService;
-        private readonly IDeletableEntityRepository<Car> carsRepository;
-        private readonly IDeletableEntityRepository<Reservation> reservationsRepository;
         private readonly IDeletableEntityRepository<Transfer> transfersRepository;
-        private readonly IDeletableEntityRepository<Driver> driversfersRepository;
 
         public HangfireService(
-                               ICarsService carsService,
                                IReservationsService reservationsService,
-                               IDriversService driversService,
-                               IDeletableEntityRepository<Car> carsRepository,
-                               IDeletableEntityRepository<Reservation> reservationsRepository,
-                               IDeletableEntityRepository<Transfer> transfersRepository,
-                               IDeletableEntityRepository<Driver> driversfersRepository)
+                               IDeletableEntityRepository<Transfer> transfersRepository)
         {
-            this.carsService = carsService;
             this.reservationsService = reservationsService;
-            this.driversService = driversService;
-            this.carsRepository = carsRepository;
-            this.reservationsRepository = reservationsRepository;
             this.transfersRepository = transfersRepository;
-            this.driversfersRepository = driversfersRepository;
         }
 
         public async Task<int> CancelExpiredReservationsAsync()

@@ -22,19 +22,16 @@
     public class TripsService : BaseService<Trip, int>, ITripsService
     {
         private readonly IDeletableEntityRepository<Trip> tripsRepository;
-        private readonly IDeletableEntityRepository<Car> carRepository;
         private readonly ICarsService carsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public TripsService(
                             IDeletableEntityRepository<Trip> tripsRepository,
-                            IDeletableEntityRepository<Car> carRepository,
                             ICarsService carsService,
                             UserManager<ApplicationUser> userManager)
             : base(tripsRepository)
         {
             this.tripsRepository = tripsRepository;
-            this.carRepository = carRepository;
             this.carsService = carsService;
             this.userManager = userManager;
         }

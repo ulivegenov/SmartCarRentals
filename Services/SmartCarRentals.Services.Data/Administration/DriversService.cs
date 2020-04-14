@@ -8,22 +8,17 @@
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
 
     public class DriversService : BaseService<Driver, string>, IDriversService
     {
         private readonly IDeletableEntityRepository<Driver> driverRepository;
-        private readonly IDeletableEntityRepository<Transfer> transfersRepository;
 
-        public DriversService(
-                              IDeletableEntityRepository<Driver> driversRepository,
-                              IDeletableEntityRepository<Transfer> transfersRepository)
+        public DriversService(IDeletableEntityRepository<Driver> driversRepository)
             : base(driversRepository)
         {
             this.driverRepository = driversRepository;
-            this.transfersRepository = transfersRepository;
         }
 
         public override async Task<T> GetByIdAsync<T>(string id)
@@ -69,22 +64,6 @@
                                                     .ToListAsync();
 
             return drivers;
-        }
-
-        public async Task<bool> IsDriverAvailableByDate(DateTime date, string driverId)
-        {
-            var transfer = await this.transfersRepository.All()
-                                                         .Where(t => t.TransferDate.Date.CompareTo(date.Date) == 0
-                                                                && t.Status != Status.Finished)
-                                                         .Select(t => new Transfer()
-                                                         {
-                                                             DriverId = t.DriverId,
-                                                         })
-                                                         .ToListAsync();
-
-            var result = !transfer.Select(t => t.DriverId).Contains(driverId);
-
-            return result;
         }
     }
 }

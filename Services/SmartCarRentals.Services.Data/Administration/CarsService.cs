@@ -46,7 +46,7 @@
                 throw new ArgumentNullException(string.Format(InvalidCarIdErrorMessage, id));
             }
 
-            if (car.ReservationStatus == ReservationStatus.Reserved || car.ParkingId == null)
+            if (car.ReservationStatus == ReservationStatus.Reserved || car.HireStatus == HireStatus.Unavailable)
             {
                 throw new InvalidOperationException(string.Format(InvalidOperationErrorMessage, id));
             }
@@ -175,7 +175,7 @@
 
             var reservations = await this.reservationsRepository.All()
                                                                 .Where(r => r.ReservationDate.Date.CompareTo(date.Date) == 0
-                                                                       && r.Status != Status.Canceled)
+                                                                       && r.Status == Status.Awaiting)
                                                                 .Select(r => r.CarId)
                                                                 .ToListAsync();
 

@@ -26,7 +26,6 @@
 
         private readonly ICarsService carsService;
         private readonly ITripsService tripsService;
-        private readonly IParkingsService parkingsService;
         private readonly IUsersService usersService;
         private readonly IReservationsService reservationsService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -34,14 +33,12 @@
         public TripsController(
                                ICarsService carsService,
                                ITripsService tripsService,
-                               IParkingsService parkingsService,
                                IUsersService usersService,
                                IReservationsService reservationsService,
                                UserManager<ApplicationUser> userManager)
         {
             this.carsService = carsService;
             this.tripsService = tripsService;
-            this.parkingsService = parkingsService;
             this.usersService = usersService;
             this.reservationsService = reservationsService;
             this.userManager = userManager;
@@ -76,13 +73,15 @@
             var currentUser = await this.userManager.GetUserAsync(this.User);
             tripCreateInputModel.ClientId = currentUser.Id;
 
+            var isCarAvailableByDate = await this.carsService.IsCarAvailableByDate(DateTime.UtcNow, id);
+
             if (!this.ModelState.IsValid ||
-                carServiceModel.HireStatus == HireStatus.Unavailable)
+                !isCarAvailableByDate)
             {
                 tripCreateInputModel.Car = carServiceModel.To<Car>();
                 tripCreateInputModel.ClientId = currentUser.Id;
 
-                if (carServiceModel.HireStatus == HireStatus.Unavailable)
+                if (!isCarAvailableByDate)
                 {
                     this.TempData["Error"] = UnavailableCarErrorMessage;
                 }
