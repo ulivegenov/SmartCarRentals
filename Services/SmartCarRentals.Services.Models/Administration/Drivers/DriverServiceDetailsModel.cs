@@ -5,7 +5,6 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Driver;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Contracts;
 
@@ -29,8 +28,6 @@
         public string Image { get; set; }
 
         public double Rating { get; set; }
-
-        public HireStatus HireStatus { get; set; }
 
         public virtual ICollection<Transfer> Transfers { get; set; }
     }

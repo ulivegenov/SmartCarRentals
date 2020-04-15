@@ -6,7 +6,6 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Models;
-    using SmartCarRentals.Data.Models.Enums.Driver;
 
     public class Driver : BaseDeletableModel<string>
     {

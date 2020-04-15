@@ -1,4 +1,5 @@
-﻿@model SmartCarRentals.Web.ViewModels.Main.Home.ContactViewModel
+﻿@*@model SmartCarRentals.Web.ViewModels.Main.Home.ContactViewModel*@
+@using SmartCarRentals.Common
 @{
     this.ViewData["Title"] = "Contact Page";
 }
@@ -22,27 +23,26 @@
     <div class="container">
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-8 block-9 mb-md-5">
-                <form method="post" class="ftco-animate bg-primary p-5 contact-form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" asp-for="Name" placeholder="Your Name">
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                <div method="post" class="ftco-animate bg-primary p-5 contact-form">
+                    <h2 class="justify-content-center text-white">
+                        Have a question? Ask us right now!
+                        &emsp; &emsp;
+                        <button id="goLiveBtn" class="btn btn-secondary py-1 px-2">Go Live</button>
+                    </h2>
+                    <div class="input-group">
+                        <textarea id="messagesList" cols="30" rows="7" class="form-control" disabled placeholder="Live Chat..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" asp-for="Email" placeholder="Your Email">
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                    <hr />
+                    <div class="input-group">
+                        <div class="input-group">
+                            <input id="inputMessage" type="text" class="form-control" placeholder="Message...">
+                            <span class="input-group-btn">
+                                &nbsp;
+                                <button id="sendBtn" class="btn btn-secondary py-3 px-2">Send</button>
+                            </span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" asp-for="Subject" placeholder="Subject">
-                        <span asp-validation-for="Subject" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <textarea cols="30" rows="7" class="form-control" asp-for="Message" placeholder="Message"></textarea>
-                        <span asp-validation-for="Message" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Send Message" class="btn btn-secondary py-3 px-5">
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="row mb-5">
@@ -84,10 +84,65 @@
 </section>
 
 <script>
+    // Map configuration
     var map = L.map('map').setView([42.700167, 23.315572], 15);
     L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=dPGyH01bwsnn7Gd1wicQ', {
         attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
     }).addTo(map);
     var marker = L.marker([42.700167, 23.315572]).addTo(map);
 </script>
+
+@section Scripts {
+    <script>
+        // SignalR methods
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/contact")
+            .build();
+
+        $("#sendBtn").attr("disabled", true);
+
+        $("#goLiveBtn").click(async function () {
+            await connection.start().catch(function (err) {
+                  console.log(err.toString());
+              });
+
+            $("#sendBtn").attr("disabled", false);
+
+            connection.invoke("JoinToGroup", "group");
+
+            connection.on("Finished", function () {
+                $("#sendBtn").attr("disabled", true);
+                connection.stop();
+            });
+
+            $("#goLiveBtn").attr("disabled", true); 
+        });
+
+        connection.on("NewMessage",
+            function (textMessage) {
+                let chatInfo = `${textMessage.user}: ${escapeHtml(textMessage.text)}\n`;
+                let messageListText = $("#messagesList").val();
+                $("#messagesList").val(messageListText + chatInfo);
+            });
+
+        $("#sendBtn").click(function () {
+            let textMessage = $("#inputMessage").val();
+            $("#inputMessage").val("");
+            connection.invoke("Send", textMessage);
+        });
+
+        //connection.start().catch(function (err) {
+        //    console.log(err.toString());
+        //});
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+}
 

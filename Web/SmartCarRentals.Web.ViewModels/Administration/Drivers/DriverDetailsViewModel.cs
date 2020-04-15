@@ -3,7 +3,6 @@
     using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Common;
-    using SmartCarRentals.Data.Models.Enums.Driver;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Drivers;
 
@@ -23,8 +22,6 @@
         public string Image { get; set; }
 
         public double Rating { get; set; }
-
-        public HireStatus HireStatus { get; set; }
 
         public string TransfersCount { get; set; }
     }

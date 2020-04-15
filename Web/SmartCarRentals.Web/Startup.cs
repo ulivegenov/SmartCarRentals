@@ -41,6 +41,7 @@
     using SmartCarRentals.Services.Models.Administration.Parkings;
     using SmartCarRentals.Services.Models.Administration.Towns;
     using SmartCarRentals.Services.Models.Administration.Users;
+    using SmartCarRentals.Web.Hubs;
     using SmartCarRentals.Web.Infrastructure;
     using SmartCarRentals.Web.ViewModels;
 
@@ -60,8 +61,8 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            //services.AddControllersWithViews();
+            //services.AddRazorPages();
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -107,6 +108,7 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
+            services.AddSignalR();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -229,6 +231,7 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<ChatHub>("/contact");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default2", "{controller=Home}/{action=Index}/{id?}/{secondId?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
