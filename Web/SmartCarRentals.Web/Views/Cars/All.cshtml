@@ -115,7 +115,7 @@
                         else
                         {
                             <li>
-                                <a asp-route="default"
+                                <a id="previousPage" asp-route="default"
                                    asp-route-id="@(this.Model.CurrentPage - 1)">&lt;</a>
                             </li>
                         }
@@ -162,7 +162,7 @@
                         else
                         {
                             <li class="page-item">
-                                <a asp-route="default"
+                                <a id="nextPage" asp-route="default"
                                    asp-route-id="@(this.Model.CurrentPage + 1)">&gt;</a>
                             </li>
                         }

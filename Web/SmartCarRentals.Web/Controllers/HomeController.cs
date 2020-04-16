@@ -63,7 +63,6 @@
                 return this.View(contactViewModel);
             }
 
-            //var response = await this.mailService.SendEmailAsync(contactViewModel.Email, contactViewModel.Name, contactViewModel.Subject, contactViewModel.Message);
             await this.mailService.ReceiveEmailAsync(contactViewModel.Email, contactViewModel.Name, contactViewModel.Subject, contactViewModel.Message);
 
             return this.Redirect("/");

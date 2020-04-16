@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
@@ -47,7 +48,7 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> All(string searchByCountry, string searchByTown, string searchByParking, int id = 1)
+        public async Task<IActionResult> All(string filter, string searchByCountry, string searchByTown, string searchByParking, int id = 1)
         {
             var page = id;
             var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
@@ -57,36 +58,26 @@
 
             var count = await this.carsService.GetCountAsync();
 
-            foreach (var car in cars)
-            {
-                if (car.ParkingId != null)
-                {
-                    var parking = parkings.FirstOrDefault(p => p.Id == car.ParkingId);
-                    var counrty = countries.FirstOrDefault(c => c.Id == parking.Town.CountryId);
-                    car.Parking.Town = parking.Town;
-                    car.Parking.Town.Country = new Country() { Name = counrty.Name };
-                }
-            }
-
             this.ViewData["CountryFilter"] = searchByCountry;
             this.ViewData["TownFilter"] = searchByTown;
             this.ViewData["ParkingFilter"] = searchByParking;
 
             if (!string.IsNullOrEmpty(searchByCountry))
             {
-                cars = cars.Where(c => c.Parking.Town.Country.Name.Contains(searchByCountry));
+                cars = await this.carsService.GetAllByCountryWithPagingAsync<CarsServiceAllModel>
+                    (searchByCountry, GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
                 count = await this.carsService.GetCountByCountryAsync(searchByCountry);
             }
 
             if (!string.IsNullOrEmpty(searchByTown))
             {
-                cars = cars.Where(c => c.Parking.Town.Name.Contains(searchByTown));
+                cars = await this.carsService.GetAllByTownWithPagingAsync<CarsServiceAllModel>
+                    (searchByTown, GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
                 count = await this.carsService.GetCountByTownAsync(searchByTown);
             }
 
             if (!string.IsNullOrEmpty(searchByParking))
             {
-                //cars = cars.Where(c => c.Parking.Name.Contains(searchByParking));
                 cars = await this.carsService.GetAllByParkingWithPagingAsync<CarsServiceAllModel>
                     (searchByParking, GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
                 count = await this.carsService.GetCountByParkingAsync(searchByParking);
