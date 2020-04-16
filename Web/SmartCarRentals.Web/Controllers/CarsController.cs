@@ -55,6 +55,8 @@
             var towns = await this.townsService.GetAllAsync<TownsServiceDropDownModel>();
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
 
+            var count = await this.carsService.GetCountAsync();
+
             foreach (var car in cars)
             {
                 if (car.ParkingId != null)
@@ -73,16 +75,21 @@
             if (!string.IsNullOrEmpty(searchByCountry))
             {
                 cars = cars.Where(c => c.Parking.Town.Country.Name.Contains(searchByCountry));
+                count = await this.carsService.GetCountByCountryAsync(searchByCountry);
             }
 
             if (!string.IsNullOrEmpty(searchByTown))
             {
                 cars = cars.Where(c => c.Parking.Town.Name.Contains(searchByTown));
+                count = await this.carsService.GetCountByTownAsync(searchByTown);
             }
 
             if (!string.IsNullOrEmpty(searchByParking))
             {
-                cars = cars.Where(c => c.Parking.Name.Contains(searchByParking));
+                //cars = cars.Where(c => c.Parking.Name.Contains(searchByParking));
+                cars = await this.carsService.GetAllByParkingWithPagingAsync<CarsServiceAllModel>
+                    (searchByParking, GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
+                count = await this.carsService.GetCountByParkingAsync(searchByParking);
             }
 
             var viewModel = new CarsAllViewModelCollection();
@@ -93,7 +100,6 @@
 
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
 
-            var count = await this.carsService.GetCountAsync();
             viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
 
             if (viewModel.PagesCount == 0)

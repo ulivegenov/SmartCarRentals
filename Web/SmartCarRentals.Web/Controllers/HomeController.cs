@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using SmartCarRentals.Services.Data.Administration.Contracts;
+    using SmartCarRentals.Services.Data.AppServices.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.TransfersTypes;
@@ -18,13 +19,16 @@
     public class HomeController : BaseController
     {
         private readonly IHomeService homeService;
+        private readonly IMailService mailService;
         private readonly ITransfersTypesService transfersTypesService;
 
         public HomeController(
                               IHomeService homeService,
+                              IMailService mailService,
                               ITransfersTypesService transfersTypesService)
         {
             this.homeService = homeService;
+            this.mailService = mailService;
             this.transfersTypesService = transfersTypesService;
         }
 
@@ -52,12 +56,15 @@
         }
 
         [HttpPost]
-        public IActionResult Contact(ContactViewModel contactViewModel)
+        public async Task<IActionResult> Contact(ContactViewModel contactViewModel)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(contactViewModel);
             }
+
+            //var response = await this.mailService.SendEmailAsync(contactViewModel.Email, contactViewModel.Name, contactViewModel.Subject, contactViewModel.Message);
+            await this.mailService.ReceiveEmailAsync(contactViewModel.Email, contactViewModel.Name, contactViewModel.Subject, contactViewModel.Message);
 
             return this.Redirect("/");
         }

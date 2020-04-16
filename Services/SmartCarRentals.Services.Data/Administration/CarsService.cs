@@ -36,6 +36,33 @@
             this.parkingsService = parkingsService;
         }
 
+        public async Task<int>GetCountByCountryAsync(string countryName)
+        {
+            var cars = await this.carRepository.All()
+                                               .Where(c => c.Parking.Town.Country.Name == countryName)
+                                               .ToListAsync();
+
+            return cars.Count;
+        }
+
+        public async Task<int> GetCountByTownAsync(string townName)
+        {
+            var cars = await this.carRepository.All()
+                                               .Where(c => c.Parking.Town.Name == townName)
+                                               .ToListAsync();
+
+            return cars.Count;
+        }
+
+        public async Task<int> GetCountByParkingAsync(string parkingName)
+        {
+            var cars = await this.carRepository.All()
+                                               .Where(c => c.Parking.Name == parkingName)
+                                               .ToListAsync();
+
+            return cars.Count;
+        }
+
         public override async Task<int> DeleteByIdAsync(string id)
         {
             var car = await this.carRepository.All()
@@ -163,6 +190,46 @@
                                                .ToListAsync();
 
             return cars;
+        }
+
+        public async Task<IEnumerable<T>> GetAllByParkingWithPagingAsync<T>(string parkingName, int? take = null, int skip = 0)
+        {
+            var cars = this.carRepository.All()
+                                         .Where(c => c.Parking.Name == parkingName)
+                                         .Select(c => new Car()
+                                         {
+                                             Id = c.Id,
+                                             Image = c.Image,
+                                             Make = c.Make,
+                                             Model = c.Model,
+                                             Class = c.Class,
+                                             HireStatus = c.HireStatus,
+                                             PricePerDay = c.PricePerDay,
+                                             Rating = c.Ratings.Count != 0
+                                                      ? c.Ratings.Select(r => r.RatingVote).Average()
+                                                      : 0,
+                                             Trips = c.Trips.Select(t => new Trip() { Id = t.Id, }).ToList(),
+                                             ParkingId = c.ParkingId,
+                                             Parking = new Parking()
+                                             {
+                                                 Name = c.Parking.Name,
+                                                 Address = c.Parking.Address,
+                                                 Town = new Town()
+                                                 {
+                                                     Name = c.Parking.Town.Name,
+                                                     Country = new Country { Name = c.Parking.Town.Country.Name },
+                                                 },
+                                             },
+                                         })
+                                         .To<T>()
+                                         .Skip(skip);
+
+            if (take.HasValue)
+            {
+                cars = cars.Take(take.Value);
+            }
+
+            return await cars.ToListAsync();
         }
 
         public async Task<bool> IsCarAvailableByDate(DateTime date, string carId)

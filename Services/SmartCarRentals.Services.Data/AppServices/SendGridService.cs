@@ -1,5 +1,6 @@
 ﻿namespace SmartCarRentals.Services.Data.AppServices
 {
+    using System;
     using System.Threading.Tasks;
 
     using SendGrid;
@@ -31,10 +32,12 @@
 
         public async Task<Response> ReceiveEmailAsync(string fromEmail, string name, string subject, string content)
         {
-            var from = new EmailAddress(fromEmail, name);
+            var from = new EmailAddress(GlobalConstants.ApplicationEmail, name);
             var to = new EmailAddress(GlobalConstants.ApplicationEmail, GlobalConstants.SystemName);
-            var plainTextContent = content;
-            var htmlContent = $"<strong>{content}</strong>";
+            var plainTextContent = $"Email of sender: {fromEmail} {Environment.NewLine}" +
+                                   $"Name: {name}{Environment.NewLine}" +
+                                   $"Message:{Environment.NewLine}{content}";
+            var htmlContent = $"<strong>{plainTextContent}</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await this.sendGridClient.SendEmailAsync(msg);
 

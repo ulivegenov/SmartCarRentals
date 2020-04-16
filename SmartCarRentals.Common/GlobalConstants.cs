@@ -22,7 +22,7 @@
         public const int PlatinumUserDiscount = 10;
 
         // Emai
-        public const string ApplicationEmail = "yuliyan.vegenov@gmail.com";
+        public const string ApplicationEmail = "ulivegenov@students.softuni.bg";
 
         // Controllers constants
         public const int ItemsPerPage = 6;
