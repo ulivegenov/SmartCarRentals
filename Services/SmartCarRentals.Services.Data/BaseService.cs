@@ -34,23 +34,23 @@
             return count;
         }
 
-        public virtual async Task<int> CreateAsync(IServiceInputModel servicesInputViewModel)
+        public virtual async Task<TKey> CreateAsync(IServiceInputModel servicesInputViewModel)
         {
             var entity = servicesInputViewModel.To<TEntity>();
 
             await this.deletableEntityRepository.AddAsync(entity);
-            var result = await this.deletableEntityRepository.SaveChangesAsync();
+            await this.deletableEntityRepository.SaveChangesAsync();
 
-            return result;
+            return entity.Id;
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync<T>()
         {
-            var entity = await this.deletableEntityRepository.All()
+            var entities = await this.deletableEntityRepository.All()
                                                             .To<T>()
                                                             .ToListAsync();
 
-            return entity;
+            return entities;
         }
 
         public virtual IEnumerable<T> GetAllWithPaging<T>(int? take = null, int skip = 0)

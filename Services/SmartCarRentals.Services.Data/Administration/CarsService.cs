@@ -36,7 +36,7 @@
             this.parkingsService = parkingsService;
         }
 
-        public async Task<int>GetCountByCountryAsync(string countryName)
+        public async Task<int> GetCountByCountryAsync(string countryName)
         {
             var cars = await this.carRepository.All()
                                                .Where(c => c.Parking.Town.Country.Name == countryName)
@@ -186,10 +186,9 @@
                                                        },
                                                    },
                                                })
-                                               .To<T>()
                                                .ToListAsync();
 
-            return cars;
+            return cars.Select(c => c.To<T>()).ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllByCountryWithPagingAsync<T>(string countryName, int? take = null, int skip = 0)
@@ -221,7 +220,6 @@
                                                  },
                                              },
                                          })
-                                         .To<T>()
                                          .Skip(skip);
 
             if (take.HasValue)
@@ -229,7 +227,9 @@
                 cars = cars.Take(take.Value);
             }
 
-            return await cars.ToListAsync();
+            var result = await cars.ToListAsync();
+
+            return result.Select(c => c.To<T>()).ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllByTownWithPagingAsync<T>(string townName, int? take = null, int skip = 0)
@@ -261,7 +261,6 @@
                                                  },
                                              },
                                          })
-                                         .To<T>()
                                          .Skip(skip);
 
             if (take.HasValue)
@@ -269,7 +268,9 @@
                 cars = cars.Take(take.Value);
             }
 
-            return await cars.ToListAsync();
+            var result = await cars.ToListAsync();
+
+            return result.Select(c => c.To<T>()).ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllByParkingWithPagingAsync<T>(string parkingName, int? take = null, int skip = 0)
@@ -301,7 +302,6 @@
                                                  },
                                              },
                                          })
-                                         .To<T>()
                                          .Skip(skip);
 
             if (take.HasValue)
@@ -309,7 +309,9 @@
                 cars = cars.Take(take.Value);
             }
 
-            return await cars.ToListAsync();
+            var result = await cars.ToListAsync();
+
+            return result.Select(c => c.To<T>()).ToList();
         }
 
         public async Task<bool> IsCarAvailableByDate(DateTime date, string carId)

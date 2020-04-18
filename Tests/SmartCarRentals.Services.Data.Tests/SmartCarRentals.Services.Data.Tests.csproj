@@ -13,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <PackageReference Include="Hangfire.MemoryStorage.Core" Version="1.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
@@ -29,6 +30,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SmartCarRentals.Data\SmartCarRentals.Data.csproj" />
     <ProjectReference Include="..\..\Services\SmartCarRentals.Services.Data\SmartCarRentals.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\SmartCarRentals.Web\SmartCarRentals.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AppServices\" />
+    <Folder Include="Main\" />
   </ItemGroup>
 
 </Project>

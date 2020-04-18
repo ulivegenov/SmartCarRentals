@@ -30,7 +30,7 @@
 
         public double Rating { get; set; }
 
-        public int? ParkingId { get; set; }
+        public int ParkingId { get; set; }
 
         public virtual Parking Parking { get; set; }
 

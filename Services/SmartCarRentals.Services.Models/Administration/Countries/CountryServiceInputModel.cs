@@ -11,6 +11,7 @@
 
     public class CountryServiceInputModel : IServiceInputModel, IMapTo<Country>, IMapFrom<Country>
     {
+
         public CountryServiceInputModel()
         {
             this.CreatedOn = DateTime.UtcNow;

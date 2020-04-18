@@ -9,7 +9,7 @@
     {
         Task<int> GetCountAsync();
 
-        Task<int> CreateAsync(IServiceInputModel servicesInputViewModel);
+        Task<TKey> CreateAsync(IServiceInputModel servicesInputViewModel);
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 

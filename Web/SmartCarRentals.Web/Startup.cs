@@ -61,9 +61,6 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddControllersWithViews();
-            //services.AddRazorPages();
-
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
@@ -152,7 +149,6 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IParkingsService, ParkingsService>();
             services.AddTransient<ICountriesService, CountriesService>();

@@ -23,7 +23,6 @@
 
         public virtual Parking Parking { get; set; }
 
-        [Required]
         public string ClientId { get; set; }
 
         public virtual ApplicationUser Client { get; set; }
