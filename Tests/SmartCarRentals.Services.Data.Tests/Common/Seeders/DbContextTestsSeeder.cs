@@ -174,6 +174,7 @@
                     TownId = 1,
                     Town = new Town()
                     {
+                        CountryId = 1,
                         Name = "Sofia",
                     },
                     Address = "Some street",
@@ -186,6 +187,7 @@
                     TownId = 2,
                     Town = new Town()
                     {
+                        CountryId = 2,
                         Name = "Athens",
                     },
                     Address = "Some street",
@@ -198,6 +200,7 @@
                     TownId = 3,
                     Town = new Town()
                     {
+                        CountryId = 3,
                         Name = "Bucharest",
                     },
                     Address = "Some street",
@@ -246,6 +249,31 @@
             await context.SaveChangesAsync();
 
             return towns.Length;
+        }
+
+        public async Task<int> SeedParkingSlotsAsync(ApplicationDbContext context)
+        {
+            var parkingSlots = new ParkingSlot[]
+            {
+                new ParkingSlot() { ParkingId = 1 },
+                new ParkingSlot() { ParkingId = 1 },
+                new ParkingSlot() { ParkingId = 1 },
+                new ParkingSlot() { ParkingId = 1 },
+                new ParkingSlot() { ParkingId = 2 },
+                new ParkingSlot() { ParkingId = 2 },
+                new ParkingSlot() { ParkingId = 2 },
+                new ParkingSlot() { ParkingId = 3 },
+                new ParkingSlot() { ParkingId = 3 },
+            };
+
+            foreach (var parkingSlot in parkingSlots)
+            {
+                await context.ParkingSlots.AddAsync(parkingSlot);
+            }
+
+            await context.SaveChangesAsync();
+
+            return parkingSlots.Length;
         }
     }
 }

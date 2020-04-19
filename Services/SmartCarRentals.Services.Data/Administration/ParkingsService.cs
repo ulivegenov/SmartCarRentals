@@ -130,10 +130,11 @@
 
         public async Task<IEnumerable<ParkingsServiceAllModel>> GetAllByTownIdAsync(int townId)
         {
-            var parkings = await this.GetAllAsync<ParkingsServiceAllModel>();
+            var parkings = await this.parkingRepository.All()
+                                                       .ToListAsync();
             var townParkings = parkings.Where(p => p.Town.Id == townId).ToList();
 
-            return townParkings;
+            return townParkings.Select(p => p.To<ParkingsServiceAllModel>()).ToList();
         }
 
         public async Task<IEnumerable<Parking>> GetAllByCountryIdAsync(int countryId)
