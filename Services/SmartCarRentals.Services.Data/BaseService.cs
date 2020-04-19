@@ -103,7 +103,7 @@
             return result;
         }
 
-        public async Task<IEnumerable<TKey>> DeleteAllByIdAsync(IEnumerable<TKey> ids)
+        public virtual async Task<IEnumerable<TKey>> DeleteAllByIdAsync(IEnumerable<TKey> ids)
         {
             var towns = await this.deletableEntityRepository.All()
                                                             .Where(t => ids.Contains<TKey>(t.Id))

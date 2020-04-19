@@ -1,10 +1,11 @@
 ﻿namespace SmartCarRentals.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-
+    using SmartCarRentals.Common;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Parkings;
@@ -119,13 +120,24 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
-            var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceAllModel>();
+            var page = id;
+            var parkings = this.parkingsService.GetAllWithPaging<ParkingsServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
             var viewModel = new ParkingsAllViewModelCollection()
             {
                 Parkings = parkings.Select(p => p.To<ParkingsAllViewModel>()).ToList(),
             };
+
+            var count = await this.parkingsService.GetCountAsync();
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPageAdmin);
+
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

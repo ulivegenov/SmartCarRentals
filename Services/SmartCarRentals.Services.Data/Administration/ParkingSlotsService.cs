@@ -12,7 +12,7 @@
     using SmartCarRentals.Data.Models.Enums.ParkoingLot;
     using SmartCarRentals.Services.Data.Administration.Contracts;
 
-    public class ParkingSlotsService : IParkingSlotsService
+    public class ParkingSlotsService : BaseService<ParkingSlot, int>, IParkingSlotsService
     {
         private const string InvalidParkingSlotIdErrorMessage = "ParkingSlot with ID: {0} does not exist.";
         private const string InvalidParkingSlotsIdsErrorMessage = "There is no ParkingSlot with any of these IDs.";
@@ -26,13 +26,14 @@
                                    IDeletableEntityRepository<ParkingSlot> parkingSlotRepository,
                                    IDeletableEntityRepository<Parking> parkingRepository,
                                    IDeletableEntityRepository<Town> townRepository)
+            : base(parkingSlotRepository)
         {
             this.parkingSlotRepository = parkingSlotRepository;
             this.parkingRepository = parkingRepository;
             this.townRepository = townRepository;
         }
 
-        public async Task<int> DeleteByIdAsync(int slotId)
+        public override async Task<int> DeleteByIdAsync(int slotId)
         {
             var parkingSlot = await this.parkingSlotRepository.GetByIdWithDeletedAsync(slotId);
 
@@ -52,7 +53,7 @@
             return parkingSlot.Id;
         }
 
-        public async Task<IEnumerable<int>> DeleteAllByIdAsync(IEnumerable<int> slotIds)
+        public override async Task<IEnumerable<int>> DeleteAllByIdAsync(IEnumerable<int> slotIds)
         {
             var parkingSlots = await this.parkingSlotRepository.All()
                                                                .Where(ps => slotIds.Contains(ps.Id))
