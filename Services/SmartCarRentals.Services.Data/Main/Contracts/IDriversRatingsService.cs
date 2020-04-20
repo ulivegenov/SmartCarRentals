@@ -4,12 +4,10 @@
 
     using SmartCarRentals.Services.Models.Main.DraversRatings;
 
-    public interface IDriversRatingsService
+    public interface IDriversRatingsService : IBaseService<int>
     {
         Task<int> DeleteAllByDriverIdAsync(string driverId);
 
         Task<DriverRatingServiceDetailsModel> GetByTransferId(int transferId);
-
-        Task<int> CreateAsync(DriverRatingServiceInputModel driverRatingServiceInputModel);
     }
 }

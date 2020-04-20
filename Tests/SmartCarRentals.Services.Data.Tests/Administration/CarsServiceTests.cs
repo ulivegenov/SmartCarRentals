@@ -3,7 +3,9 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Repositories;
     using SmartCarRentals.Services.Data.Administration;
@@ -83,6 +85,7 @@
             var seeder = new DbContextTestsSeeder();
             await seeder.SeedParkingsAsync(context);
             await seeder.SeedCarsAsync(context);
+
             var result = await carsService.GetAllByParkingAsync<CarsServiceAllModel>(4);
             var count = result.ToList().Count;
 

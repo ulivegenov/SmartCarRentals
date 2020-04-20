@@ -8,26 +8,19 @@
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Data.Models.Enums.Reservation;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Services.Models.Main.Reservations;
 
     public class ReservationsService : BaseService<Reservation, int>, IReservationsService
     {
         private readonly IDeletableEntityRepository<Reservation> reservationRepository;
-        private readonly ICarsService carsService;
 
-        public ReservationsService(
-                                   IDeletableEntityRepository<Reservation> reservationRepository,
-                                   ICarsService carsService)
+        public ReservationsService(IDeletableEntityRepository<Reservation> reservationRepository)
             : base(reservationRepository)
         {
             this.reservationRepository = reservationRepository;
-            this.carsService = carsService;
         }
 
         public async Task<IEnumerable<MyReservationsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
@@ -56,7 +49,6 @@
                                                              },
                                                          })
                                                          .OrderBy(r => r.Status)
-                                                         .To<MyReservationsServiceAllModel>()
                                                          .Skip(skip);
 
             if (take.HasValue)
@@ -64,7 +56,9 @@
                 reservations = reservations.Take(take.Value);
             }
 
-            return await reservations.ToListAsync();
+            var result = await reservations.ToListAsync();
+
+            return result.Select(r => r.To<MyReservationsServiceAllModel>()).ToList();
         }
 
         public async Task<IEnumerable<MyReservationsServiceAllModel>> GetAllAwaitingReservationsAsync()
@@ -94,13 +88,7 @@
 
             reservation.Status = Status.Canceled;
             this.reservationRepository.Update(reservation);
-            await this.reservationRepository.SaveChangesAsync();
-
-            var car = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(reservation.CarId);
-            car.HireStatus = HireStatus.Available;
-            car.ReservationStatus = ReservationStatus.Free;
-
-            var result = await this.carsService.EditAsync(car);
+            var result = await this.reservationRepository.SaveChangesAsync();
 
             return result;
         }

@@ -1,4 +1,4 @@
-﻿namespace SmartCarRentals.Services.Data.Administration
+﻿namespace SmartCarRentals.Services.Data.Main
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,11 +10,12 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.DraversRatings;
 
-    public class DriversRatingsService : IDriversRatingsService
+    public class DriversRatingsService : BaseService<DriverRating, int>, IDriversRatingsService
     {
         private readonly IDeletableEntityRepository<DriverRating> driversRatingsEntityRepository;
 
         public DriversRatingsService(IDeletableEntityRepository<DriverRating> driversRatingsEntityRepository)
+            : base(driversRatingsEntityRepository)
         {
             this.driversRatingsEntityRepository = driversRatingsEntityRepository;
         }
@@ -41,16 +42,6 @@
                                                                         .FirstOrDefaultAsync(dr => dr.TransferId == transferId);
 
             return driverRating.To<DriverRatingServiceDetailsModel>();
-        }
-
-        public async Task<int> CreateAsync(DriverRatingServiceInputModel driverRatingServiceInputModel)
-        {
-            var driverRating = driverRatingServiceInputModel.To<DriverRating>();
-
-            await this.driversRatingsEntityRepository.AddAsync(driverRating);
-            var result = await this.driversRatingsEntityRepository.SaveChangesAsync();
-
-            return result;
         }
     }
 }

@@ -6,8 +6,9 @@
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class DriverRatingServiceInputModel : IMapTo<DriverRating>
+    public class DriverRatingServiceInputModel : IServiceInputModel, IMapTo<DriverRating>
     {
         [Range(EntitiesAttributeConstraints.MinRatingVote, EntitiesAttributeConstraints.MaxRatingVote)]
         public double RatingVote { get; set; }

@@ -1,18 +1,14 @@
 ﻿namespace SmartCarRentals.Services.Data.Tests.Administration
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    using Moq;
-    using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Repositories;
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Data.Tests.Common;
     using SmartCarRentals.Services.Data.Tests.Common.Seeders;
-    using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Countries;
 
     using Xunit;
@@ -50,9 +46,9 @@
             var country2 = new CountryServiceInputModel() { Name = "Belgum" };
             var country3 = new CountryServiceInputModel() { Name = "Greece" };
 
-            var result = await countriesService.CreateAsync(country);
-            result = await countriesService.CreateAsync(country2);
-            result = await countriesService.CreateAsync(country3);
+            await countriesService.CreateAsync(country);
+            await countriesService.CreateAsync(country2);
+            await countriesService.CreateAsync(country3);
             var countries = await countriesService.GetAllAsync<CountriesServiceAllModel>();
             var count = countries.ToList().Count;
 
