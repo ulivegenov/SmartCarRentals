@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using Microsoft.AspNetCore.Identity;
+    using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
     using Microsoft.EntityFrameworkCore;
 
     using SmartCarRentals.Common;
@@ -17,43 +16,25 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.Transfers;
 
-    public class TransfersService : ITransfersService
+    public class TransfersService : BaseService<Transfer, int>, ITransfersService
     {
         private readonly IDeletableEntityRepository<Transfer> transfersRepository;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
 
         public TransfersService(
                                 IDeletableEntityRepository<Transfer> transfersRepository,
-                                UserManager<ApplicationUser> userManager)
+                                IDeletableEntityRepository<ApplicationUser> usersRepository)
+            : base(transfersRepository)
         {
             this.transfersRepository = transfersRepository;
-            this.userManager = userManager;
-        }
-
-        public async Task<int> GetCountAsync()
-        {
-            var users = await this.transfersRepository.All()
-                                                     .Select(t => t.Id)
-                                                     .ToListAsync();
-
-            return users.Count;
-        }
-
-        public async Task<int> CreateAsync(TransferServiceInputModel transferServiceInputModel)
-        {
-            transferServiceInputModel.Status = this.GetStatus(transferServiceInputModel.TransferDate);
-            var transfer = transferServiceInputModel.To<Transfer>();
-
-            await this.transfersRepository.AddAsync(transfer);
-
-            var result = await this.transfersRepository.SaveChangesAsync();
-
-            return result;
+            this.usersRepository = usersRepository;
         }
 
         public async Task<IEnumerable<MyTransfersServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
         {
-            var user = await this.userManager.FindByIdAsync(userId);
+            var user = await this.usersRepository.All()
+                                                 .Where(u => u.Id == userId)
+                                                 .FirstOrDefaultAsync();
             var discount = GlobalConstants.UserDiscount;
 
             if (user.Rank == RankType.GoldUser)
@@ -101,32 +82,32 @@
             return await transfers.ToListAsync();
         }
 
-        public async Task<TransferServiceDetailsModel> GetByIdAsync(int transferId)
+        public override async Task<TransferServiceDetailsModel> GetByIdAsync<TransferServiceDetailsModel>(int transferId)
         {
             var transfer = await this.transfersRepository.All()
-                                                        .Where(t => t.Id == transferId)
-                                                        .Select(t => new Transfer()
-                                                        {
-                                                            Id = t.Id,
-                                                            TransferDate = t.TransferDate,
-                                                            Points = t.Points,
-                                                            Type = new TransferType()
-                                                            {
-                                                                Id = t.Type.Id,
-                                                                Name = t.Type.Name,
-                                                                Price = t.Type.Price,
-                                                            },
-                                                            Driver = new Driver()
-                                                            {
-                                                                Id = t.Driver.Id,
-                                                                FirstName = t.Driver.FirstName,
-                                                                LastName = t.Driver.LastName,
-                                                            },
-                                                            HasPaid = t.HasPaid,
-                                                            HasVote = t.HasVote,
-                                                        })
-                                                        .To<TransferServiceDetailsModel>()
-                                                        .FirstOrDefaultAsync();
+                                                         .Where(t => t.Id == transferId)
+                                                         .Select(t => new Transfer()
+                                                         {
+                                                             Id = t.Id,
+                                                             TransferDate = t.TransferDate,
+                                                             Points = t.Points,
+                                                             Type = new TransferType()
+                                                             {
+                                                                 Id = t.Type.Id,
+                                                                 Name = t.Type.Name,
+                                                                 Price = t.Type.Price,
+                                                             },
+                                                             Driver = new Driver()
+                                                             {
+                                                                 Id = t.Driver.Id,
+                                                                 FirstName = t.Driver.FirstName,
+                                                                 LastName = t.Driver.LastName,
+                                                             },
+                                                             HasPaid = t.HasPaid,
+                                                             HasVote = t.HasVote,
+                                                         })
+                                                         .To<TransferServiceDetailsModel>()
+                                                         .FirstOrDefaultAsync();
 
             return transfer;
         }
@@ -149,7 +130,10 @@
 
         public async Task<int> PayByIdAsync(int transferId, string userId)
         {
-            var user = await this.userManager.FindByIdAsync(userId);
+            var user = await this.usersRepository.All()
+                                                 .Where(u => u.Id == userId)
+                                                 .FirstOrDefaultAsync();
+
             var discount = GlobalConstants.UserDiscount;
 
             if (user.Rank == RankType.GoldUser)
@@ -162,32 +146,32 @@
                 discount = GlobalConstants.PlatinumUserDiscount;
             }
 
-            var transfer = await this.transfersRepository.All()
-                                                        .Where(t => t.Id == transferId)
-                                                        .Select(t => new Transfer()
-                                                        {
-                                                            Id = t.Id,
-                                                            TransferDate = t.TransferDate,
-                                                            Points = t.Points,
-                                                            Status = t.Status,
-                                                            ClientId = t.ClientId,
-                                                            DriverId = t.DriverId,
-                                                            TransferTypeId = t.TransferTypeId,
-                                                            Type = new TransferType()
-                                                            {
-                                                                Id = t.Type.Id,
-                                                                Name = t.Type.Name,
-                                                                Price = t.Type.Price,
-                                                            },
-                                                            HasPaid = t.HasPaid,
-                                                            HasVote = t.HasVote,
-                                                        })
-                                                        .FirstOrDefaultAsync();
+            var transferDto = await this.transfersRepository.All()
+                                                         .Where(t => t.Id == transferId)
+                                                         .Select(t => new TransferServicePointsModel()
+                                                         {
+                                                             Id = t.Id,
+                                                             Points = t.Points,
+                                                             Status = t.Status,
+                                                             TransferTypeId = t.TransferTypeId,
+                                                             Type = new TransferType()
+                                                             {
+                                                                 Name = t.Type.Name,
+                                                                 Price = t.Type.Price,
+                                                             },
+                                                             HasPaid = t.HasPaid,
+                                                         })
+                                                         .FirstOrDefaultAsync();
 
-            transfer.HasPaid = true;
-            transfer.Type.Price -= transfer.Type.Price * discount / 100;
-            transfer.Points = (int)Math.Round(transfer.Type.Price / 10);
-            transfer.Status = Status.Finished;
+            transferDto.HasPaid = true;
+            transferDto.Type.Price -= transferDto.Type.Price * discount / 100;
+            transferDto.Points = (int)Math.Round(transferDto.Type.Price / 10);
+            transferDto.Status = Status.Finished;
+
+            var transfer = await this.transfersRepository.GetByIdWithDeletedAsync(transferId);
+            transfer.HasPaid = transferDto.HasPaid;
+            transfer.Points = transferDto.Points;
+            transfer.Status = transferDto.Status;
             this.transfersRepository.Update(transfer);
 
             await this.transfersRepository.SaveChangesAsync();
@@ -203,24 +187,6 @@
             var result = await this.transfersRepository.SaveChangesAsync();
 
             return result;
-        }
-
-        // Temp Method, only for Development
-        private Status GetStatus(DateTime transferDate)
-        {
-            var status = Status.Forthcoming;
-
-            if (transferDate.CompareTo(DateTime.UtcNow) == 0)
-            {
-                status = Status.OnGoing;
-            }
-
-            if (transferDate.CompareTo(DateTime.UtcNow) < 0)
-            {
-                status = Status.Finished;
-            }
-
-            return status;
         }
     }
 }

@@ -434,5 +434,166 @@
 
             return reservations.Length;
         }
+
+        public async Task<int> SeedTransfersAsync(ApplicationDbContext context)
+        {
+            var driver1 = new Driver()
+            {
+                Id = "abc",
+                FirstName = "FirstName",
+                LastName = "LastName",
+            };
+
+            var driver2 = new Driver()
+            {
+                Id = "bcd",
+                FirstName = "FirstName",
+                LastName = "LastName",
+            };
+
+            var transferType = new TransferType()
+            {
+                //Id = 1,
+                Name = "Transfer",
+                Price = 100,
+            };
+
+            var transfers = new Transfer[]
+            {
+                new Transfer()
+                {
+                    ClientId = "abc",
+                    TransferDate = DateTime.UtcNow.AddDays(10),
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Forthcoming,
+                    Type = transferType,
+                    Driver = driver1,
+                    HasPaid = false,
+                    HasVote = false,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "abc",
+                    TransferDate = DateTime.UtcNow.AddDays(5),
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Forthcoming,
+                    Type = transferType,
+                    Driver = driver1,
+                    HasPaid = false,
+                    HasVote = false,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "abc",
+                    TransferDate = DateTime.UtcNow.AddDays(-10),
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished,
+                    Type = transferType,
+                    Driver = driver1,
+                    HasPaid = false,
+                    HasVote = false,
+                    Points = 0,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "bcd",
+                    TransferDate = DateTime.UtcNow.AddDays(-10),
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished,
+                    Type = transferType,
+                    Driver = driver2,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "bcd",
+                    TransferDate = DateTime.UtcNow.AddDays(-3),
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished,
+                    Type = transferType,
+                    Driver = driver2,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "cde",
+                    TransferDate = DateTime.UtcNow.AddDays(-10),
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished,
+                    Type = transferType,
+                    Driver = driver1,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "cde",
+                    TransferDate = DateTime.UtcNow,
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished,
+                    Type = transferType,
+                    Driver = driver1,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "cde",
+                    TransferDate = DateTime.UtcNow,
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.OnGoing,
+                    Type = transferType,
+                    Driver = driver2,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+            };
+
+            foreach (var transfer in transfers)
+            {
+                await context.Transfers.AddAsync(transfer);
+            }
+
+            await context.SaveChangesAsync();
+
+            return transfers.Length;
+        }
+
+        public async Task<int> SeedUsersAsync(ApplicationDbContext context)
+        {
+            var users = new ApplicationUser[]
+            {
+                new ApplicationUser()
+                {
+                    Id = "abc",
+                    FirstName = "FirstName",
+                    LastName = "LastName",
+                },
+
+                new ApplicationUser()
+                {
+                    Id = "bcd",
+                    FirstName = "FirstName",
+                    LastName = "LastName",
+                },
+
+                new ApplicationUser()
+                {
+                    Id = "cde",
+                    FirstName = "FirstName",
+                    LastName = "LastName",
+                },
+            };
+
+            foreach (var user in users)
+            {
+                await context.Users.AddAsync(user);
+            }
+
+            await context.SaveChangesAsync();
+
+            return users.Length;
+        }
     }
 }

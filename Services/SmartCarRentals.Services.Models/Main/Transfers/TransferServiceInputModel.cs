@@ -4,15 +4,13 @@
     using System.ComponentModel.DataAnnotations;
 
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Mapping;
+    using SmartCarRentals.Services.Models.Contracts;
 
-    public class TransferServiceInputModel : IMapTo<Transfer>
+    public class TransferServiceInputModel : IServiceInputModel, IMapTo<Transfer>
     {
         [Required]
         public DateTime TransferDate { get; set; }
-
-        public Status Status { get; set; }
 
         public int Points { get; set; }
 

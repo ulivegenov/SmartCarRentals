@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.Transfers;
     using SmartCarRentals.Web.Infrastructure.CustomAttributes;
@@ -25,8 +25,6 @@
         [DateRange]
         [Display(Name = "Transfer Date")]
         public DateTime TransferDate { get; set; }
-
-        public Status Status { get; set; }
 
         public int Points { get; set; }
 

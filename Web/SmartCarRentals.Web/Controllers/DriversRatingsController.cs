@@ -7,28 +7,25 @@
     using Microsoft.AspNetCore.Mvc;
 
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Main.DraversRatings;
+    using SmartCarRentals.Services.Models.Main.Transfers;
     using SmartCarRentals.Web.ViewModels.Main.DriversRatings;
 
     public class DriversRatingsController : BaseController
     {
         private readonly IDriversRatingsService driversRatingsService;
         private readonly ITransfersService transfersService;
-        private readonly IDriversService driversService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public DriversRatingsController(
                                         IDriversRatingsService driversRatingsService,
                                         ITransfersService transfersService,
-                                        IDriversService driversService,
                                         UserManager<ApplicationUser> userManager)
         {
             this.driversRatingsService = driversRatingsService;
             this.transfersService = transfersService;
-            this.driversService = driversService;
             this.userManager = userManager;
         }
 
@@ -36,7 +33,7 @@
         public async Task<IActionResult> Create(int id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var transferServiceModel = await this.transfersService.GetByIdAsync(id);
+            var transferServiceModel = await this.transfersService.GetByIdAsync<TransferServiceDetailsModel>(id);
             var transfer = transferServiceModel.To<Transfer>();
             var draver = transfer.Driver;
             var viewModel = new DriverRatingCreateInputModel()
@@ -56,7 +53,7 @@
         public async Task<IActionResult> Create(DriverRatingCreateInputModel driverRatingCreateInputModel, int id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var transfer = await this.transfersService.GetByIdAsync(id);
+            var transfer = await this.transfersService.GetByIdAsync<TransferServiceDetailsModel>(id);
             var driver = transfer.Driver;
 
             if (!this.ModelState.IsValid)

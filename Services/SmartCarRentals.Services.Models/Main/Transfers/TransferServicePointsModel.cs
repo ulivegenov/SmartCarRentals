@@ -1,16 +1,13 @@
 ﻿namespace SmartCarRentals.Services.Models.Main.Transfers
 {
-    using System;
-
+    using AutoMapper;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Mapping;
 
-    public class TransferServiceDetailsModel : IMapFrom<Transfer>, IMapTo<Transfer>
+    public class TransferServicePointsModel : IMapFrom<Transfer>, IMapTo<Transfer>//, IHaveCustomMappings
     {
         public int Id { get; set; }
-
-        public DateTime TransferDate { get; set; }
 
         public Status Status { get; set; }
 
@@ -20,16 +17,11 @@
 
         public TransferType Type { get; set; }
 
-        public string ClientId { get; set; }
-
-        public string DriverId { get; set; }
-
-        public virtual Driver Driver { get; set; }
-
-        public double Rating { get; set; }
-
         public bool HasPaid { get; set; }
 
-        public bool HasVote { get; set; }
+        //public void CreateMappings(IProfileExpression configuration)
+        //{
+        //    configuration.fo
+        //}
     }
 }
