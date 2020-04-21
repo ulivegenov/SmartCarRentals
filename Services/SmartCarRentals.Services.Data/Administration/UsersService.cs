@@ -203,8 +203,7 @@
             {
                 user.Rank = RankType.PlatinumUser;
             }
-
-            if (user.Points >= GlobalConstants.GoldUserMinPoints)
+            else if (user.Points >= GlobalConstants.GoldUserMinPoints)
             {
                 user.Rank = RankType.GoldUser;
             }

@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
+    using SmartCarRentals.Common;
     using SmartCarRentals.Data;
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Data.Models.Enums.Reservation;
+    using SmartCarRentals.Data.Models.Enums.User;
 
     public class DbContextTestsSeeder
     {
@@ -453,7 +455,6 @@
 
             var transferType = new TransferType()
             {
-                //Id = 1,
                 Name = "Transfer",
                 Price = 100,
             };
@@ -529,18 +530,18 @@
 
                 new Transfer()
                 {
-                    ClientId = "cde",
+                    ClientId = "def",
                     TransferDate = DateTime.UtcNow,
-                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished,
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.OnGoing,
                     Type = transferType,
-                    Driver = driver1,
+                    Driver = driver2,
                     HasPaid = true,
                     HasVote = true,
                 },
 
                 new Transfer()
                 {
-                    ClientId = "cde",
+                    ClientId = "efg",
                     TransferDate = DateTime.UtcNow,
                     Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.OnGoing,
                     Type = transferType,
@@ -584,6 +585,22 @@
                     FirstName = "FirstName",
                     LastName = "LastName",
                 },
+
+                new ApplicationUser()
+                {
+                    Id = "def",
+                    FirstName = "FirstName",
+                    LastName = "LastName",
+                    Rank = RankType.GoldUser,
+                },
+
+                new ApplicationUser()
+                {
+                    Id = "efg",
+                    FirstName = "FirstName",
+                    LastName = "LastName",
+                    Rank = RankType.PlatinumUser,
+                },
             };
 
             foreach (var user in users)
@@ -594,6 +611,186 @@
             await context.SaveChangesAsync();
 
             return users.Length;
+        }
+
+        public async Task<int> SeedTripsAsync(ApplicationDbContext context)
+        {
+            var car1 = new Car()
+            {
+                Make = "Make",
+                Model = "Model",
+                HireStatus = HireStatus.Unavailable,
+                ParkingId = 1,
+                PlateNumber = "PlateNumber",
+                PricePerDay = 30,
+                PricePerHour = 3,
+            };
+
+            var car2 = new Car()
+            {
+                Make = "Make",
+                Model = "Model",
+                HireStatus = HireStatus.Unavailable,
+                ParkingId = 1,
+                PlateNumber = "PlateNumber",
+                PricePerDay = 30,
+                PricePerHour = 3,
+            };
+
+            var car3 = new Car()
+            {
+                Make = "Make",
+                Model = "Model",
+                HireStatus = HireStatus.Unavailable,
+                ParkingId = 1,
+                PlateNumber = "PlateNumber",
+                PricePerDay = 30,
+                PricePerHour = 3,
+            };
+
+            var trips = new Trip[]
+            {
+                new Trip()
+                {
+                    ClientId = "abc",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "abc",
+                    Car = car1,
+                    HasPaid = false,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.OnGoing,
+                },
+
+                new Trip()
+                {
+                    CreatedOn = DateTime.UtcNow.AddDays(-2),
+                    ClientId = "abc",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car2,
+                    HasPaid = true,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.Finished,
+                },
+
+                new Trip()
+                {
+                    ClientId = "bcd",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car2,
+                    HasPaid = false,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.OnGoing,
+                },
+
+                new Trip()
+                {
+                    ClientId = "cde",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "cde",
+                    Car = car3,
+                    HasPaid = false,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.OnGoing,
+                },
+
+                new Trip()
+                {
+                    CreatedOn = DateTime.UtcNow.AddHours(-6),
+                    ClientId = "cde",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car3,
+                    HasPaid = true,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.Finished,
+                },
+
+                new Trip()
+                {
+                    CreatedOn = DateTime.UtcNow.AddDays(-2),
+                    ClientId = "def",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car2,
+                    HasPaid = true,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.Finished,
+                },
+
+                new Trip()
+                {
+                    CreatedOn = DateTime.UtcNow.AddDays(-2),
+                    ClientId = "efg",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car2,
+                    HasPaid = true,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.Finished,
+                },
+
+                new Trip()
+                {
+                    CreatedOn = DateTime.UtcNow.AddHours(-6),
+                    ClientId = "def",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car3,
+                    HasPaid = true,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.Finished,
+                },
+
+                new Trip()
+                {
+                    CreatedOn = DateTime.UtcNow.AddHours(-6),
+                    ClientId = "efg",
+                    EndDate = null,
+                    KmRun = null,
+                    CarId = "bcd",
+                    Car = car3,
+                    HasPaid = true,
+                    HasVote = false,
+                    Points = 0,
+                    Price = 0,
+                    Status = SmartCarRentals.Data.Models.Enums.Trip.Status.Finished,
+                },
+            };
+
+            foreach (var trip in trips)
+            {
+                await context.Trips.AddAsync(trip);
+            }
+
+            await context.SaveChangesAsync();
+
+            return trips.Length;
         }
     }
 }

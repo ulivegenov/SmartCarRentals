@@ -1,18 +1,15 @@
 ﻿namespace SmartCarRentals.Services.Data.Tests.Main
 {
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using Moq;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Repositories;
     using SmartCarRentals.Services.Data.Main;
     using SmartCarRentals.Services.Data.Tests.Common;
     using SmartCarRentals.Services.Data.Tests.Common.Seeders;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+
     using Xunit;
 
     public class TransfersServiceTests
@@ -107,7 +104,7 @@
         }
 
         [Fact]
-        public async Task PayByIdAsync_ShouldRetutnCorrectResult()
+        public async Task PayByIdAsync_ShouldRetutnCorrectResult_RankUser()
         {
             MapperInitializer.InitializeMapper();
             var context = ApplicationDbContextInMemoryFactory.InitializeContext();
@@ -122,6 +119,42 @@
             var result = await transfersService.PayByIdAsync(3, "abc");
 
             Assert.True(result == 10, ErrorMessage);
+        }
+
+        [Fact]
+        public async Task PayByIdAsync_ShouldRetutnCorrectResult_RankGoldUser()
+        {
+            MapperInitializer.InitializeMapper();
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var transferRepository = new EfDeletableEntityRepository<Transfer>(context);
+            var userRepository = new EfDeletableEntityRepository<ApplicationUser>(context);
+            var transfersService = new TransfersService(transferRepository, userRepository);
+            var seeder = new DbContextTestsSeeder();
+            await seeder.SeedTransfersAsync(context);
+            await seeder.SeedUsersAsync(context);
+
+            var transfer = transferRepository.GetByIdWithDeletedAsync(7);
+            var result = await transfersService.PayByIdAsync(7, "def");
+
+            Assert.True(result == 10, ErrorMessage);
+        }
+
+        [Fact]
+        public async Task PayByIdAsync_ShouldRetutnCorrectResult_RankPlatinumUser()
+        {
+            MapperInitializer.InitializeMapper();
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var transferRepository = new EfDeletableEntityRepository<Transfer>(context);
+            var userRepository = new EfDeletableEntityRepository<ApplicationUser>(context);
+            var transfersService = new TransfersService(transferRepository, userRepository);
+            var seeder = new DbContextTestsSeeder();
+            await seeder.SeedTransfersAsync(context);
+            await seeder.SeedUsersAsync(context);
+
+            var transfer = transferRepository.GetByIdWithDeletedAsync(8);
+            var result = await transfersService.PayByIdAsync(7, "efg");
+
+            Assert.True(result == 9, ErrorMessage);
         }
     }
 }

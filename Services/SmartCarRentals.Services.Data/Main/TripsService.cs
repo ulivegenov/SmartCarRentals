@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
-
     using Microsoft.EntityFrameworkCore;
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Common.Repositories;
@@ -22,23 +20,23 @@
     public class TripsService : BaseService<Trip, int>, ITripsService
     {
         private readonly IDeletableEntityRepository<Trip> tripsRepository;
-        private readonly ICarsService carsService;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
+        private readonly IDeletableEntityRepository<Car> carsRepository;
 
         public TripsService(
                             IDeletableEntityRepository<Trip> tripsRepository,
-                            ICarsService carsService,
-                            UserManager<ApplicationUser> userManager)
+                            IDeletableEntityRepository<ApplicationUser> usersRepository,
+                            IDeletableEntityRepository<Car> carsRepository)
             : base(tripsRepository)
         {
             this.tripsRepository = tripsRepository;
-            this.carsService = carsService;
-            this.userManager = userManager;
+            this.usersRepository = usersRepository;
+            this.carsRepository = carsRepository;
         }
 
         public async Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
         {
-            var user = await this.userManager.FindByIdAsync(userId);
+            var user = await this.usersRepository.GetByIdWithDeletedAsync(userId);
             var discount = GlobalConstants.UserDiscount;
 
             if (user.Rank == RankType.GoldUser)
@@ -90,7 +88,7 @@
         public async Task<int> PayAsync(MyTripsServiceAllModel tripServiceModel)
         {
             var userId = tripServiceModel.ClientId;
-            var user = await this.userManager.FindByIdAsync(userId);
+            var user = await this.usersRepository.GetByIdWithDeletedAsync(userId);
             var discount = GlobalConstants.UserDiscount;
 
             if (user.Rank == RankType.GoldUser)
@@ -105,7 +103,14 @@
 
             tripServiceModel.EndDate = DateTime.UtcNow;
 
-            var car = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(tripServiceModel.CarId);
+            var car = await this.carsRepository.All()
+                                               .Where(c => c.Id == tripServiceModel.CarId)
+                                               .Select(c => new Car()
+                                               {
+                                                   PricePerDay = c.PricePerDay,
+                                                   PricePerHour = c.PricePerHour,
+                                               })
+                                               .FirstOrDefaultAsync();
 
             decimal price = 0;
 
@@ -123,12 +128,15 @@
             }
 
             tripServiceModel.Price = price - (price * discount / 100);
-            tripServiceModel.Points = (int)Math.Round(price / 10);
+            tripServiceModel.Points = (int)Math.Round(tripServiceModel.Price / 10);
             tripServiceModel.Status = Status.Finished;
             tripServiceModel.HasPaid = true;
 
-            var trip = tripServiceModel.To<Trip>();
-
+            var trip = await this.tripsRepository.GetByIdWithDeletedAsync(tripServiceModel.Id);
+            trip.Price = tripServiceModel.Price;
+            trip.Points = tripServiceModel.Points;
+            trip.Status = tripServiceModel.Status;
+            trip.HasPaid = tripServiceModel.HasPaid;
             this.tripsRepository.Update(trip);
 
             await this.tripsRepository.SaveChangesAsync();
@@ -141,6 +149,7 @@
             var trip = await this.tripsRepository.GetByIdWithDeletedAsync(triprId);
 
             trip.HasVote = true;
+            this.tripsRepository.Update(trip);
             var result = await this.tripsRepository.SaveChangesAsync();
 
             return result;

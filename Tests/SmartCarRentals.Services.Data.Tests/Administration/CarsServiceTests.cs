@@ -73,6 +73,26 @@
         }
 
         [Fact]
+        public async Task GetAllAsync_ShouldReturnCorrectResult()
+        {
+            MapperInitializer.InitializeMapper();
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var carsRepository = new EfDeletableEntityRepository<Car>(context);
+            var tripsRepository = new EfDeletableEntityRepository<Trip>(context);
+            var reservationsRepository = new EfDeletableEntityRepository<Reservation>(context);
+            var parkingsRepository = new EfDeletableEntityRepository<Parking>(context);
+            var parkingService = new ParkingsService(parkingsRepository);
+            var carsService = new CarsService(carsRepository, tripsRepository, reservationsRepository, parkingService);
+            var seeder = new DbContextTestsSeeder();
+            await seeder.SeedCarsAsync(context);
+
+            var cars = await carsService.GetAllAsync<CarsServiceAllModel>();
+            var count = cars.ToList().Count;
+
+            Assert.True(count == 5, ErrorMessage);
+        }
+
+        [Fact]
         public async Task GetAllByParkingAsync_ShouldReturnCorrectResult()
         {
             var context = ApplicationDbContextInMemoryFactory.InitializeContext();

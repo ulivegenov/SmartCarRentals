@@ -34,7 +34,6 @@
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(this.configuration),
-                              new SettingsSeeder(),
                           };
 
             foreach (var seeder in seeders)

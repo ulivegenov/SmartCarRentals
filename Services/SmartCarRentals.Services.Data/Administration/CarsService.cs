@@ -151,10 +151,9 @@
                                                        },
                                                    },
                                                })
-                                               .To<T>()
                                                .ToListAsync();
 
-            return cars;
+            return cars.Select(c => c.To<T>()).ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllByParkingAsync<T>(int parkingId)

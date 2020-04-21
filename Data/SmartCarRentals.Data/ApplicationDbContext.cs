@@ -36,8 +36,6 @@
 
         public DbSet<Reservation> Reservations { get; set; }
 
-        public DbSet<Setting> Settings { get; set; }
-
         public DbSet<Town> Towns { get; set; }
 
         public DbSet<Transfer> Transfers { get; set; }

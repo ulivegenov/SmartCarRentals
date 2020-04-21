@@ -61,17 +61,13 @@
             var context = ApplicationDbContextInMemoryFactory.InitializeContext();
             var countriesRepository = new EfDeletableEntityRepository<Country>(context);
             var countriesService = new CountriesService(countriesRepository);
-            var country = new CountryServiceInputModel() { Name = "Bulgaria" };
-            var country2 = new CountryServiceInputModel() { Name = "Belgum" };
-            var country3 = new CountryServiceInputModel() { Name = "Greece" };
+            var seeder = new DbContextTestsSeeder();
+            await seeder.SeedCountriesAsync(context);
 
-            await countriesService.CreateAsync(country);
-            await countriesService.CreateAsync(country2);
-            await countriesService.CreateAsync(country3);
             var countries = await countriesService.GetAllAsync<CountriesServiceAllModel>();
             var count = countries.ToList().Count;
 
-            Assert.True(count == 3, ErrorMessage);
+            Assert.True(count == 8, ErrorMessage);
         }
 
         [Fact]

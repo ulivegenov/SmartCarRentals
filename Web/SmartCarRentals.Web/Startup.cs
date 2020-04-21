@@ -34,7 +34,6 @@
     using SmartCarRentals.Services.Data.Main;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Messaging;
     using SmartCarRentals.Services.Models.Administration.Cars;
     using SmartCarRentals.Services.Models.Administration.Countries;
     using SmartCarRentals.Services.Models.Administration.Drivers;
@@ -149,7 +148,6 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IParkingsService, ParkingsService>();
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<ITownsService, TownsService>();

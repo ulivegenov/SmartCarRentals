@@ -7,7 +7,6 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using SmartCarRentals.Data.Common.Models;
     using SmartCarRentals.Data.Common.Repositories;
     using SmartCarRentals.Services.Mapping;
