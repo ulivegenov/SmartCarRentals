@@ -5,7 +5,7 @@
     using SmartCarRentals.Data.Models.Enums.Transfer;
     using SmartCarRentals.Services.Mapping;
 
-    public class TransferServicePointsModel : IMapFrom<Transfer>, IMapTo<Transfer>//, IHaveCustomMappings
+    public class TransferServicePointsModel : IMapFrom<Transfer>, IMapTo<Transfer>
     {
         public int Id { get; set; }
 
@@ -18,10 +18,5 @@
         public TransferType Type { get; set; }
 
         public bool HasPaid { get; set; }
-
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration.fo
-        //}
     }
 }

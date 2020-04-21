@@ -9,6 +9,7 @@
     using SmartCarRentals.Services.Data.Administration;
     using SmartCarRentals.Services.Data.Tests.Common;
     using SmartCarRentals.Services.Data.Tests.Common.Seeders;
+    using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Countries;
 
     using Xunit;
@@ -31,6 +32,24 @@
                                                         .Select(c => c.Name)
                                                         .FirstOrDefaultAsync();
             var expectedResult = country.Name;
+
+            Assert.True(result == 1, ErrorMessage);
+        }
+
+        [Fact]
+        public async Task EditAsync_ShouldReturnCorrectResult()
+        {
+            MapperInitializer.InitializeMapper();
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var countriesRepository = new EfDeletableEntityRepository<Country>(context);
+            var countriesService = new CountriesService(countriesRepository);
+            var seeder = new DbContextTestsSeeder();
+            await seeder.SeedCountriesAsync(context);
+
+            var countryFromDb = await countriesRepository.All().FirstOrDefaultAsync();
+            var country = countryFromDb.To<CountryServiceDetailsModel>();
+            country.Name = "BGN";
+            var result = await countriesService.EditAsync(country);
 
             Assert.True(result == 1, ErrorMessage);
         }

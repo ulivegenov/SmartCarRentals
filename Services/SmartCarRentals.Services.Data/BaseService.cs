@@ -82,7 +82,21 @@
 
         public virtual async Task<int> EditAsync(IServiceDetailsModel<TKey> serviceDetailsModel)
         {
-            var entity = serviceDetailsModel.To<TEntity>();
+            var model = serviceDetailsModel.To<TEntity>();
+            var entity = await this.deletableEntityRepository.GetByIdWithDeletedAsync(serviceDetailsModel.Id);
+            var modelProperties = model.GetType().GetProperties();
+            var entityProperties = entity.GetType().GetProperties();
+
+            foreach (var property in entityProperties)
+            {
+                foreach (var modelProperty in modelProperties)
+                {
+                    if (property.Name != "Id" && property.Name == modelProperty.Name)
+                    {
+                        property.SetValue(entity, modelProperty.GetValue(model));
+                    }
+                }
+            }
 
             this.deletableEntityRepository.Update(entity);
             var result = await this.deletableEntityRepository.SaveChangesAsync();
