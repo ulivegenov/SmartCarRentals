@@ -10,33 +10,34 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Reservation;
     using SmartCarRentals.Services.Data.AppServices.Contracts;
-    using SmartCarRentals.Services.Data.Main.Contracts;
 
     public class HangfireService : IHangfireService
     {
-        private readonly IReservationsService reservationsService;
+        private readonly IDeletableEntityRepository<Reservation> reservationsRepository;
         private readonly IDeletableEntityRepository<Transfer> transfersRepository;
 
         public HangfireService(
-                               IReservationsService reservationsService,
+                               IDeletableEntityRepository<Reservation> reservationsRepository,
                                IDeletableEntityRepository<Transfer> transfersRepository)
         {
-            this.reservationsService = reservationsService;
+            this.reservationsRepository = reservationsRepository;
             this.transfersRepository = transfersRepository;
         }
 
         public async Task<int> CancelExpiredReservationsAsync()
         {
-            var reservations = await this.reservationsService.GetAllAwaitingReservationsAsync();
-            var reservationsToCancel = reservations.Where(r => r.ReservationDate.CompareTo(DateTime.UtcNow) < 0
-                                                          && r.Status != Status.Accomplished);
-
-            var result = 0;
+            var reservationsToCancel = await this.reservationsRepository.All()
+                                                                        .Where(r => r.Status == Status.Awaiting
+                                                                               && r.ReservationDate.Date.CompareTo(DateTime.UtcNow.Date) < 0)
+                                                                        .ToListAsync();
 
             foreach (var reservation in reservationsToCancel)
             {
-                result = await this.reservationsService.CancelAsync(reservation.Id);
+                reservation.Status = Status.Canceled;
+                this.reservationsRepository.Update(reservation);
             }
+
+            var result = await this.reservationsRepository.SaveChangesAsync();
 
             return result;
         }
@@ -45,7 +46,7 @@
         {
             var transfers = await this.transfersRepository.All()
                                                           .Where(t => t.TransferDate.Date.CompareTo(DateTime.UtcNow.Date) == 0
-                                                                 && t.Status != SmartCarRentals.Data.Models.Enums.Transfer.Status.Finished)
+                                                                 && t.Status == SmartCarRentals.Data.Models.Enums.Transfer.Status.Forthcoming)
                                                           .ToListAsync();
 
             foreach (var transfer in transfers)

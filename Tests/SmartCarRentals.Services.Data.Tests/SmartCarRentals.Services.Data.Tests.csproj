@@ -33,8 +33,4 @@
     <ProjectReference Include="..\..\Web\SmartCarRentals.Web\SmartCarRentals.Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AppServices\" />
-  </ItemGroup>
-
 </Project>

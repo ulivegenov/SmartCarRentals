@@ -425,6 +425,28 @@
                     Parking = parking,
                     ParkingId = 1,
                 },
+
+                new Reservation()
+                {
+                    ClientId = "cde",
+                    CarId = "cde",
+                    Car = car3,
+                    ReservationDate = DateTime.UtcNow.AddDays(-1),
+                    Status = Status.Awaiting,
+                    Parking = parking,
+                    ParkingId = 1,
+                },
+
+                new Reservation()
+                {
+                    ClientId = "cde",
+                    CarId = "cde",
+                    Car = car3,
+                    ReservationDate = DateTime.UtcNow.AddDays(-1),
+                    Status = Status.Awaiting,
+                    Parking = parking,
+                    ParkingId = 1,
+                },
             };
 
             foreach (var reservation in reservations)
@@ -544,6 +566,28 @@
                     ClientId = "efg",
                     TransferDate = DateTime.UtcNow,
                     Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.OnGoing,
+                    Type = transferType,
+                    Driver = driver2,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "efg",
+                    TransferDate = DateTime.UtcNow,
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Forthcoming,
+                    Type = transferType,
+                    Driver = driver2,
+                    HasPaid = true,
+                    HasVote = true,
+                },
+
+                new Transfer()
+                {
+                    ClientId = "efg",
+                    TransferDate = DateTime.UtcNow,
+                    Status = SmartCarRentals.Data.Models.Enums.Transfer.Status.Forthcoming,
                     Type = transferType,
                     Driver = driver2,
                     HasPaid = true,

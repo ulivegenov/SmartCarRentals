@@ -6,6 +6,7 @@
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Countries;
     using SmartCarRentals.Services.Models.Main.Cars;
+    using SmartCarRentals.Services.Models.Main.Reservations;
 
     public class MapperInitializer
     {
@@ -15,7 +16,8 @@
                 typeof(CountryServiceInputModel).GetTypeInfo().Assembly,
                 typeof(CountryServiceDetailsModel).GetTypeInfo().Assembly,
                 typeof(Country).GetTypeInfo().Assembly,
-                typeof(CarsHotOffersServiceModel).GetTypeInfo().Assembly);
+                typeof(CarsHotOffersServiceModel).GetTypeInfo().Assembly,
+                typeof(MyReservationsServiceAllModel).GetTypeInfo().Assembly);
         }
     }
 }

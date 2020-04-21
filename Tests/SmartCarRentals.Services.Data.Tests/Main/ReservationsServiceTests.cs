@@ -61,7 +61,7 @@
 
             var result = await reservationsService.GetAllAwaitingReservationsAsync();
 
-            Assert.True(result.ToList().Count == 6, ErrorMessage);
+            Assert.True(result.ToList().Count == 8, ErrorMessage);
         }
 
         [Fact]
