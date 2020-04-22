@@ -8,18 +8,8 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Common\appsettings.test.json" />
-  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="appsettings.test.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +31,12 @@
     <ProjectReference Include="..\..\Data\SmartCarRentals.Data\SmartCarRentals.Data.csproj" />
     <ProjectReference Include="..\..\Services\SmartCarRentals.Services.Data\SmartCarRentals.Services.Data.csproj" />
     <ProjectReference Include="..\..\Web\SmartCarRentals.Web\SmartCarRentals.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.test.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
