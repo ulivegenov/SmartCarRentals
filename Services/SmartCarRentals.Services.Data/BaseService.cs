@@ -47,8 +47,8 @@
         public virtual async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             var entities = await this.deletableEntityRepository.All()
-                                                            .To<T>()
-                                                            .ToListAsync();
+                                                               .To<T>()
+                                                               .ToListAsync();
 
             return entities;
         }

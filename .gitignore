@@ -358,3 +358,4 @@ appsettings.Production.json
 *.min.css
 *.min.js
 /Web/SmartCarRentals.Web/appsettings.json
+/Tests/SmartCarRentals.Services.Data.Tests/appsettings.test.json

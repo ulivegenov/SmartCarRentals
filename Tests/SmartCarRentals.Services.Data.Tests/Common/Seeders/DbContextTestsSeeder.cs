@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using SmartCarRentals.Common;
     using SmartCarRentals.Data;
@@ -614,6 +615,11 @@
                     Id = "abc",
                     FirstName = "FirstName",
                     LastName = "LastName",
+                    Roles = new List<IdentityUserRole<string>>()
+                    {
+                        new IdentityUserRole<string>() { RoleId = "RoleOne", UserId = "abc" },
+                        new IdentityUserRole<string>() { RoleId = "RoleTwo", UserId = "abc" },
+                    },
                 },
 
                 new ApplicationUser()

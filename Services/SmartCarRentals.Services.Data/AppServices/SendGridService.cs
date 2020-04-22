@@ -11,9 +11,9 @@
 
     public class SendGridService : IMailService
     {
-        private readonly SendGridClient sendGridClient;
+        private readonly ISendGridClient sendGridClient;
 
-        public SendGridService(SendGridClient sendGridClient)
+        public SendGridService(ISendGridClient sendGridClient)
         {
             this.sendGridClient = sendGridClient;
         }
