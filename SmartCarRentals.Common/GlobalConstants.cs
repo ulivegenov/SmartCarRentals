@@ -10,7 +10,7 @@
 
         // Cloudinary constants
         public const string CarsImagesFolder = "SmartCarRentalsPics/Cars";
-        public const string DriversImagesFolder = "SmartCarRentalPics/Drivers";
+        public const string DriversImagesFolder = "SmartCarRentalsPics/Drivers";
 
         // Points Constants
         public const int GoldUserMinPoints = 200;

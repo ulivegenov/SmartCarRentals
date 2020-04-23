@@ -43,6 +43,7 @@
     using SmartCarRentals.Web.Hubs;
     using SmartCarRentals.Web.Infrastructure;
     using SmartCarRentals.Web.ViewModels;
+    using SmartCarRentals.Web.ViewModels.Main.Error;
 
     public class Startup
     {
