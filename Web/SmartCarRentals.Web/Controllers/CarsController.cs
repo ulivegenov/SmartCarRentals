@@ -65,10 +65,10 @@
 
             if (!string.IsNullOrEmpty(searchString) && viewModel.Countries.Contains(searchString))
             {
-                if (searchString != (string)this.TempData["SearchString"])
+                if (searchString != (string)this.TempData["CurrentFilter"])
                 {
                     id = 1;
-                    this.TempData["SearchString"] = searchString;
+                    this.TempData["CurrentFilter"] = searchString;
                 }
 
                 page = id;
@@ -78,10 +78,10 @@
             }
             else if (!string.IsNullOrEmpty(searchString) && viewModel.Towns.Contains(searchString))
             {
-                if (searchString != (string)this.TempData["SearchString"])
+                if (searchString != (string)this.TempData["CurrentFilter"])
                 {
                     id = 1;
-                    this.TempData["SearchString"] = searchString;
+                    this.TempData["CurrentFilter"] = searchString;
                 }
 
                 page = id;
@@ -91,10 +91,10 @@
             }
             else if (!string.IsNullOrEmpty(searchString) && viewModel.Parkings.Contains(searchString))
             {
-                if (searchString != (string)this.TempData["SearchString"])
+                if (searchString != (string)this.TempData["CurrentFilter"])
                 {
                     id = 1;
-                    this.TempData["SearchString"] = searchString;
+                    this.TempData["CurrentFilter"] = searchString;
                 }
 
                 page = id;
@@ -108,7 +108,7 @@
             }
 
             this.ViewData["CurrentFilter"] = searchString;
-            this.TempData["SearchString"] = searchString;
+            this.TempData["CurrentFilter"] = searchString;
 
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
 

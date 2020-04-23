@@ -4,9 +4,9 @@
 @{
     this.ViewData["Title"] = "Cars All";
     var bgUrl = "https://res.cloudinary.com/dp70enihl/image/upload/v1585135294/SmartCarRentalsPics/Background/bg_3_s4tpcl.jpg";
-    var countries = Model.Countries.Select(country => new SelectListItem(country, country));
-    var towns = Model.Towns.Select(town => new SelectListItem(town, town));
-    var parkings = Model.Parkings.Select(parking => new SelectListItem(parking, parking));
+    var countries = Model.Countries.Select(Country => new SelectListItem(Country, Country));
+    var towns = Model.Towns.Select(Town => new SelectListItem(Town, Town));
+    var parkings = Model.Parkings.Select(Parking => new SelectListItem(Parking, Parking));
 }
 
 
