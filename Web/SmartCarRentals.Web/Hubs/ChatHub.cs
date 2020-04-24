@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.SignalR;
-    using Microsoft.EntityFrameworkCore.Internal;
     using SmartCarRentals.Common;
     using SmartCarRentals.Web.ViewModels.Main.Chat;
 
@@ -20,7 +19,7 @@
                 User = this.Context.User.Identity.IsAuthenticated ?
                        this.Context.User.Identity.Name :
                        "Guest",
-                Text = message,
+                Text = message + Environment.NewLine,
             };
 
             await this.Clients.All.SendAsync("NewMessage", myMessage);
