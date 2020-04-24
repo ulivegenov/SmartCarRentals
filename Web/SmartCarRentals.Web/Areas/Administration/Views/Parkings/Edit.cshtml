@@ -1,6 +1,6 @@
-﻿@model SmartCarRentals.Web.ViewModels.Administration.TransfersTypes.TransferTypeDetailsViewModel
+﻿@model SmartCarRentals.Web.ViewModels.Administration.Parkings.ParkingDetailsViewModel
 @{
-    ViewData["Title"] = "Edit TransferType";
+    ViewData["Title"] = "Edit Parking";
 }
 
 <section class="content" align="center">
@@ -18,9 +18,14 @@
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Price" class="label"></label>
-                            <input asp-for="Price" class="form-control" placeholder="Price" readonly />
-                            <span asp-validation-for="Price" class="text-danger"></span>
+                            <label asp-for="TownName" class="label"></label>
+                            <input asp-for="TownName" class="form-control" placeholder="TownName" readonly />
+                            <span asp-validation-for="TownName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="label"></label>
+                            <input asp-for="Address" class="form-control" placeholder="Address" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success py-2 px-3" asp-area="Administration" asp-controller="Parkings" asp-action="Edit" asp-route-id="@Model.Id">Update</button>

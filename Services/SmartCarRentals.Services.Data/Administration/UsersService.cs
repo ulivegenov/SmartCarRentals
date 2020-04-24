@@ -76,11 +76,29 @@
         public async Task<IEnumerable<UsersServiceAllModel>> GetAllWithPagingAsync(int? take = null, int skip = 0)
         {
             var users = this.userRepository.All()
+                                           .Select(u => new ApplicationUser()
+                                           {
+                                               Id = u.Id,
+                                               NormalizedUserName = u.NormalizedUserName,
+                                               NormalizedEmail = u.NormalizedEmail,
+                                               FirstName = u.FirstName,
+                                               LastName = u.LastName,
+                                               Rank = u.Rank,
+                                               Points = u.Points,
+                                               Roles = u.Roles.Select(r => new IdentityUserRole<string>() { RoleId = r.RoleId }).ToList(),
+                                           })
                                            .OrderByDescending(u => u.Points)
                                            .To<UsersServiceAllModel>()
                                            .Skip(skip);
 
-            foreach (var user in users)
+            if (take.HasValue)
+            {
+                users = users.Take(take.Value);
+            }
+
+            var result = await users.ToListAsync();
+
+            foreach (var user in result)
             {
                 foreach (var identityRole in user.Roles)
                 {
@@ -89,12 +107,7 @@
                 }
             }
 
-            if (take.HasValue)
-            {
-                users = users.Take(take.Value);
-            }
-
-            return users.ToList();
+            return result;
         }
 
         public async Task<UserServiceDetailsModel> GetByIdAsync(string id)
