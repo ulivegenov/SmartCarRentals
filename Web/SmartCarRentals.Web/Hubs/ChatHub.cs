@@ -34,19 +34,19 @@
             var sorryMessage = new Message()
             {
                 User = "Auto Admin",
-                Text = $"Sorry {currentUser}! There are no available operators, at the moment.",
+                Text = $"Sorry {currentUser}! There are no available operators, at the moment.{Environment.NewLine}",
             };
 
             var adminMessage = new Message()
             {
                 User = "Auto Admin",
-                Text = $"{currentUser} you are online...",
+                Text = $"{currentUser} you are online...{Environment.NewLine}",
             };
 
             var userMessage = new Message()
             {
                 User = "Auto Admin",
-                Text = $"{currentUser} is joined...",
+                Text = $"{currentUser} is joined...{Environment.NewLine}",
             };
 
             if (users.Count == 1)
