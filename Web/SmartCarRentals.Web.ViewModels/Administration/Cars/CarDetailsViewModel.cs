@@ -32,6 +32,7 @@
         public string Model { get; set; }
 
         [Required]
+        [Display(Name = "Plate Number")]
         [MaxLength(EntitiesAttributeConstraints.PlateNumberMaxLength)]
         public string PlateNumber { get; set; }
 
@@ -42,10 +43,12 @@
         public int KmRun { get; set; }
 
         [Required]
+        [Display(Name = "Price Per Hour")]
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerHour { get; set; }
 
         [Required]
+        [Display(Name = "Price Per Day")]
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
 
@@ -60,6 +63,7 @@
         public FuelType Fuel { get; set; }
 
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
+        [Display(Name = "Passengers Capacity")]
         public int PassengersCapacity { get; set; }
 
         public double Rating { get; set; }

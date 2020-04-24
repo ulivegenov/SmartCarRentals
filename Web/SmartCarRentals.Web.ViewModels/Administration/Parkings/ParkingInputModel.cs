@@ -15,6 +15,7 @@
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Town")]
         public string TownId { get; set; }
 
         [Required]

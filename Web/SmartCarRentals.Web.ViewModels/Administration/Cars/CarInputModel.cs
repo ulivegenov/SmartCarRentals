@@ -28,14 +28,17 @@
         public string Model { get; set; }
 
         [Required]
+        [Display(Name = "Plate Number")]
         [StringLength(EntitiesAttributeConstraints.PlateNumberMaxLength, MinimumLength = EntitiesAttributeConstraints.PlateNumberMinLength)]
         public string PlateNumber { get; set; }
 
         [Required]
+        [Display(Name = "Price Per Hour")]
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerHour { get; set; }
 
         [Required]
+        [Display(Name = "Price Per Day")]
         [Range(EntitiesAttributeConstraints.MinPrice, EntitiesAttributeConstraints.MaxPrice)]
         public int PricePerDay { get; set; }
 
@@ -49,8 +52,11 @@
         public FuelType Fuel { get; set; }
 
         [Range(EntitiesAttributeConstraints.MinPassengers, EntitiesAttributeConstraints.MaxPassengers)]
+        [Display(Name = "Passengers Capacity")]
         public int PassengersCapacity { get; set; }
 
+        [Required]
+        [Display(Name = "Parking")]
         public int ParkingId { get; set; }
 
         public ICollection<ParkingsDropDownViewModel> Parkings { get; set; }

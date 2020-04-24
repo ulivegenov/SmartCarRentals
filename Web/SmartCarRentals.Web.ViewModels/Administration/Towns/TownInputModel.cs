@@ -15,6 +15,7 @@
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Country")]
         public string CountryId { get; set; }
 
         public IEnumerable<CountriesDropDownViewModel> Countries { get; set; }
