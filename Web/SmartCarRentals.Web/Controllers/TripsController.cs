@@ -10,13 +10,11 @@
 
     using SmartCarRentals.Common;
     using SmartCarRentals.Data.Models;
-    using SmartCarRentals.Data.Models.Enums.Car;
     using SmartCarRentals.Data.Models.Enums.Trip;
     using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
     using SmartCarRentals.Services.Models.Administration.Cars;
-    using SmartCarRentals.Services.Models.Main.Reservations;
     using SmartCarRentals.Services.Models.Main.Trips;
     using SmartCarRentals.Web.ViewModels.Main.Trips;
 
@@ -62,8 +60,6 @@
         [HttpPost]
         public async Task<IActionResult> Create(TripCreateInputModel tripCreateInputModel, string id)
         {
-            var carServiceModel = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(id);
-
             if (tripCreateInputModel.CarId == null)
             {
                 tripCreateInputModel.CarId = id;
@@ -78,7 +74,8 @@
             if (!this.ModelState.IsValid ||
                 !isCarAvailableByDate)
             {
-                tripCreateInputModel.Car = carServiceModel.To<Car>();
+                var car = await this.carsService.GetByIdAsync<CarServiceDetailsModel>(id);
+                tripCreateInputModel.Car = car.To<Car>();
                 tripCreateInputModel.ClientId = currentUser.Id;
 
                 if (!isCarAvailableByDate)
@@ -91,9 +88,6 @@
 
             var tripServiceCreateModel = tripCreateInputModel.To<TripServiceInputModel>();
             await this.tripsService.CreateAsync(tripServiceCreateModel);
-
-            carServiceModel.HireStatus = HireStatus.Unavailable;
-            await this.carsService.EditAsync(carServiceModel);
 
             return this.Redirect("/Trips/MyTrips");
         }

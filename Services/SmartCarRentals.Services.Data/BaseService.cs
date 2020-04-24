@@ -85,13 +85,17 @@
             var modelProperties = model.GetType().GetProperties();
             var entityProperties = entity.GetType().GetProperties();
 
-            foreach (var property in entityProperties)
+            foreach (var modelProperty in modelProperties)
             {
-                foreach (var modelProperty in modelProperties)
+                foreach (var property in entityProperties)
                 {
-                    if (property.Name != "Id" && property.Name == modelProperty.Name)
+                    if (property.Name == modelProperty.Name &&
+                        property.Name != "Id" &&
+                        property.Name != "CreatedOn" &&
+                        property.Name != "ModifiedOn")
                     {
                         property.SetValue(entity, modelProperty.GetValue(model));
+                        break;
                     }
                 }
             }

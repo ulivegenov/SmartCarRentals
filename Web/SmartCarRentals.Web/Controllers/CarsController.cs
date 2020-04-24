@@ -110,7 +110,15 @@
             this.ViewData["CurrentFilter"] = searchString;
             this.TempData["SearchString"] = searchString;
 
+            var carsWithRatings = await this.carsService.GetAllAsync<CarsServiceAllModel>();
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
+
+            foreach (var car in viewModel.Cars)
+            {
+                car.Rating = carsWithRatings.Where(c => c.Id == car.Id)
+                                            .Select(c => c.Rating)
+                                            .FirstOrDefault();
+            }
 
             viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
 

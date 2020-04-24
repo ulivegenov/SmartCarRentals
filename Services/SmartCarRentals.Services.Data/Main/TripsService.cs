@@ -11,10 +11,9 @@
     using SmartCarRentals.Data.Models;
     using SmartCarRentals.Data.Models.Enums.Trip;
     using SmartCarRentals.Data.Models.Enums.User;
-    using SmartCarRentals.Services.Data.Administration.Contracts;
     using SmartCarRentals.Services.Data.Main.Contracts;
     using SmartCarRentals.Services.Mapping;
-    using SmartCarRentals.Services.Models.Administration.Cars;
+    using SmartCarRentals.Services.Models.Contracts;
     using SmartCarRentals.Services.Models.Main.Trips;
 
     public class TripsService : BaseService<Trip, int>, ITripsService
@@ -32,6 +31,23 @@
             this.tripsRepository = tripsRepository;
             this.usersRepository = usersRepository;
             this.carsRepository = carsRepository;
+        }
+
+        public override async Task<int> CreateAsync(IServiceInputModel servicesInputViewModel)
+        {
+            var trip = servicesInputViewModel.To<Trip>();
+            var car = await this.carsRepository.All()
+                                               .Where(c => c.Id == trip.CarId)
+                                               .FirstOrDefaultAsync();
+
+            car.HireStatus = SmartCarRentals.Data.Models.Enums.Car.HireStatus.Unavailable;
+
+            this.carsRepository.Update(car);
+            await this.tripsRepository.AddAsync(trip);
+
+            var result = await this.tripsRepository.SaveChangesAsync();
+
+            return result;
         }
 
         public async Task<IEnumerable<MyTripsServiceAllModel>> GetByUserAsync(string userId, int? take = null, int skip = 0)
@@ -137,6 +153,8 @@
             trip.Points = tripServiceModel.Points;
             trip.Status = tripServiceModel.Status;
             trip.HasPaid = tripServiceModel.HasPaid;
+            trip.EndDate = tripServiceModel.EndDate;
+            trip.KmRun = tripServiceModel.KmRun;
             this.tripsRepository.Update(trip);
 
             await this.tripsRepository.SaveChangesAsync();
