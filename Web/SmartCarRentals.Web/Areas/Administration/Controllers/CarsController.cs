@@ -155,7 +155,7 @@
         public async Task<IActionResult> All(int id = 1)
         {
             var page = id;
-            var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
+            var cars = await this.carsService.GetAllWithPagingAsync<CarsServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
             var carsWithAddress = await this.carsService.GetAllAsync<CarsServiceAllModel>();
 
             var viewModel = new CarsAllViewModelCollection();

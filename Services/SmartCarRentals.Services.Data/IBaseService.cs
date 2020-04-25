@@ -13,7 +13,7 @@
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 
-        IEnumerable<T> GetAllWithPaging<T>(int? take = null, int skip = 0);
+        Task<IEnumerable<T>> GetAllWithPagingAsync<T>(int? take = null, int skip = 0);
 
         Task<T> GetByIdAsync<T>(TKey id);
 

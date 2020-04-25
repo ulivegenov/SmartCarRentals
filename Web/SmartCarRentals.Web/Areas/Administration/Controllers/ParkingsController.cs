@@ -123,7 +123,7 @@
         public async Task<IActionResult> All(int id = 1)
         {
             var page = id;
-            var parkings = this.parkingsService.GetAllWithPaging<ParkingsServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
+            var parkings = await this.parkingsService.GetAllWithPagingAsync<ParkingsServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
             var viewModel = new ParkingsAllViewModelCollection()
             {
                 Parkings = parkings.Select(p => p.To<ParkingsAllViewModel>()).ToList(),

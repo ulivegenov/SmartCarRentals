@@ -33,6 +33,7 @@
                                                    PricePerDay = c.PricePerDay,
                                                    Image = c.Image,
                                                    Class = c.Class,
+                                                   Rating = c.Rating,
                                                })
                                                .Take(4)
                                                .ToListAsync();

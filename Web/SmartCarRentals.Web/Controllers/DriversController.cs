@@ -23,19 +23,10 @@
         public async Task<IActionResult> All(int id = 1)
         {
             var page = id;
-            var drivers = this.driversService.GetAllWithPaging<DriversServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
-            var driversWithRatings = await this.driversService.GetAllAsync<DriversServiceAllModel>();
+            var drivers = await this.driversService.GetAllWithPagingAsync<DriversServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
 
             var viewModel = new DriversAllViewModelCollection();
-
-            foreach (var driver in drivers)
-            {
-                driver.Rating = driversWithRatings.Where(d => d.Id == driver.Id)
-                                                  .Select(d => d.Rating)
-                                                  .FirstOrDefault();
-
-                viewModel.Drivers.Add(driver.To<DriversAllViewModel>());
-            }
+            viewModel.Drivers = drivers.Select(d => d.To<DriversAllViewModel>()).ToList();
 
             var count = await this.driversService.GetCountAsync();
             viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);

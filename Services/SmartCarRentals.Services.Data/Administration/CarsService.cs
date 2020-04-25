@@ -190,6 +190,46 @@
             return cars.Select(c => c.To<T>()).ToList();
         }
 
+        public override async Task<IEnumerable<T>> GetAllWithPagingAsync<T>(int? take = null, int skip = 0)
+        {
+            var cars = this.carRepository.All()
+                                         .Select(c => new Car()
+                                         {
+                                             Id = c.Id,
+                                             Image = c.Image,
+                                             Make = c.Make,
+                                             Model = c.Model,
+                                             Class = c.Class,
+                                             HireStatus = c.HireStatus,
+                                             PricePerDay = c.PricePerDay,
+                                             Rating = c.Ratings.Count != 0
+                                                      ? c.Ratings.Select(r => r.RatingVote).Average()
+                                                      : 0,
+                                             Trips = c.Trips.Select(t => new Trip() { Id = t.Id, }).ToList(),
+                                             ParkingId = c.ParkingId,
+                                             Parking = new Parking()
+                                             {
+                                                 Name = c.Parking.Name,
+                                                 Address = c.Parking.Address,
+                                                 Town = new Town()
+                                                 {
+                                                     Name = c.Parking.Town.Name,
+                                                     Country = new Country { Name = c.Parking.Town.Country.Name },
+                                                 },
+                                             },
+                                         })
+                                         .Skip(skip);
+
+            if (take.HasValue)
+            {
+                cars = cars.Take(take.Value);
+            }
+
+            var result = await cars.ToListAsync();
+
+            return result.Select(c => c.To<T>()).ToList();
+        }
+
         public async Task<IEnumerable<T>> GetAllByCountryWithPagingAsync<T>(string countryName, int? take = null, int skip = 0)
         {
             var cars = this.carRepository.All()

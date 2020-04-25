@@ -50,7 +50,7 @@
         public async Task<IActionResult> All(string currentFilter, string searchString, int id = 1)
         {
             var page = id;
-            var cars = this.carsService.GetAllWithPaging<CarsServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
+            var cars = await this.carsService.GetAllWithPagingAsync<CarsServiceAllModel>(GlobalConstants.ItemsPerPage, (page - 1) * GlobalConstants.ItemsPerPage);
             var countries = await this.countriesService.GetAllAsync<CountriesServiceDropDownModel>();
             var towns = await this.townsService.GetAllAsync<TownsServiceDropDownModel>();
             var parkings = await this.parkingsService.GetAllAsync<ParkingsServiceDropDownModel>();
@@ -58,7 +58,6 @@
             var count = await this.carsService.GetCountAsync();
 
             var viewModel = new CarsAllViewModelCollection();
-            var carsAllViewModel = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
             viewModel.Countries = countries.Select(c => c.Name).ToList();
             viewModel.Towns = towns.Select(t => t.Name).ToList();
             viewModel.Parkings = parkings.Select(p => p.Name).ToList();
@@ -110,15 +109,7 @@
             this.ViewData["CurrentFilter"] = searchString;
             this.TempData["SearchString"] = searchString;
 
-            var carsWithRatings = await this.carsService.GetAllAsync<CarsServiceAllModel>();
             viewModel.Cars = cars.Select(c => c.To<CarsAllViewModel>()).ToList();
-
-            foreach (var car in viewModel.Cars)
-            {
-                car.Rating = carsWithRatings.Where(c => c.Id == car.Id)
-                                            .Select(c => c.Rating)
-                                            .FirstOrDefault();
-            }
 
             viewModel.PagesCount = (int)Math.Ceiling((double)count / GlobalConstants.ItemsPerPage);
 

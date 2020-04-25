@@ -126,7 +126,7 @@
         public async Task<IActionResult> All(int id = 1)
         {
             var page = id;
-            var drivers = this.driversService.GetAllWithPaging<DriversServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
+            var drivers = await this.driversService.GetAllWithPagingAsync<DriversServiceAllModel>(GlobalConstants.ItemsPerPageAdmin, (page - 1) * GlobalConstants.ItemsPerPageAdmin);
             var driversWithRatings = await this.driversService.GetAllAsync<DriversServiceAllModel>();
             var viewModel = new DriversAllViewModelCollection();
 

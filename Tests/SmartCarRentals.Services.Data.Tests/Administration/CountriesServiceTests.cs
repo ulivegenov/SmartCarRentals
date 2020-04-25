@@ -158,7 +158,8 @@
             var seeder = new DbContextTestsSeeder();
             await seeder.SeedCountriesAsync(context);
 
-            var countriesCount = countriesService.GetAllWithPaging<CountryServiceDetailsModel>(take, skip).ToList().Count;
+            var countries = await countriesService.GetAllWithPagingAsync<CountryServiceDetailsModel>(take, skip);
+            var countriesCount = countries.ToList().Count;
 
             Assert.True(take == countriesCount, ErrorMessage);
         }
@@ -176,7 +177,8 @@
             await seeder.SeedCountriesAsync(context);
 
             var expectedCount = await countriesService.GetCountAsync();
-            var countriesCount = countriesService.GetAllWithPaging<CountryServiceDetailsModel>(take, skip).ToList().Count;
+            var countries = await countriesService.GetAllWithPagingAsync<CountryServiceDetailsModel>(take, skip);
+            var countriesCount = countries.ToList().Count;
 
             Assert.True(expectedCount == countriesCount, ErrorMessage);
         }
