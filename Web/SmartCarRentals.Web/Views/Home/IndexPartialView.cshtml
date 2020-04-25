@@ -18,11 +18,11 @@
                     <span>
                         @for (int j = 1; j <= Model.Cars[i].Rating; j++)
                         {
-                            if (i < 4)
+                            if (j < 4)
                             {
                                 <span class="fas fa-star text-yellow"></span>
                             }
-                            else if (i > 7)
+                            else if (j > 7)
                             {
                                 <span class="fas fa-star text-danger"></span>
                             }

@@ -33,7 +33,9 @@
                                                    PricePerDay = c.PricePerDay,
                                                    Image = c.Image,
                                                    Class = c.Class,
-                                                   Rating = c.Rating,
+                                                   Rating = c.Ratings.Count != 0
+                                                            ? c.Ratings.Select(r => r.RatingVote).Average()
+                                                            : 0,
                                                })
                                                .Take(4)
                                                .ToListAsync();
