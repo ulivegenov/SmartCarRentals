@@ -1,4 +1,5 @@
-﻿@using SmartCarRentals.Common
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using SmartCarRentals.Common
 <!DOCTYPE html>
 
 <html lang="en">
@@ -53,6 +54,7 @@
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
             integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
             crossorigin=""></script>
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
     <header>
