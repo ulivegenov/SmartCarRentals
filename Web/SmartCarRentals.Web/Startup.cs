@@ -186,14 +186,12 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                //if (env.IsDevelopment())
-                //{
-                    
-                //}
-
+                if (env.IsDevelopment())
+                {
                 dbContext.Database.Migrate();
 
                 new ApplicationDbContextSeeder(this.configuration).SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                }
             }
 
             if (env.IsDevelopment())
